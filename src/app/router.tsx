@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import AppShell from './AppShell';
+import AboutUs from '../features/landing/AboutUs';
 import Home from '../features/landing/Home';
 
 export const router = createBrowserRouter([
@@ -7,7 +8,7 @@ export const router = createBrowserRouter([
         path: '/',
         element: <AppShell />,
         children: [
-            {path: '/', element: <Home />},
+            { path: 'nosotros', element: <AboutUs /> },            {path: '/', element: <Home />},
         ],
     },
 ]);
