@@ -9,7 +9,7 @@ export default function Header() {
     const base =
         "px-3 py-2 text-sm font-medium rounded-(--radius) transition-colors";
     const idle = "text-(--text-muted) hover:text-(--text) hover:bg-(--bg-muted)";
-    const active = "text-(--text) bg-(--bg-muted) shadow-(--shadow-sm)";
+    const active = "text-(--text) bg-(--bg-muted-2) shadow-(--shadow-sm)";
 
     const closeMobile = () => setMobileOpen(false);
 
@@ -78,12 +78,12 @@ export default function Header() {
                 {/* Boton para movil */}
                 <button
                     type="button"
-                    className="md:hidden inline-flex items-center justify-center rounded-(--radius) border border-(--border) px-3 py-2 text-(--text) hover:bg-(--bg-muted)"
+                    className="md:hidden inline-flex items-center justify-center rounded-(--radius) border border-(--border) px-4 py-3 text-(--text) hover:bg-(--bg-muted)"
                     aria-label="Abrir menú"
                     aria-expanded={mobileOpen}
                     onClick={() => setMobileOpen((v) => !v)}
                 >
-                    <span className="text-lg leading-none">{mobileOpen ? "✕" : "☰"}</span>
+                    <span className="text-xl leading-none">{mobileOpen ? "✕" : "☰"}</span>
                 </button>
             </div>
 
@@ -98,8 +98,12 @@ export default function Header() {
                                         <NavLink
                                             to={item.to}
                                             onClick={closeMobile}
-                                            className={({ isActive }) =>
-                                                `${base} ${isActive ? active : idle} w-full text-left`
+                                            className={({ isActive }) => {
+                                                if (item.variant === "highlight") {
+                                                    return `px-4 py-2 text-sm font-semibold rounded-(--radius) bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors w-full text-left`;
+                                                }
+                                                return `${base} ${isActive ? active : idle} w-full text-left`
+                                            }
                                             }
                                         >
                                             {item.label}
