@@ -11,13 +11,13 @@ export default function Footer() {
 
   return (
     <footer className="mt-12 border-t border-(--border) bg-(--bg)">
-      <div className="mx-auto max-w-6xl px-4 py-10">
+      <div className="mx-auto max-w-7xl px-4 py-10">
 
         {/* Main grid */}
         <div className="grid gap-10 md:grid-cols-4">
           
           {/* Brand */}
-          <div className="md:col-span-1 flex flex-col items-center text-center space-y-5">
+          <div className="md:col-span-1 flex flex-col items-left text-left space-y-5">
             <NavLink to="/" className="inline-block">
               <img
                 src={LogoImage}
@@ -26,7 +26,7 @@ export default function Footer() {
               />
             </NavLink>
 
-            <p className="text-sm leading-6 text-(--text-muted)">
+            <p className="text-sm leading-6 text-(--text-muted)!">
               {footerBrandMock.description}
             </p>
           </div>
@@ -36,8 +36,7 @@ export default function Footer() {
             {footerSectionsMock.map((section) => (
               <div key={section.title}>
                 
-                {/* Títulos ahora en muted */}
-                <div className="text-sm font-semibold text-(--text-muted)">
+                <div className="text-sm font-semibold text-(--text)">
                   {section.title}
                 </div>
 
@@ -46,7 +45,7 @@ export default function Footer() {
                     <li key={link.to}>
                       <NavLink
                         to={link.to}
-                        className="text-sm text-(--text-muted) hover:text-(--text)"
+                        className="text-sm text-(--text-muted)!"
                       >
                         {link.label}
                       </NavLink>
@@ -59,7 +58,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="md:col-span-1">
-            <div className="text-sm font-semibold text-(--text-muted)">
+            <div className="text-sm font-semibold text-(--text)">
               Contacto
             </div>
 
@@ -105,7 +104,7 @@ export default function Footer() {
         <div className="mt-6 flex justify-center">
           <NavLink
             to="/cotizar"
-            className="inline-flex items-center justify-center rounded-(--radius) bg-(--primary-500) px-6 py-3 text-sm font-semibold text-white hover:bg-(--primary-600) transition"
+            className="inline-flex items-center justify-center rounded-(--radius) bg-(--primary) px-6 py-3 text-sm font-semibold text-white! hover:bg-(--primary-700) transition"
           >
             Solicitar cotización
           </NavLink>
