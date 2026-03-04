@@ -39,3 +39,4 @@ export const footerContactMock = {
   instagramUrl: "https://instagram.com/",
   facebookUrl: "https://facebook.com/",
 };
+

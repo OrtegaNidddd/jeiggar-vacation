@@ -11,28 +11,28 @@ export default function Footer() {
 
   return (
     <footer className="mt-12 border-t border-(--border) bg-(--bg)">
-      <div className="mx-auto max-w-7xl px-4 py-10">
+      <div className="mx-auto max-w-7xl px-4 py-6">
 
         {/* Main grid */}
-        <div className="grid gap-10 md:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-4">
           
           {/* Brand */}
-          <div className="md:col-span-1 flex flex-col items-left text-left space-y-5">
+          <div className="md:col-span-1 flex flex-col items-center text-center space-y-4">
             <NavLink to="/" className="inline-block">
               <img
                 src={LogoImage}
                 alt="Jeiggar Vacation"
-                className="w-40 h-auto"
+                className="w-40 h-auto mx-auto"
               />
             </NavLink>
 
-            <p className="text-sm leading-6 text-(--text-muted)!">
+            <p className="text-sm leading-6 text-(--text-muted) text-le">
               {footerBrandMock.description}
             </p>
           </div>
 
           {/* Links sections */}
-          <div className="grid gap-8 sm:grid-cols-2 md:col-span-2 md:grid-cols-3">
+          <div className="grid gap-y-4 gap-x-2 sm:grid-cols-2 md:col-span-2 md:grid-cols-3">
             {footerSectionsMock.map((section) => (
               <div key={section.title}>
                 
@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
 
         {/* Social buttons */}
-        <div className="mt-8 flex justify-center items-center gap-4 flex-wrap">
+        <div className="mt-6 flex justify-center items-center gap-4 flex-wrap">
           <a
             href={footerContactMock.whatsappUrl}
             target="_blank"
@@ -101,7 +101,8 @@ export default function Footer() {
         </div>
 
         {/* CTA */}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-4
+         flex justify-center">
           <NavLink
             to="/cotizar"
             className="inline-flex items-center justify-center rounded-(--radius) bg-(--primary) px-6 py-3 text-sm font-semibold text-white! hover:bg-(--primary-700) transition"
@@ -111,7 +112,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 flex flex-col gap-2 border-t border-(--border) pt-6 text-sm text-(--text-muted) md:flex-row md:items-center md:justify-between">
+        <div className="mt-6 flex flex-col gap-2 border-t border-(--border) pt-6 text-sm text-(--text-muted) md:flex-row md:items-center md:justify-between">
           <span>
             © {year} Jeiggar Vacation. Todos los derechos reservados.
           </span>
