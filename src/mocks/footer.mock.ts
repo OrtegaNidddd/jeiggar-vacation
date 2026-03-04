@@ -1,5 +1,4 @@
-export type FooterLink = { label: string; to: string };
-export type FooterSection = { title: string; links: FooterLink[] };
+import type { FooterSection } from "../domain/types/Footer";
 
 export const footerBrandMock = {
   name: "Jeiggar Vacation",
@@ -40,3 +39,4 @@ export const footerContactMock = {
   instagramUrl: "https://instagram.com/",
   facebookUrl: "https://facebook.com/",
 };
+
