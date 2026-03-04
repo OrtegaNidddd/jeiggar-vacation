@@ -24,7 +24,7 @@ export const navigationMock: NavItem[] = [
     },
     { 
         label: 'Servicios', 
-        to: '/servicios' 
+        to: '/servicios'    
     },
     { 
         label: 'Nosotros', 
