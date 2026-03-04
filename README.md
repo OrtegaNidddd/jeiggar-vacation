@@ -72,6 +72,7 @@ export default defineConfig([
 ])
 ```
 
+
 ```
 jeiggar-vacation
 ├─ README.md
@@ -82,28 +83,41 @@ jeiggar-vacation
 ├─ public
 │  └─ vite.svg
 ├─ src
-│  ├─ App.tsx
 │  ├─ app
 │  │  ├─ AppShell.tsx
 │  │  └─ router.tsx
 │  ├─ assets
 │  │  ├─ icons
 │  │  ├─ images
+│  │  │  └─ logo_jeiggar.png
 │  │  └─ react.svg
 │  ├─ components
 │  │  ├─ cards
 │  │  ├─ common
+│  │  │  ├─ Footer.tsx
+│  │  │  └─ Header.tsx
 │  │  ├─ forms
 │  │  └─ ui
 │  ├─ domain
 │  │  └─ types
+│  │     └─ NavItem.ts
 │  ├─ features
 │  │  ├─ destinations
 │  │  ├─ landing
+│  │  │  ├─ AboutUs.tsx
+│  │  │  ├─ Contact.tsx
+│  │  │  ├─ Home.tsx
+│  │  │  └─ components
+│  │  │     ├─ About.tsx
+│  │  │     ├─ CTA.tsx
+│  │  │     └─ Hero.tsx
 │  │  ├─ map
 │  │  └─ quotes
 │  ├─ index.css
-│  └─ main.tsx
+│  ├─ main.tsx
+│  └─ mocks
+│     ├─ footer.mock.ts
+│     └─ navigation.mock.ts
 ├─ tsconfig.app.json
 ├─ tsconfig.json
 ├─ tsconfig.node.json
