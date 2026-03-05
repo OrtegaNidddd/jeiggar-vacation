@@ -1,4 +1,4 @@
-import AboutInfoCard from "../landing/components/AboutInfoCard";
+import AboutInfoCard from "../../components/cards/AboutInfoCard";
 import { aboutUsCardsMock } from "../../mocks/about-us-cards.mock";
 
 export default function AboutUs() {
