@@ -7,7 +7,7 @@ export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const base =
-        "px-3 py-2 text-sm font-medium rounded-(--radius) transition-colors";
+        "px-3 py-2 text-sm font-medium rounded-(--radius) transition-colors duration-400";
     const idle = "text-(--text-muted) hover:text-(--text) hover:bg-(--bg-muted)";
     const active = "text-(--text) bg-(--bg-muted-2) shadow-(--shadow-sm)";
 
@@ -37,7 +37,7 @@ export default function Header() {
                                     to={item.to}
                                     className={({ isActive }) => {
                                         if (item.variant === "highlight") {
-                                            return `px-4 py-2 text-sm font-semibold rounded-(--radius) bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors`;
+                                            return `px-4 py-2 text-sm font-semibold rounded-(--radius) bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors duration-400`;
                                         }
                                         return `px-3 py-2 text-sm font-semibold rounded-(--radius) ${isActive ? active : idle}`;
                                     }}
