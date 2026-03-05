@@ -1,8 +1,10 @@
 import type { LucideIcon } from "lucide-react";
 
-export type AboutInfoCardProps = {
+export type AnimatedCardProps = {
   title: string;
   description: string;
+  icon?: LucideIcon;
+  centerText?: boolean;
 };
 
 export type SimpleCardProps = {
