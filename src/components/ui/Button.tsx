@@ -17,9 +17,9 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-(--primary) text-white! hover:bg-(--primary-700) font-semibold!",
+      "bg-(--primary) text-white! hover:bg-(--primary-700) font-semibold! transition-colors duration-400",
     secondary:
-      "bg-white border border-(--border) hover:bg-(--bg-muted-2) font-semibold!",
+      "bg-white border border-(--border) hover:bg-(--bg-muted-2) font-semibold! transition-colors duration-400",
   };
 
   return (
