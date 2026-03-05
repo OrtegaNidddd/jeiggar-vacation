@@ -1,25 +1,23 @@
-import AboutInfoCard from "../../components/cards/AboutInfoCard";
-import ValuesSection from "../../components/ValuesSection";
-import { aboutUsCardsMock } from "../../mocks/about-us-cards.mock";
+import AnimatedCard from "../../components/cards/AnimatedCard";
+import ValuesSection from "./components/ValuesSection";
+import { aboutUsCardsMock, aboutUsContentMock } from "../../mocks/about-us-cards.mock";
 
 export default function AboutUs() {
   return (
-    <div className="bg-(--bg)">
+    <div className="bg-(--bg) p-4">
       {/* HERO */}
-      <section className="border-b border-(--border)">
-        <div className="mx-auto max-w-6xl px-4 py-16 flex flex-col items-center text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-(--text) mb-6">
-            ¿Quiénes Somos?
-          </h1>
+        <div className="mx-auto border-b border-(--border) max-w-6xl my-8 flex flex-col items-center text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-(--text) mb-6">
+            {aboutUsContentMock.title}
+          </h2>
 
-          <p className="mt-3 text-(--text-muted) max-w-lg leading-7">
-            Creamos experiencias de viaje auténticas, personalizadas y memorables.
-          </p>
+          <span className="text-xs tracking-wide bg-blue-100 text-(--primary-700) px-4 py-2 rounded-full font-bold mb-6">
+            {aboutUsContentMock.badge}
+          </span>
         </div>
-      </section>
 
       {/* CONTENT */}
-      <section className="mx-auto max-w-6xl px-4 py-16 space-y-20">
+      <section className="mx-auto max-w-6xl px-4 space-y-20">
 
         {/* Historia */}
         <div className="max-w-4xl mx-auto space-y-6">
@@ -62,7 +60,7 @@ export default function AboutUs() {
         {/* Misión / Visión / Objetivo */}
         <div className="grid gap-8 md:grid-cols-3">
           {aboutUsCardsMock.map((card) => (
-            <AboutInfoCard key={card.id} {...card} />
+            <AnimatedCard key={card.id} {...card} />
           ))}
         </div>
 
