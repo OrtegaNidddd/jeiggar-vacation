@@ -1,4 +1,4 @@
-import type { HeroLanding } from "../domain/types/HeroLanding";
+import type { HeroLanding } from "../domain/types/Landing";
 
 export const heroLandingMock: HeroLanding = {
     badge: "TU REFUGIO EN EL TRÓPICO",

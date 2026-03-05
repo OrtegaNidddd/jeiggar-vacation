@@ -1,6 +1,6 @@
 import HeroImage from "../../../assets/images/hero-image.jpeg";
 import Button from "../../../components/ui/Button";
-import { heroLandingMock } from "../../../mocks/heroLanding.mock";
+import { heroLandingMock } from "../../../mocks/hero-landing.mock";
 
 export default function Hero() {
     return (
