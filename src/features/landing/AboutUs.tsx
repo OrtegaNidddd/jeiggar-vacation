@@ -1,4 +1,5 @@
 import AboutInfoCard from "../../components/cards/AboutInfoCard";
+import ValuesSection from "../../components/ValuesSection";
 import { aboutUsCardsMock } from "../../mocks/about-us-cards.mock";
 
 export default function AboutUs() {
@@ -6,12 +7,12 @@ export default function AboutUs() {
     <div className="bg-(--bg)">
       {/* HERO */}
       <section className="border-b border-(--border)">
-        <div className="mx-auto max-w-6xl px-4 py-16 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-(--text)">
+        <div className="mx-auto max-w-6xl px-4 py-16 flex flex-col items-center text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-(--text) mb-6">
             ¿Quiénes Somos?
           </h1>
 
-          <p className="mt-4 text-(--text-muted) max-w-2xl mx-auto leading-7">
+          <p className="mt-3 text-(--text-muted) max-w-lg leading-7">
             Creamos experiencias de viaje auténticas, personalizadas y memorables.
           </p>
         </div>
@@ -19,9 +20,12 @@ export default function AboutUs() {
 
       {/* CONTENT */}
       <section className="mx-auto max-w-6xl px-4 py-16 space-y-20">
+
         {/* Historia */}
         <div className="max-w-4xl mx-auto space-y-6">
-          <h2 className="text-2xl font-semibold text-(--text)">Nuestra Historia</h2>
+          <h2 className="text-2xl font-semibold text-(--text)">
+            Nuestra Historia
+          </h2>
 
           <p className="text-(--text-muted) leading-7">
             En <span className="font-semibold text-(--text)">Jeiggar Vacation</span>{" "}
@@ -55,16 +59,15 @@ export default function AboutUs() {
           </p>
         </div>
 
-        {/* Mission Vision Objective */}
+        {/* Misión / Visión / Objetivo */}
         <div className="grid gap-8 md:grid-cols-3">
           {aboutUsCardsMock.map((card) => (
-            <AboutInfoCard
-              key={card.id}
-              title={card.title}
-              description={card.description}
-            />
+            <AboutInfoCard key={card.id} {...card} />
           ))}
         </div>
+
+        <ValuesSection />
+
       </section>
     </div>
   );

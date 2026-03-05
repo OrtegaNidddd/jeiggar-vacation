@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import LogoImage from "../../assets/images/logo_jeiggar.png";
+import isologo from "../../assets/images/isologo.png";
+import CTA from "../../features/landing/components/CTA";
 import {
   footerBrandMock,
   footerContactMock,
@@ -14,60 +15,45 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-6">
 
         {/* Main grid */}
-        <div className="grid gap-6 md:grid-cols-4">
-          
+        <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
+
           {/* Brand */}
-          <div className="md:col-span-1 flex flex-col items-center text-center space-y-4">
-            <NavLink to="/" className="inline-block">
+          <div className="flex flex-col items-center text-center space-y-4 md:flex-row md:items-start md:text-left md:space-y-0 md:gap-4">
+            <NavLink to="/" className="shrink-0">
               <img
-                src={LogoImage}
+                src={isologo}
                 alt="Jeiggar Vacation"
-                className="w-40 h-auto mx-auto"
+                className="w-20 md:w-24 h-auto"
               />
             </NavLink>
 
-            <p className="text-sm leading-6 text-(--text-muted) text-le">
+            <p className="text-sm leading-6 text-(--text-muted)">
               {footerBrandMock.description}
             </p>
           </div>
 
-          {/* Links sections */}
-          <div className="grid gap-y-4 gap-x-2 sm:grid-cols-2 md:col-span-2 md:grid-cols-3">
-            {footerSectionsMock.map((section) => (
-              <div key={section.title}>
-                
-                <div className="text-sm font-semibold text-(--text)">
-                  {section.title}
-                </div>
-
-                <ul className="mt-3 space-y-2">
-                  {section.links.map((link) => (
-                    <li key={link.to}>
-                      <NavLink
-                        to={link.to}
-                        className="text-sm text-(--text-muted)!"
-                      >
-                        {link.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
+          {/* Sections */}
+          {footerSectionsMock.map((section) => (
+            <div key={section.title}>
+              <div className="text-sm font-semibold text-(--text)">
+                {section.title}
               </div>
-            ))}
-          </div>
 
-          {/* Contact */}
-          <div className="md:col-span-1">
-            <div className="text-sm font-semibold text-(--text)">
-              Contacto
+              <ul className="mt-3 space-y-2">
+                {section.links.map((link) => (
+                  <li key={`${section.title}-${link.label}`}>
+                    <NavLink
+                      to={link.to}
+                      className="text-sm text-(--text-muted) whitespace-nowrap"
+                    >
+                      {link.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ))}
 
-            <div className="mt-3 space-y-2 text-sm text-(--text-muted)">
-              <div>{footerContactMock.city}</div>
-              <div>{footerContactMock.phone}</div>
-              <div>{footerContactMock.email}</div>
-            </div>
-          </div>
         </div>
 
         {/* Social buttons */}
@@ -101,15 +87,7 @@ export default function Footer() {
         </div>
 
         {/* CTA */}
-        <div className="mt-4
-         flex justify-center">
-          <NavLink
-            to="/cotizar"
-            className="inline-flex items-center justify-center rounded-(--radius) bg-(--primary) px-6 py-3 text-sm font-semibold text-white! hover:bg-(--primary-700) transition"
-          >
-            Solicitar cotización
-          </NavLink>
-        </div>
+        <CTA />
 
         {/* Bottom bar */}
         <div className="mt-6 flex flex-col gap-2 border-t border-(--border) pt-6 text-sm text-(--text-muted) md:flex-row md:items-center md:justify-between">
@@ -119,6 +97,7 @@ export default function Footer() {
 
           <span>Powered by N&N</span>
         </div>
+
       </div>
     </footer>
   );
