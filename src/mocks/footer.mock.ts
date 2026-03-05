@@ -29,6 +29,14 @@ export const footerSectionsMock: FooterSection[] = [
       { label: "Cotizar", to: "/cotizar" },
     ],
   },
+  {
+    title: "Contacto",
+    links: [
+      { label: "Cúcuta, Colombia", to: "#" },
+      { label: "+57 300 000 0000", to: "#" },
+      { label: "contacto@jeiggarvacation.com", to: "#" },
+    ],
+  },
 ];
 
 export const footerContactMock = {
@@ -39,4 +47,3 @@ export const footerContactMock = {
   instagramUrl: "https://instagram.com/",
   facebookUrl: "https://facebook.com/",
 };
-

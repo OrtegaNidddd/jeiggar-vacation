@@ -1,17 +1,38 @@
 type AboutInfoCardProps = {
   title: string;
   description: string;
+  icon: string;
 };
 
-export default function AboutInfoCard({ title, description }: AboutInfoCardProps) {
+export default function AboutInfoCard({
+  title,
+  description,
+  icon,
+}: AboutInfoCardProps) {
   return (
-    <div className="rounded-(--radius) border border-[#d4af37]/70 bg-(--bg-muted) p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <h3 className="text-lg font-semibold text-(--text) text-center mb-5 relative pb-2">
-        {title}
-        <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-12 bg-[#d4af37] rounded" />
-      </h3>
+    <div
+      className="rounded-(--radius) border border-(--border) p-6 bg-(--bg-muted) shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-lg hover:border-(--primary)"
+    >
+      {/* Icono + titulo */}
+      <div className="text-center">
 
-      <p className="text-sm text-(--text-muted) leading-7">{description}</p>
+        <img
+          src={icon}
+          alt={title}
+          className="w-12 h-12 mx-auto mb-4"
+        />
+
+        <h3 className="text-lg font-semibold text-(--text)">
+          {title}
+        </h3>
+
+      </div>
+
+      {/* Descripción */}
+      <p className="mt-4 text-sm text-(--text-muted) leading-6 text-justify">
+        {description}
+      </p>
+
     </div>
   );
 }
