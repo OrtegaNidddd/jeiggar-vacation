@@ -3,7 +3,7 @@ import TravelCategories from "./components/TravelCategories";
 
 export default function Home() {
   return (
-    <div>
+    <div className="p-4">
       <Hero />
       <TravelCategories />
     </div>
