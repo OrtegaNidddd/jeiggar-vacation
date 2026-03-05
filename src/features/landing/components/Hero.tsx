@@ -21,7 +21,7 @@ export default function Hero() {
 
                     {/* Badge */}
                     <span className="text-xs tracking-wide bg-blue-100 text-(--primary-700) px-4 py-2 rounded-full font-bold mb-6">
-                        {heroLandingMock.badge}
+                        {heroLandingMock.badge}H
                     </span>
 
                     {/* Título */}
