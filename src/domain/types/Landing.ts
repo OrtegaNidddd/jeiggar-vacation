@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import type { Button } from "./Buttons";
+import type { ButtonConfig } from "./Buttons";
 
 export type HeroLanding = {
     badge: string;
@@ -7,7 +7,7 @@ export type HeroLanding = {
     titleSecondary: string;
     highlight: string;
     description: string;
-    buttons: Button[];
+    buttons: ButtonConfig[];
 }
 
 export type TravelCategories = {

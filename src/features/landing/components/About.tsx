@@ -1,4 +1,4 @@
-import AboutInfoCard from "../components/AboutInfoCard";
+import AnimatedCard from "../../../components/cards/AnimatedCard";
 import { aboutUsCardsMock } from "../../../mocks/about-us-cards.mock";
 
 export default function AboutUs() {
@@ -6,7 +6,12 @@ export default function AboutUs() {
     <section className="mx-auto max-w-6xl px-4 py-16">
       <div className="grid gap-8 md:grid-cols-3">
         {aboutUsCardsMock.map((item) => (
-          <AboutInfoCard key={item.id} {...item} />
+          <AnimatedCard
+            key={item.id}
+            title={item.title}
+            description={item.description}
+            icon={item.icon}
+          />
         ))}
       </div>
     </section>

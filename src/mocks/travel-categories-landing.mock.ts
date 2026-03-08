@@ -1,6 +1,7 @@
 import { Footprints, Ship, Trees } from "lucide-react";
+import type { TravelCategories } from "../domain/types/Landing";
 
-export const travelCategoriesLandingMock = {
+export const travelCategoriesLandingMock: TravelCategories = {
     title: "Explora por categoría",
     subtitle: "Encuentra la experiencia perfecta según tu estilo",
     categories: [

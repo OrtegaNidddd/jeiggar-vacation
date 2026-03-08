@@ -7,9 +7,9 @@ export default function AboutUs() {
     <div className="bg-(--bg) p-4">
       {/* HERO */}
         <div className="mx-auto border-b border-(--border) max-w-6xl my-8 flex flex-col items-center text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-(--text) mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-(--text) mb-6">
             {aboutUsContentMock.title}
-          </h2>
+          </h1>
 
           <span className="text-xs tracking-wide bg-blue-100 text-(--primary-700) px-4 py-2 rounded-full font-bold mb-6">
             {aboutUsContentMock.badge}
@@ -60,7 +60,12 @@ export default function AboutUs() {
         {/* Misión / Visión / Objetivo */}
         <div className="grid gap-8 md:grid-cols-3">
           {aboutUsCardsMock.map((card) => (
-            <AnimatedCard key={card.id} {...card} />
+            <AnimatedCard
+              key={card.id}
+              title={card.title}
+              description={card.description}
+              icon={card.icon}
+            />
           ))}
         </div>
 

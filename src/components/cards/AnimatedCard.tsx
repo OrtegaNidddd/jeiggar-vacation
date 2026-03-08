@@ -16,7 +16,7 @@ export default function AnimatedCard({
         {Icon && (
           <Icon
             className="w-7 h-7 mx-auto mb-4 text-(--primary)"
-            aria-label={title}
+            aria-hidden={true}
           />
         )}
 
