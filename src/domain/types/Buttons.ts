@@ -1,4 +1,4 @@
-export type Button = {
+export type ButtonConfig = {
     label: string;
     variant?: 'primary' | 'secondary';
 }
