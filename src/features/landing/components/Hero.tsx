@@ -1,10 +1,8 @@
-import { useAOS } from "../../../hooks/useAOS";
 import HeroImage from "../../../assets/images/hero-image.jpeg";
 import Button from "../../../components/ui/Button";
 import { heroLandingMock } from "../../../mocks/hero-landing.mock";
 
 export default function Hero() {
-    useAOS();
     return (
         <section className="pt-8 pb-10">
             <div className="relative mx-auto max-w-6xl overflow-hidden rounded-(--radius)">
