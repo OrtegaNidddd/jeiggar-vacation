@@ -1,4 +1,4 @@
-import AnimatedCard from "../../../components/cards/AnimatedCard";
+import AnimatedCard from "../../../components/ui/AnimatedCard";
 import { aboutUsCardsMock } from "../../../mocks/about-us-cards.mock";
 
 export default function AboutUs() {

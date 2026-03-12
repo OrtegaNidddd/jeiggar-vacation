@@ -1,4 +1,4 @@
-import SimpleCard from "../../../components/cards/SimpleCard";
+import SimpleCard from "../../../components/ui/SimpleCard";
 import { travelCategoriesLandingMock } from "../../../mocks/travel-categories-landing.mock";
 
 
