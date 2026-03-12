@@ -18,3 +18,16 @@ export type TravelCategories = {
     descriptions: string[];
     to: string;
 }
+
+export type FeaturedTrips = {
+    title: string;
+    description?: string;
+    image: string;
+    badge?: string;
+    meta?: {
+        icon?: LucideIcon;
+        label: string;
+    }[];
+    cta?: ButtonConfig;
+    to: string;
+}
