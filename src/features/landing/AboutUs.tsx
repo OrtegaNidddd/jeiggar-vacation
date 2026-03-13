@@ -1,4 +1,4 @@
-import AnimatedCard from "../../components/cards/AnimatedCard";
+import AnimatedCard from "../../components/ui/AnimatedCard";
 import ValuesSection from "./components/ValuesSection";
 import { aboutUsCardsMock, aboutUsContentMock } from "../../mocks/about-us-cards.mock";
 
