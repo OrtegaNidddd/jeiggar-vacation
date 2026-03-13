@@ -7,9 +7,9 @@ export default function FeaturedTrips() {
             <h2 className="text-2xl font-bold">Viajes destacados</h2>
             <p className="text-sm text-(--text-muted)!">Experiencias únicas seleccionadas para ti</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {featuredTrips.map((trip, index) => (
+                {featuredTrips.map((trip) => (
                     <ImageCard
-                        key={index}
+                        key={trip.to}
                         title={trip.title}
                         description={trip.description}
                         image={trip.image}

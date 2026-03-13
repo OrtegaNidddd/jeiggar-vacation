@@ -1,12 +1,26 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { LinkProps } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 type Variant = "primary" | "secondary";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type CommonProps = {
   variant?: Variant;
-  to?: string;
-}
+  className?: string;
+  children?: ReactNode;
+};
+
+type AsButton = CommonProps &
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof CommonProps> & {
+    to?: never;
+  };
+
+type AsLink = CommonProps &
+  Omit<LinkProps, keyof CommonProps | "to"> & {
+    to: string;
+  };
+
+type ButtonProps = AsButton | AsLink;
 
 export default function Button({
   children,
@@ -29,7 +43,7 @@ export default function Button({
 
   if (to) {
     return (
-      <Link to={to} className={classes}>
+      <Link to={to} className={classes} {...(props as Omit<LinkProps, "to" | "className">)}>
         {children}
       </Link>
     );
@@ -38,7 +52,7 @@ export default function Button({
   return (
     <button
       className={classes}
-      {...props}
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {children}
     </button>
