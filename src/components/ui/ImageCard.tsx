@@ -12,7 +12,7 @@ export default function ImageCard({
   to,
 }: ImageCardProps) {
   return (
-    <Link to={to} className="block group">
+    <article className="block group">
       <div className="rounded-(--radius) border border-(--border) overflow-hidden shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg bg-(--bg) h-full flex flex-col">
 
         {/* Image area */}
@@ -51,9 +51,11 @@ export default function ImageCard({
         <div className="p-5 flex-1 flex flex-col justify-between">
           <div>
             {/* Title */}
-            <h3 className="text-base font-semibold text-(--text) leading-snug mb-3">
-                {title}
-            </h3>
+            <Link to={to} className="hover:text-(--primary) transition-colors">
+              <h3 className="text-base font-semibold text-(--text) leading-snug mb-3">
+                  {title}
+              </h3>
+            </Link>
 
             {/* Meta items */}
             {meta.length > 0 && (
@@ -78,7 +80,7 @@ export default function ImageCard({
           {/* CTA */}
           {cta && (
             <div className="border-t border-(--border) pt-4">
-              <Button variant={cta.variant} className="w-full">
+              <Button to={to} variant={cta.variant} className="w-full">
                 {cta.label}
               </Button>
             </div>
@@ -86,6 +88,6 @@ export default function ImageCard({
 
         </div>
       </div>
-    </Link>
+    </article>
   );
 }
