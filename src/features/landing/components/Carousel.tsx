@@ -16,7 +16,9 @@ function getVisibleCards(width: number) {
 
 export default function Carousel() {
 	const { title, username, usernameUrl, autoplayMs, slides } = carouselLandingMock;
-	const [visibleCards, setVisibleCards] = useState(() => getVisibleCards(window.innerWidth));
+	const [visibleCards, setVisibleCards] = useState(() =>
+		typeof window !== "undefined" ? getVisibleCards(window.innerWidth) : 2,
+	);
 	const [activeIndex, setActiveIndex] = useState(0);
 	const maxStartIndex = useMemo(
 		() => Math.max(0, slides.length - visibleCards),
