@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import isologo from "../../assets/images/isologo.png";
-import CTA from "../../features/landing/components/CTA";
+import Button from "../ui/Button";
 import {
   footerBrandMock,
   footerContactMock,
@@ -86,8 +86,13 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* CTA */}
-        <CTA />
+        <div className="mt-6 flex justify-center">
+          <Button variant="primary"
+            to={footerContactMock.quoteTo}
+          >
+            {footerContactMock.quoteLabel}
+          </Button>
+        </div>
 
         {/* Bottom bar */}
         <div className="mt-6 flex flex-col gap-2 border-t border-(--border) pt-6 text-sm text-(--text-muted) md:flex-row md:items-center md:justify-between">

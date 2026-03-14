@@ -30,7 +30,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "px-3 py-2 rounded-(--radius) text-sm! font-medium! transition cursor-pointer";
+    "rounded-full px-6 py-3 text-sm! font-semibold! transition cursor-pointer";
 
   const variants = {
     primary:
