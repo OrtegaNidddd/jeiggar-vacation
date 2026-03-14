@@ -31,3 +31,26 @@ export type FeaturedTrips = {
     cta?: ButtonConfig;
     to: string;
 }
+
+export type CarouselSlide = {
+    id: number;
+    image: string;
+    alt: string;
+}
+
+export type LandingCarousel = {
+    title: string;
+    username: string;
+    usernameUrl: string;
+    autoplayMs: number;
+    slides: CarouselSlide[];
+}
+
+export type LandingCTA = {
+    title: string;
+    description: string;
+    inputPlaceholder: string;
+    buttonLabel: string;
+    whatsappNumber: string;
+    messageTemplate: string;
+}
