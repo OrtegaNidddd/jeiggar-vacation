@@ -7,10 +7,14 @@ export default function Hero() {
         <section className="pt-8 pb-10">
             <div className="relative mx-auto max-w-6xl overflow-hidden rounded-(--radius)">
 
-                {/* Imagen de fondo */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${HeroImage})` }}
+                {/* Imagen principal: no lazy, porque suele ser LCP */}
+                <img
+                    src={HeroImage}
+                    alt="Paisaje principal de Jeiggar Vacation"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover"
                 />
 
                 {/* Overlay suave */}
@@ -54,7 +58,9 @@ export default function Hero() {
                         data-aos-delay="220"
                         className="mt-6 flex gap-4"
                     >
-                        <Button to="/">{heroLandingMock.buttons[0].label}</Button>
+                        <Button to="/" variant={heroLandingMock.buttons[0].variant}>
+                            {heroLandingMock.buttons[0].label}
+                        </Button>
 
                         <Button to="/" variant={heroLandingMock.buttons[1].variant}>
                             {heroLandingMock.buttons[1].label}

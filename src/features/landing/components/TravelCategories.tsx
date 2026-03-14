@@ -5,9 +5,9 @@ import { travelCategoriesLandingMock } from "../../../mocks/travel-categories-la
 export default function TravelCategories() {
     return (
         <div className="flex flex-col mx-auto max-w-6xl items-start gap-4 py-12">
-            <h2 className="text-2xl font-bold">{travelCategoriesLandingMock.title}</h2>
-            <p className="text-sm text-(--text-muted)! ">{travelCategoriesLandingMock.subtitle}</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <h2 data-aos="fade-right" className="text-2xl font-bold">{travelCategoriesLandingMock.title}</h2>
+            <p data-aos="fade-right" className="text-sm text-(--text-muted)! ">{travelCategoriesLandingMock.subtitle}</p>
+            <div data-aos="fade-up" className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {travelCategoriesLandingMock.categories.map((category, index) => (
                     <SimpleCard
                         key={index}
