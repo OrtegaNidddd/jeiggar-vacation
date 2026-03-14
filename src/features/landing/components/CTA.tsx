@@ -53,6 +53,7 @@ export default function CTA() {
               <input
                 type="tel"
                 placeholder={inputPlaceholder}
+                aria-label={inputPlaceholder}
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
                 required
