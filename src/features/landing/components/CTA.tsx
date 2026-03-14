@@ -15,8 +15,12 @@ export default function CTA() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const userPhone = phone.trim();
+    // Normalizamos el teléfono eliminando todo lo que no sean dígitos
+    const userPhone = phone.replace(/\D/g, "");
+
+    // Si tras normalizar no queda nada, mostramos un mensaje de error
     if (!userPhone) {
+      window.alert("Por favor ingresa un número de teléfono válido.");
       return;
     }
 
