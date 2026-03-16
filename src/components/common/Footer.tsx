@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import isologo from "../../assets/images/isologo.png";
+import isologo from "../../assets/images/logo_jeiggar.jpeg";
 import Button from "../ui/Button";
 import {
   footerBrandMock,
