@@ -1,15 +1,13 @@
 import { MapPin } from "lucide-react";
 import type { FeaturedTrips } from "../domain/types/Landing";
-import EjeCafeteroImage from "../assets/images/eje-cafetero.png";
-import SierraNevadaImage from "../assets/images/sierra-nevada.jpg";
-import AmazonasImage from "../assets/images/amazonas.jpeg";
+import { placeImages } from "./place-images.mock";
 
 export const featuredTrips: FeaturedTrips[] = [
   {
     title: "Ruta del Café Premium",
     description: "Sumérgete en el aroma del Eje Cafetero con catas privadas y estancias en haciendas tradicionales.",
     badge: "Popular",
-    image: EjeCafeteroImage,
+    image: placeImages.featuredTrips.rutaCafePremium,
     meta: [
       { icon: MapPin, label: "Salento" },
     ],
@@ -19,7 +17,7 @@ export const featuredTrips: FeaturedTrips[] = [
   {
     title: "Sierra Nevada Ancestral",
     description: "Explora los pueblos indígenas de la Sierra Nevada y conecta con la cultura y naturaleza del Caribe colombiano.",
-    image: SierraNevadaImage,
+    image: placeImages.featuredTrips.sierraNevadaAncestral,
     meta: [
       { icon: MapPin, label: "Santa Marta" },
     ],
@@ -30,7 +28,7 @@ export const featuredTrips: FeaturedTrips[] = [
     title: "Amazonas Profundo",
     description: "Adéntrate en la selva amazónica, navega sus ríos y descubre una biodiversidad única en el mundo.",
     badge: "Nuevo",
-    image: AmazonasImage,
+    image: placeImages.featuredTrips.amazonasProfundo,
     meta: [
       { icon: MapPin, label: "Leticia" },
     ],
