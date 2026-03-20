@@ -1,4 +1,4 @@
-import type { HeroLanding } from "../domain/types/Landing";
+import type { HeroLanding } from "@/domain/types/Landing";
 
 export const heroLandingMock: HeroLanding = {
     badge: "TU REFUGIO EN EL TRÓPICO",
@@ -8,6 +8,7 @@ export const heroLandingMock: HeroLanding = {
     description: "Viajes diseñados para el alma. Encuentra la paz entre montañas cafeteras, brisas del Caribe y la calidez de nuestra gente.",
     buttons: [
         {
+            to: "/destinos",
             label: "Explorar Destinos",
             variant: "primary"
         },

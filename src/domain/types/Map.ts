@@ -1,4 +1,3 @@
-// Se mantiene Department por si se usa en otro lado
 export type Department = {
   id: string
   name: string
@@ -22,6 +21,9 @@ export type Destination = {
   lat: number
   lng: number
   cityId: string
+  cityName: string
+  activities: string[]
+  climate?: string
 }
 
 export type City = {

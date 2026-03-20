@@ -1,11 +1,23 @@
-import HeroImage from "../../../assets/images/hero-image.jpeg";
-import Button from "../../../components/ui/Button";
-import { heroLandingMock } from "../../../mocks/hero-landing.mock";
+import HeroImage from "@/assets/images/hero-image.jpeg";
+import Button from "@/components/ui/Button";
+import { heroLandingMock } from "@/mocks/hero-landing.mock";
+import {
+    HERO_RESERVATION_TEMPLATE,
+    WHATSAPP_NUMBER,
+    sendWhatsAppMessage,
+} from "@/lib/whatsapp";
 
 export default function Hero() {
+    const handleReserveNow = () => {
+        sendWhatsAppMessage({
+            phone: WHATSAPP_NUMBER,
+            message: HERO_RESERVATION_TEMPLATE,
+        });
+    };
+
     return (
         <section className="pt-8 pb-10">
-            <div className="relative mx-auto max-w-6xl overflow-hidden rounded-(--radius)">
+            <div className="relative mx-auto max-w-6xl overflow-hidden rounded-lg">
 
                 {/* Imagen principal: no lazy, porque suele ser LCP */}
                 <img
@@ -58,11 +70,11 @@ export default function Hero() {
                         data-aos-delay="220"
                         className="mt-6 flex gap-4"
                     >
-                        <Button to="/" variant={heroLandingMock.buttons[0].variant}>
+                        <Button to={heroLandingMock.buttons[0].to} variant={heroLandingMock.buttons[0].variant}>
                             {heroLandingMock.buttons[0].label}
                         </Button>
 
-                        <Button to="/" variant={heroLandingMock.buttons[1].variant}>
+                        <Button onClick={handleReserveNow} variant={heroLandingMock.buttons[1].variant}>
                             {heroLandingMock.buttons[1].label}
                         </Button>
                     </div>
