@@ -10,7 +10,7 @@ export default function FeaturedTrips() {
             <div data-aos="fade-up" className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {featuredTrips.map((trip) => (
                     <ImageCard
-                        key={trip.title}
+                        key={trip.slug}
                         title={trip.title}
                         description={trip.description}
                         image={trip.image}
