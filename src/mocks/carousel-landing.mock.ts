@@ -1,7 +1,7 @@
-import type { LandingCarousel } from "../domain/types/Landing";
-import HeroImage from "../assets/images/hero-image.jpeg";
-import SierraNevadaImage from "../assets/images/sierra-nevada.jpg";
-import EjeCafeteroImage from "../assets/images/eje-cafetero.png";
+import type { LandingCarousel } from "@/domain/types/Landing";
+import HeroImage from "@/assets/images/hero-image.jpeg";
+import SierraNevadaImage from "@/assets/images/sierra-nevada.jpg";
+import EjeCafeteroImage from "@/assets/images/eje-cafetero.png";
 import AmazonasImage from '@/assets/images/amazonas.jpeg'
 import BogotaImage from '@/assets/images/bogota.jpeg'
 import MedellinImage from '@/assets/images/medellin.webp'

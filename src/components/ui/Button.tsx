@@ -1,11 +1,10 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { LinkProps } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-type Variant = "primary" | "secondary";
+import type { ButtonVariant } from "@/domain/types/Buttons";
 
 type CommonProps = {
-  variant?: Variant;
+  variant?: ButtonVariant;
   className?: string;
   children?: ReactNode;
 };

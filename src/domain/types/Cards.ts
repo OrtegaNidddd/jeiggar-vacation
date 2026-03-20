@@ -1,26 +1,21 @@
 import type { LucideIcon } from "lucide-react";
-import type { ButtonConfig } from "./Buttons";
+import type { ButtonConfig, LinkConfig } from "./Buttons";
+import type { TitledContent } from "./Common";
 
-export type AnimatedCardProps = {
-  title: string;
-  description: string;
+export type AnimatedCardProps = TitledContent & {
   icon?: LucideIcon;
   centerText?: boolean;
 };
 
-export type SimpleCardProps = {
-  title: string;
-  description: string;
+export type SimpleCardProps = LinkConfig & TitledContent & {
   icon?: LucideIcon;
-  to: string;
 };
 
-export interface ImageCardProps {
-  title: string;
+export interface ImageCardProps extends LinkConfig {
+  title: TitledContent["title"];
   description?: string;
   image?: string;
   badge?: string;
   meta?: { icon?: LucideIcon; label: string }[];
   cta?: ButtonConfig;
-  to: string;
 }

@@ -1,4 +1,4 @@
-import type { NavItem } from "../domain/types/NavItem";
+import type { NavItem } from "@/domain/types/NavItem";
 
 export const navigationMock: NavItem[] = [
     { 

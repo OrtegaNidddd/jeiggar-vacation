@@ -1,7 +1,6 @@
 import type { LucideIcon } from "lucide-react";
+import type { TitledContent } from "./Common";
 
-export type Value = {
-  title: string;
-  description: string;
+export type Value = TitledContent & {
   icon: LucideIcon; 
 };

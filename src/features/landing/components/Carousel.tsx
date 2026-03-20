@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { carouselLandingMock } from "../../../mocks/carousel-landing.mock";
+import { carouselLandingMock } from "@/mocks/carousel-landing.mock";
 
 function getVisibleCards(width: number) {
 	if (width >= 1024) {

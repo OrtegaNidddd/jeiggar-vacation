@@ -1,5 +1,5 @@
 import { Target, Eye, Crosshair } from "lucide-react";
-import type { AboutUsCardItem, AboutUsContent } from "../domain/types/AboutUs";
+import type { AboutUsCardItem, AboutUsContent } from "@/domain/types/AboutUs";
 
 
 export const aboutUsContentMock: AboutUsContent = {

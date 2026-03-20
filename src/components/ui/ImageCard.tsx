@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Button from "../ui/Button";
-import type { ImageCardProps } from "../../domain/types/Cards";
+import Button from "@/components/ui/Button";
+import type { ImageCardProps } from "@/domain/types/Cards";
 
 export default function ImageCard({
   title,

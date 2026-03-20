@@ -1,7 +1,6 @@
-export type FooterLink = { 
-    label: string; 
-    to: string 
-};
+import type { LabeledLinkConfig } from "./Buttons";
+
+export type FooterLink = LabeledLinkConfig;
 
 export type FooterSection = { 
     title: string; 

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { navigationMock } from "../../mocks/navigation.mock";
-import LogoImage from "../../assets/images/logo_jeiggar.jpeg";
+import { navigationMock } from "@/mocks/navigation.mock";
+import LogoImage from "@/assets/images/logo_jeiggar.jpeg";
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);

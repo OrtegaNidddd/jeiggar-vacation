@@ -1,15 +1,13 @@
 import type { LucideIcon } from "lucide-react";
+import type { TitledContent, WithTitle } from "./Common";
 
-export type AboutUsContent = {
-  title: string;
+export type AboutUsContent = WithTitle & {
   badge: string;
   historyTitle: string;
   historyParagraphs: string[];
 };
 
-export type AboutUsCardItem = {
+export type AboutUsCardItem = TitledContent & {
   id: "mission" | "vision" | "objective";
-  title: string;
-  description: string;
   icon: LucideIcon;
 };

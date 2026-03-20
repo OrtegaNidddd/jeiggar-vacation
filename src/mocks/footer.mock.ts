@@ -1,4 +1,4 @@
-import type { FooterSection } from "../domain/types/Footer";
+import type { FooterSection } from "@/domain/types/Footer";
 
 export const footerBrandMock = {
   name: "Jeiggar Vacation",

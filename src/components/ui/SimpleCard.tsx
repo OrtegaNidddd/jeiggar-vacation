@@ -1,4 +1,4 @@
-import type { SimpleCardProps } from "../../domain/types/Cards";
+import type { SimpleCardProps } from "@/domain/types/Cards";
 import { Link } from "react-router-dom";
 
 export default function SimpleCard({ title, description, icon: Icon, to }: SimpleCardProps) {
