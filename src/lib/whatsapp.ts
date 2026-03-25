@@ -4,7 +4,7 @@ export const WHATSAPP_NUMBER = "573208396909";
 
 export const HERO_RESERVATION_TEMPLATE = [
   "Hola, Jeiggar Vacation.",
-  "Quiero reservar ahora y recibir asesoria para mi viaje.",
+  "Quiero reservar ahora y recibir asesoría para mi viaje.",
 ].join("\n");
 
 export const FOOTER_WHATSAPP_TEMPLATE = [
@@ -66,7 +66,7 @@ export function sendWhatsAppMessage({
   }
 
   const url = `https://api.whatsapp.com/send?phone=${sanitizedPhone}&text=${encodeURIComponent(finalMessage)}`;
-  const popup = window.open(url, "noopener,noreferrer");
+  const popup = window.open(url, "_blank", "noopener,noreferrer");
 
   if (!popup) {
     window.location.href = url;

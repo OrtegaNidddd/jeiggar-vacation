@@ -5,6 +5,7 @@ import Home from '@/features/landing/Home';
 import MapView from '@/features/map/MapView';
 import { colombiaMapData } from '@/mocks/map.mock';
 import Plans from '@/features/landing/Plans'; 
+import Contact from '@/features/landing/Contact';
 import DestinationDetail from '@/features/destinations/DestinationsDetails';
 import DestinationsSelector from '@/features/destinations/DestinationsSelector';
 import InternationalDestinations from '@/features/destinations/InternationalDestinations';
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
             { index: true, element: <Home /> },
             { path: 'nosotros', element: <AboutUs /> },
             { path: 'planes', element: <Plans /> },
+            { path: 'contacto', element: <Contact /> },
             { path: 'destinos', element: <DestinationsSelector /> },
             { path: 'destinos/nacionales', element: <MapView data={colombiaMapData} /> },
             { path: 'destinos/internacionales', element: <InternationalDestinations /> },

@@ -179,10 +179,11 @@ export default function DestinationDetail() {
 
             {/* Nombre */}
             <div>
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
+              <label htmlFor="name" className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
                 Nombre completo
               </label>
               <input
+                id="name"
                 type="text"
                 placeholder="Tu nombre"
                 value={form.name}
@@ -195,10 +196,11 @@ export default function DestinationDetail() {
             {/* Fechas */}
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
+                <label htmlFor="startDate" className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
                   Fecha inicio
                 </label>
                 <input
+                  id="startDate"
                   type="date"
                   value={form.startDate}
                   onChange={e => setForm(f => ({ ...f, startDate: e.target.value }))}
@@ -207,10 +209,11 @@ export default function DestinationDetail() {
                 {errors.startDate && <p className="text-xs text-red-500 mt-1">{errors.startDate}</p>}
               </div>
               <div>
-                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
+                <label htmlFor="endDate" className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
                   Fecha fin
                 </label>
                 <input
+                  id="endDate"
                   type="date"
                   value={form.endDate}
                   onChange={e => setForm(f => ({ ...f, endDate: e.target.value }))}
@@ -230,11 +233,13 @@ export default function DestinationDetail() {
                   <p className="text-xs text-muted-foreground mb-1">Adultos</p>
                   <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
                     <button
+                      aria-label="Disminuir adultos"
                       onClick={() => setForm(f => ({ ...f, adults: Math.max(1, f.adults - 1) }))}
                       className="px-3 py-2 text-sm hover:bg-gray-50 transition"
                     >−</button>
                     <span className="flex-1 text-center text-sm font-medium">{form.adults}</span>
                     <button
+                      aria-label="Aumentar adultos"
                       onClick={() => setForm(f => ({ ...f, adults: f.adults + 1 }))}
                       className="px-3 py-2 text-sm hover:bg-gray-50 transition"
                     >+</button>
@@ -245,11 +250,13 @@ export default function DestinationDetail() {
                   <p className="text-xs text-muted-foreground mb-1">Niños</p>
                   <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
                     <button
+                      aria-label="Disminuir niños"
                       onClick={() => setForm(f => ({ ...f, children: Math.max(0, f.children - 1) }))}
                       className="px-3 py-2 text-sm hover:bg-gray-50 transition"
                     >−</button>
                     <span className="flex-1 text-center text-sm font-medium">{form.children}</span>
                     <button
+                      aria-label="Aumentar niños"
                       onClick={() => setForm(f => ({ ...f, children: f.children + 1 }))}
                       className="px-3 py-2 text-sm hover:bg-gray-50 transition"
                     >+</button>
@@ -260,10 +267,11 @@ export default function DestinationDetail() {
 
             {/* Contacto */}
             <div>
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
+              <label htmlFor="contact" className="text-xs font-medium text-muted-foreground uppercase tracking-wide block mb-1">
                 Correo o teléfono
               </label>
               <input
+                id="contact"
                 type="text"
                 placeholder="email@ejemplo.com o 300..."
                 value={form.contact}
