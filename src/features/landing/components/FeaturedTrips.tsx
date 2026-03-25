@@ -1,5 +1,6 @@
-import ImageCard from "../../../components/ui/ImageCard";
-import { featuredTrips } from "../../../mocks/featured-trips.mock";
+import ImageCard from "@/components/ui/ImageCard";
+import { slugify } from "@/lib/utils";
+import { featuredTrips } from "@/mocks/featured-trips.mock";
 
 export default function FeaturedTrips() {
     return (
@@ -9,14 +10,14 @@ export default function FeaturedTrips() {
             <div data-aos="fade-up" className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {featuredTrips.map((trip) => (
                     <ImageCard
-                        key={trip.to}
+                        key={trip.slug}
                         title={trip.title}
                         description={trip.description}
                         image={trip.image}
                         badge={trip.badge}
                         meta={trip.meta}
                         cta={trip.cta}
-                        to={trip.to}
+                        to={`/destinos/${slugify(trip.slug)}`}
                     />
                 ))}
             </div>

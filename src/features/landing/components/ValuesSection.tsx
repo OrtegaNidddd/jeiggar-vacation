@@ -1,5 +1,5 @@
-import AnimatedCard from "../../../components/ui/AnimatedCard";
-import { valuesMock } from "../../../mocks/values.mock";
+import AnimatedCard from "@/components/ui/AnimatedCard";
+import { valuesMock } from "@/mocks/values.mock";
 
 export default function ValuesSection() {
   return (

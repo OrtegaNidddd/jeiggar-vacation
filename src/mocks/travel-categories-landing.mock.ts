@@ -1,5 +1,5 @@
 import { Footprints, Ship, Trees } from "lucide-react";
-import type { TravelCategories } from "../domain/types/Landing";
+import type { TravelCategories } from "@/domain/types/Landing";
 
 export const travelCategoriesLandingMock: TravelCategories = {
     title: "Explora por categoría",

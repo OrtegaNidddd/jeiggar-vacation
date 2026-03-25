@@ -11,6 +11,6 @@ export const colombiaMapData: CountryMapData = {
   slug: 'colombia',
   lat: 4.5709,
   lng: -74.2973,
-  zoom: 4,
+  zoom: 4.5,
   cities: [bogotaCity, medellinCity, cartagenaCity, santaMartaCity, caliCity],
 }

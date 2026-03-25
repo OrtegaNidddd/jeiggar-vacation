@@ -1,4 +1,4 @@
-import type { LandingCTA } from "../domain/types/Landing";
+import type { LandingCTA } from "@/domain/types/Landing";
 
 export const ctaLandingMock: LandingCTA = {
   title: "Recibe inspiración por WhatsApp",

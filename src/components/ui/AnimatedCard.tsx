@@ -1,4 +1,4 @@
-import type { AnimatedCardProps } from "../../domain/types/Cards";
+import type { AnimatedCardProps } from "@/domain/types/Cards";
 
 export default function AnimatedCard({
   title,

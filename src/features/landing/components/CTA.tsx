@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { ctaLandingMock } from "../../../mocks/cta-landing.mock";
+import { ctaLandingMock } from "@/mocks/cta-landing.mock";
 
 export default function CTA() {
   const {

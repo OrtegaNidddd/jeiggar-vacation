@@ -1,35 +1,33 @@
 import type { LucideIcon } from "lucide-react";
-import type { ButtonConfig } from "./Buttons";
+import type { ButtonConfig, LinkConfig } from "./Buttons";
+import type { TitledContent, WithDescription, WithImage, WithTitle } from "./Common";
 
 export type HeroLanding = {
     badge: string;
     titlePrimary: string;
     titleSecondary: string;
     highlight: string;
-    description: string;
+} & WithDescription & {
     buttons: ButtonConfig[];
 }
 
-export type TravelCategories = {
-    title: string;
+export type TravelCategories = LinkConfig & WithTitle & {
     subtitle: string;
     categories: string[];
     icon?: LucideIcon[];
     descriptions: string[];
-    to: string;
 }
 
-export type FeaturedTrips = {
-    title: string;
+export type FeaturedTrips = WithTitle & {
+    slug: string;
     description?: string;
-    image: string;
+    image: WithImage["image"];
     badge?: string;
     meta?: {
         icon?: LucideIcon;
         label: string;
     }[];
     cta?: ButtonConfig;
-    to: string;
 }
 
 export type CarouselSlide = {
@@ -38,17 +36,14 @@ export type CarouselSlide = {
     alt: string;
 }
 
-export type LandingCarousel = {
-    title: string;
+export type LandingCarousel = WithTitle & {
     username: string;
     usernameUrl: string;
     autoplayMs: number;
     slides: CarouselSlide[];
 }
 
-export type LandingCTA = {
-    title: string;
-    description: string;
+export type LandingCTA = TitledContent & {
     inputPlaceholder: string;
     buttonLabel: string;
     whatsappNumber: string;

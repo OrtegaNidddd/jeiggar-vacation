@@ -1,4 +1,4 @@
-import type { Value } from "../domain/types/Value";
+import type { Value } from "@/domain/types/Value";
 import { Heart, Shield, Leaf } from "lucide-react";
 
 export const valuesMock: Value[] = [
