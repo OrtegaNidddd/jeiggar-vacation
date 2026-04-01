@@ -1,4 +1,4 @@
-import type { FooterSection } from "../domain/types/Footer";
+import type { FooterSection } from "@/domain/types/Footer";
 
 export const footerBrandMock = {
   name: "Jeiggar Vacation",
@@ -43,6 +43,8 @@ export const footerContactMock = {
   city: "Cúcuta, Colombia",
   phone: "+57 300 000 0000",
   email: "contacto@jeiggarvacation.com",
+  quoteLabel: "Solicitar cotización",
+  quoteTo: "/cotizar",
   whatsappUrl: "https://wa.me/573000000000",
   instagramUrl: "https://instagram.com/",
   facebookUrl: "https://facebook.com/",

@@ -1,0 +1,57 @@
+import type { City } from '@/domain/types/Map'
+import { placeImages } from '@/mocks/place-images.mock'
+
+export const medellinCity: City = {
+  id: 'medellin',
+  name: 'Medellín',
+  slug: 'medellin',
+  lat: 6.2442,
+  lng: -75.5812,
+  zoom: 12,
+  description: 'La ciudad de la eterna primavera, referente mundial de innovación urbana.',
+  imageUrl: placeImages.cities.medellin,
+  destinations: [
+    {
+      id: 'comuna-13',
+      name: 'Comuna 13',
+      slug: 'comuna-13',
+      shortDescription: 'Barrio transformado en ícono de arte urbano y resiliencia.',
+      description: 'La Comuna 13 es uno de los barrios más visitados de Medellín. Su transformación social es un ejemplo mundial. Las escaleras eléctricas, los murales y el grafiti narran la historia de un pueblo que superó la violencia con arte y cultura. Hoy es un destino vibrante lleno de música, color y esperanza.',
+      category: 'Cultura',
+      imageUrl: placeImages.destinations.comuna13,
+      lat: 6.2389,
+      lng: -75.6068,
+      cityId: 'medellin',
+      cityName: 'Medellín',
+      climate: '22°C - 28°C',
+      activities: [
+        'Tour de grafiti y arte urbano',
+        'Recorrido en escaleras eléctricas',
+        'Show de breakdance en vivo',
+        'Visita a tiendas y emprendimientos locales',
+        'Fotografía urbana guiada',
+      ],
+    },
+    {
+      id: 'parque-arvi',
+      name: 'Parque Arví',
+      slug: 'parque-arvi',
+      shortDescription: 'Reserva natural accesible en metrocable desde Medellín.',
+      description: 'El Parque Arví es una reserva ecológica ubicada en las montañas orientales de Medellín. Se llega en Metrocable y ofrece senderismo, mercado campesino, mariposas y una naturaleza exuberante a pocos minutos de la ciudad. Es el pulmón verde de Medellín.',
+      category: 'Naturaleza',
+      imageUrl: placeImages.destinations.parqueArvi,
+      lat: 6.2731,
+      lng: -75.4997,
+      cityId: 'medellin',
+      cityName: 'Medellín',
+      climate: '16°C - 22°C',
+      activities: [
+        'Senderismo por senderos ecológicos',
+        'Visita al mariposario',
+        'Mercado campesino artesanal',
+        'Avistamiento de aves',
+        'Picnic en zonas verdes',
+      ],
+    },
+  ],
+}

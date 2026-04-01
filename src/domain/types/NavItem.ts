@@ -1,6 +1,6 @@
-export type NavLinkItem = {
-  label: string;
-  to: string;
+import type { LabeledLinkConfig } from "./Buttons";
+
+export type NavLinkItem = LabeledLinkConfig & {
   variant?: "default" | "highlight";
   children?: never;
 };

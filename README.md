@@ -87,20 +87,34 @@ jeiggar-vacation
 │  │  ├─ AppShell.tsx
 │  │  └─ router.tsx
 │  ├─ assets
-│  │  ├─ icons
-│  │  ├─ images
-│  │  │  └─ logo_jeiggar.png
-│  │  └─ react.svg
+│  │  └─ images
+│  │     ├─ amazonas.jpeg
+│  │     ├─ eje-cafetero.png
+│  │     ├─ hero-image.jpeg
+│  │     ├─ isologo.png
+│  │     ├─ logo_jeiggar.jpeg
+│  │     ├─ sierra-nevada-ancestral.jpeg
+│  │     ├─ sierra-nevada-santa-marta.jpeg
+│  │     └─ sierra-nevada.jpg
 │  ├─ components
-│  │  ├─ cards
 │  │  ├─ common
 │  │  │  ├─ Footer.tsx
 │  │  │  └─ Header.tsx
 │  │  ├─ forms
 │  │  └─ ui
+│  │     ├─ AnimatedCard.tsx
+│  │     ├─ Button.tsx
+│  │     ├─ ImageCard.tsx
+│  │     └─ SimpleCard.tsx
 │  ├─ domain
 │  │  └─ types
-│  │     └─ NavItem.ts
+│  │     ├─ AboutUs.ts
+│  │     ├─ Buttons.ts
+│  │     ├─ Cards.ts
+│  │     ├─ Footer.ts
+│  │     ├─ Landing.ts
+│  │     ├─ NavItem.ts
+│  │     └─ Value.ts
 │  ├─ features
 │  │  ├─ destinations
 │  │  ├─ landing
@@ -110,14 +124,27 @@ jeiggar-vacation
 │  │  │  └─ components
 │  │  │     ├─ About.tsx
 │  │  │     ├─ CTA.tsx
-│  │  │     └─ Hero.tsx
+│  │  │     ├─ Carousel.tsx
+│  │  │     ├─ FeaturedTrips.tsx
+│  │  │     ├─ Hero.tsx
+│  │  │     ├─ TravelCategories.tsx
+│  │  │     └─ ValuesSection.tsx
 │  │  ├─ map
 │  │  └─ quotes
+│  ├─ hooks
+│  │  └─ useAOS.ts
 │  ├─ index.css
 │  ├─ main.tsx
 │  └─ mocks
+│     ├─ about-us-cards.mock.ts
+│     ├─ carousel-landing.mock.ts
+│     ├─ cta-landing.mock.ts
+│     ├─ featured-trips.mock.ts
 │     ├─ footer.mock.ts
-│     └─ navigation.mock.ts
+│     ├─ hero-landing.mock.ts
+│     ├─ navigation.mock.ts
+│     ├─ travel-categories-landing.mock.ts
+│     └─ values.mock.ts
 ├─ tsconfig.app.json
 ├─ tsconfig.json
 ├─ tsconfig.node.json

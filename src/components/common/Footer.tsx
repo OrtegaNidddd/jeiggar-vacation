@@ -1,17 +1,29 @@
 import { NavLink } from "react-router-dom";
-import isologo from "../../assets/images/isologo.png";
-import CTA from "../../features/landing/components/CTA";
+import isologo from "@/assets/images/logo_jeiggar.jpeg";
+import Button from "@/components/ui/Button";
 import {
   footerBrandMock,
   footerContactMock,
   footerSectionsMock,
-} from "../../mocks/footer.mock";
+} from "@/mocks/footer.mock";
+import {
+  FOOTER_WHATSAPP_TEMPLATE,
+  WHATSAPP_NUMBER,
+  sendWhatsAppMessage,
+} from "@/lib/whatsapp";
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
+  const handleWhatsAppClick = () => {
+    sendWhatsAppMessage({
+      phone: WHATSAPP_NUMBER,
+      message: FOOTER_WHATSAPP_TEMPLATE,
+    });
+  };
+
   return (
-    <footer className="mt-12 border-t border-(--border) bg-(--bg)">
+    <footer className="mt-12 border-t border-border bg-(--bg)">
       <div className="mx-auto max-w-7xl px-4 py-6">
 
         {/* Main grid */}
@@ -58,20 +70,19 @@ export default function Footer() {
 
         {/* Social buttons */}
         <div className="mt-6 flex justify-center items-center gap-4 flex-wrap">
-          <a
-            href={footerContactMock.whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-(--radius) border border-(--border) px-4 py-2 text-sm text-(--text) hover:bg-(--bg-muted) transition"
+          <button
+            type="button"
+            onClick={handleWhatsAppClick}
+            className="rounded-lg border border-border px-4 py-2 text-sm text-(--text) hover:bg-(--bg-muted) transition"
           >
             WhatsApp
-          </a>
+          </button>
 
           <a
             href={footerContactMock.instagramUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-(--radius) border border-(--border) px-4 py-2 text-sm text-(--text) hover:bg-(--bg-muted) transition"
+            className="rounded-lg border border-border px-4 py-2 text-sm text-(--text) hover:bg-(--bg-muted) transition"
           >
             Instagram
           </a>
@@ -80,17 +91,22 @@ export default function Footer() {
             href={footerContactMock.facebookUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-(--radius) border border-(--border) px-4 py-2 text-sm text-(--text) hover:bg-(--bg-muted) transition"
+            className="rounded-lg border border-border px-4 py-2 text-sm text-(--text) hover:bg-(--bg-muted) transition"
           >
             Facebook
           </a>
         </div>
 
-        {/* CTA */}
-        <CTA />
+        <div className="mt-6 flex justify-center">
+          <Button variant="primary"
+            to={footerContactMock.quoteTo}
+          >
+            {footerContactMock.quoteLabel}
+          </Button>
+        </div>
 
         {/* Bottom bar */}
-        <div className="mt-6 flex flex-col gap-2 border-t border-(--border) pt-6 text-sm text-(--text-muted) md:flex-row md:items-center md:justify-between">
+        <div className="mt-6 flex flex-col gap-2 border-t border-border pt-6 text-sm text-(--text-muted) md:flex-row md:items-center md:justify-between">
           <span>
             © {year} Jeiggar Vacation. Todos los derechos reservados.
           </span>

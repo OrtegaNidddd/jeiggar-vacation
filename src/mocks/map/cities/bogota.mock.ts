@@ -1,0 +1,57 @@
+import type { City } from '@/domain/types/Map'
+import { placeImages } from '@/mocks/place-images.mock'
+
+export const bogotaCity: City = {
+  id: 'bogota',
+  name: 'Bogotá',
+  slug: 'bogota',
+  lat: 4.7110,
+  lng: -74.0721,
+  zoom: 12,
+  description: 'Capital de Colombia, ciudad vibrante con historia, cultura y gastronomía.',
+  imageUrl: placeImages.cities.bogota,
+  destinations: [
+    {
+      id: 'monserrate',
+      name: 'Monserrate',
+      slug: 'monserrate',
+      shortDescription: 'Cerro icónico con vista panorámica de Bogotá.',
+      description: 'El Cerro de Monserrate es uno de los símbolos más representativos de Bogotá. Desde su cima a 3.152 metros de altura ofrece una vista espectacular de toda la ciudad. Se puede subir caminando, en teleférico o funicular. En la cima se encuentra el santuario del Señor Caído, un lugar de fe y devoción para los bogotanos.',
+      category: 'Naturaleza',
+      imageUrl: placeImages.destinations.monserrate,
+      lat: 4.6051,
+      lng: -74.0557,
+      cityId: 'bogota',
+      cityName: 'Bogotá',
+      climate: '7°C - 14°C',
+      activities: [
+        'Subida a pie por el sendero histórico',
+        'Teleférico con vista panorámica',
+        'Visita al Santuario del Señor Caído',
+        'Fotografía del skyline de Bogotá',
+        'Recorrido por los restaurantes de la cima',
+      ],
+    },
+    {
+      id: 'candelaria',
+      name: 'La Candelaria',
+      slug: 'la-candelaria',
+      shortDescription: 'Centro histórico colonial de Bogotá.',
+      description: 'La Candelaria es el corazón histórico de Bogotá, lleno de calles coloniales, museos, teatros y arte urbano. Aquí se encuentran el Museo del Oro, la Plaza de Bolívar y la Casa de Nariño. Sus fachadas coloridas y callejones empedrados cuentan siglos de historia colombiana.',
+      category: 'Cultura',
+      imageUrl: placeImages.destinations.laCandelaria,
+      lat: 4.5981,
+      lng: -74.0761,
+      cityId: 'bogota',
+      cityName: 'Bogotá',
+      climate: '7°C - 18°C',
+      activities: [
+        'Visita al Museo del Oro',
+        'Recorrido por la Plaza de Bolívar',
+        'Tour de grafiti y arte urbano',
+        'Visita a la Iglesia de San Francisco',
+        'Recorrido gastronómico por el centro',
+      ],
+    },
+  ],
+}

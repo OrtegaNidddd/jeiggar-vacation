@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { navigationMock } from "../../mocks/navigation.mock";
-import LogoImage from "../../assets/images/logo_jeiggar.png";
+import { navigationMock } from "@/mocks/navigation.mock";
+import LogoImage from "@/assets/images/logo_jeiggar.jpeg";
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const base =
-        "px-3 py-2 text-sm font-medium rounded-(--radius) transition-colors";
+        "px-3 py-2 text-sm font-medium rounded-(--radius) transition-colors duration-400";
     const idle = "text-(--text-muted) hover:text-(--text) hover:bg-(--bg-muted)";
     const active = "text-(--text) bg-(--bg-muted-2) shadow-(--shadow-sm)";
 
@@ -25,7 +25,7 @@ export default function Header() {
                     className="text-base font-semibold text-(--text)"
                     onClick={closeMobile}
                 >
-                    <img src={LogoImage} className="h-auto w-40" alt="Logo" />
+                    <img src={LogoImage} className="h-auto w-30" alt="Logo" />
                 </NavLink>
 
                 {/* Nav para PC */}
@@ -37,9 +37,9 @@ export default function Header() {
                                     to={item.to}
                                     className={({ isActive }) => {
                                         if (item.variant === "highlight") {
-                                            return `px-4 py-2 text-sm font-semibold rounded-(--radius) bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors`;
+                                            return `px-4 py-2 text-sm font-semibold rounded-full bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors duration-400`;
                                         }
-                                        return `px-3 py-2 text-sm font-semibold rounded-(--radius) ${isActive ? active : idle}`;
+                                        return `px-3 py-2 text-sm font-semibold rounded-full ${isActive ? active : idle}`;
                                     }}
                                 >
                                     {item.label}
