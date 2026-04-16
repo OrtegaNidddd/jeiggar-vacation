@@ -1,17 +1,31 @@
+import { lazy, Suspense } from "react";
 import Hero from "./components/Hero";
-import TravelCategories from "./components/TravelCategories";
-import FeaturedTrips from "./components/FeaturedTrips";
-import Carousel from "./components/Carousel";
-import CTA from "./components/CTA";
+
+const TravelCategories = lazy(() => import("./components/TravelCategories"));
+const FeaturedTrips = lazy(() => import("./components/FeaturedTrips"));
+const Carousel = lazy(() => import("./components/Carousel"));
+const CTA = lazy(() => import("./components/CTA"));
+
+function SectionFallback() {
+  return <div className="h-56 w-full animate-pulse rounded-2xl bg-white/60" />;
+}
 
 export default function Home() {
   return (
     <div data-aos="fade-up" className="p-4">
       <Hero />
-      <FeaturedTrips />
-      <Carousel />
-      <TravelCategories />
-      <CTA />
+      <Suspense fallback={<SectionFallback />}>
+        <FeaturedTrips />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Carousel />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <TravelCategories />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <CTA />
+      </Suspense>
     </div>
   );
 }   

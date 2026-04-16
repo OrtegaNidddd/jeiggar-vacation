@@ -1,24 +1,23 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import AppShell from "./AppShell";
 
-import AboutUs from "@/features/landing/AboutUs";
-import Home from "@/features/landing/Home";
-import Plans from "@/features/landing/Plans";
-import Contact from "@/features/landing/Contact";
-
-import MapView from "@/features/map/MapView";
 import { colombiaMapData } from "@/mocks/map.mock";
 
-import DestinationDetail from "@/features/destinations/DestinationsDetails";
-import DestinationsSelector from "@/features/destinations/DestinationsSelector";
-import InternationalDestinations from "@/features/destinations/InternationalDestinations";
-
-import { ServicesPage } from "@/features/services/page/ServicesPage";
-import { MedicalAssistancePage } from "@/features/services/medical-assistance/page/MedicalAssistancePage";
-import { ProceduresPage } from "@/features/services/procedures/page/ProceduresPage";
-import { TravelRequirementsPage } from "@/features/services/travel-requirements/page/TravelRequirementsPage";
-import { ConnectivityPage } from "@/features/services/connectivity/page/ConnectivityPage";
-import { TransportPage } from "@/features/services/transport/page/TransportPage";
+const Home = lazy(() => import("@/features/landing/Home"));
+const AboutUs = lazy(() => import("@/features/landing/AboutUs"));
+const Plans = lazy(() => import("@/features/landing/Plans"));
+const Contact = lazy(() => import("@/features/landing/Contact"));
+const DestinationsSelector = lazy(() => import("@/features/destinations/DestinationsSelector"));
+const InternationalDestinations = lazy(() => import("@/features/destinations/InternationalDestinations"));
+const DestinationDetail = lazy(() => import("@/features/destinations/DestinationsDetails"));
+const MapView = lazy(() => import("@/features/map/MapView"));
+const ServicesPage = lazy(() => import("@/features/services/page/ServicesPage").then((module) => ({ default: module.ServicesPage })));
+const MedicalAssistancePage = lazy(() => import("@/features/services/medical-assistance/page/MedicalAssistancePage").then((module) => ({ default: module.MedicalAssistancePage })));
+const ProceduresPage = lazy(() => import("@/features/services/procedures/page/ProceduresPage").then((module) => ({ default: module.ProceduresPage })));
+const TravelRequirementsPage = lazy(() => import("@/features/services/travel-requirements/page/TravelRequirementsPage").then((module) => ({ default: module.TravelRequirementsPage })));
+const ConnectivityPage = lazy(() => import("@/features/services/connectivity/page/ConnectivityPage").then((module) => ({ default: module.ConnectivityPage })));
+const TransportPage = lazy(() => import("@/features/services/transport/page/TransportPage").then((module) => ({ default: module.TransportPage })));
 
 export const router = createBrowserRouter([
   {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navigationMock } from "@/mocks/shared";
 import { placeImages } from "@/mocks/shared/place-images.mock";
@@ -13,8 +13,7 @@ export default function Header() {
 
     const closeMobile = () => setMobileOpen(false);
 
-    // Aplana items para mobile (manteniendo grupos)
-    const items = useMemo(() => navigationMock, []);
+    const items = navigationMock;
 
     return (
         <header data-aos="fade-down" className="sticky top-0 z-50 border-b border-(--border) bg-(--bg)">

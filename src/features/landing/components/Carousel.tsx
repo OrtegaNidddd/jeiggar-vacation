@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { carouselLandingMock } from "@/mocks/landing";
 
 function getVisibleCards(width: number) {
@@ -20,15 +20,21 @@ export default function Carousel() {
 		typeof window !== "undefined" ? getVisibleCards(window.innerWidth) : 2,
 	);
 	const [activeIndex, setActiveIndex] = useState(0);
-	const maxStartIndex = useMemo(
-		() => Math.max(0, slides.length - visibleCards),
-		[slides.length, visibleCards],
-	);
+	const maxStartIndex = Math.max(0, slides.length - visibleCards);
+	const maxStartIndexRef = useRef(maxStartIndex);
+
+	useEffect(() => {
+		maxStartIndexRef.current = maxStartIndex;
+		setActiveIndex((current) => Math.min(current, maxStartIndex));
+	}, [maxStartIndex]);
 	const currentIndex = Math.min(activeIndex, maxStartIndex);
 
 	useEffect(() => {
 		const onResize = () => {
-			setVisibleCards(getVisibleCards(window.innerWidth));
+			setVisibleCards((current) => {
+				const nextVisibleCards = getVisibleCards(window.innerWidth);
+				return current === nextVisibleCards ? current : nextVisibleCards;
+			});
 		};
 
 		window.addEventListener("resize", onResize);
@@ -44,11 +50,11 @@ export default function Carousel() {
 		}
 
 		const intervalId = window.setInterval(() => {
-			setActiveIndex((prev) => (prev >= maxStartIndex ? 0 : prev + 1));
+			setActiveIndex((prev) => (prev >= maxStartIndexRef.current ? 0 : prev + 1));
 		}, autoplayMs);
 
 		return () => window.clearInterval(intervalId);
-	}, [autoplayMs, maxStartIndex, slides.length]);
+	}, [autoplayMs, slides.length]);
 
 	const goPrevious = () => {
 		setActiveIndex(currentIndex <= 0 ? maxStartIndex : currentIndex - 1);
