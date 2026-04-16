@@ -22,9 +22,6 @@ Los tokens visuales, la fuente principal y las reglas base viven en `src/index.c
 - `npm run preview`
 - `npm run lint`
 
-- <!-- TODO: completar si se agregan variables nuevas -->
-- <!-- TODO: documentar `.env` o `.env.local` si el flujo del proyecto cambia -->
-
 ## Dependencias externas relevantes
 - MapLibre GL para el mapa interactivo.
 - WhatsApp Web/API para la derivación de reservas y consultas.
