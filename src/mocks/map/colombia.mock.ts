@@ -4,6 +4,7 @@ import { medellinCity } from './cities/medellin.mock'
 import { cartagenaCity } from './cities/cartagena.mock'
 import { santaMartaCity } from './cities/santa-marta.mock'
 import { caliCity } from './cities/cali.mock'
+import { norteDeSantanderCity } from './cities/norteDeSantander.mock'
 
 export const colombiaMapData: CountryMapData = {
   id: 'colombia',
@@ -12,5 +13,12 @@ export const colombiaMapData: CountryMapData = {
   lat: 4.5709,
   lng: -74.2973,
   zoom: 4.5,
-  cities: [bogotaCity, medellinCity, cartagenaCity, santaMartaCity, caliCity],
+  cities: [
+    bogotaCity,
+    medellinCity,
+    cartagenaCity,
+    santaMartaCity,
+    caliCity,
+    norteDeSantanderCity
+  ],
 }

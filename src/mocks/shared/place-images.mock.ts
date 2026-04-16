@@ -1,3 +1,5 @@
+import DefaultDestinationImage from '@/assets/images/destinations/default-destination.webp'
+
 // LOGOS
 import MainLogo from '@/assets/images/logos/main-logo.webp'
 import Isologo from '@/assets/images/logos/isologo.webp'
@@ -69,6 +71,8 @@ import CaliImage from '@/assets/images/cities/cali.webp'
 import SanAntonioCaliImage from '@/assets/images/destinations/cali/barrio-san-antonio.webp'
 import ZoologicoCaliImage from '@/assets/images/destinations/cali/cali-zoo.webp'
 
+// NORTE DE SANTANDER
+import NorteSantanderImage from '@/assets/images/cities/norte-de-santander.webp'
 
 export const placeImages = {
   logos: {
@@ -133,8 +137,10 @@ export const placeImages = {
     cartagena: CartagenaImage,
     santaMarta: SantaMartaImage,
     cali: CaliImage,
+    norteDeSantander: NorteSantanderImage,
   },
   destinations: {
+    defaultDestination: DefaultDestinationImage,
     monserrate: MonserrateImage,
     laCandelaria: LaCandelariaImage,
     comuna13: Comuna13Image,
