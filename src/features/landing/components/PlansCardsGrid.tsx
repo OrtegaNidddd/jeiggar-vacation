@@ -35,6 +35,7 @@ export default function PlansCardsGrid({ cards }: PlansCardsGridProps) {
             <img
               src={plan.image}
               alt={plan.imageAlt}
+              loading="lazy"
               className="h-full w-full object-cover transition duration-500 hover:scale-105"
             />
           </div>

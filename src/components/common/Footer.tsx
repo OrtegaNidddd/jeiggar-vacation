@@ -35,6 +35,7 @@ export default function Footer() {
               <img
                 src={placeImages.logos.isologo}
                 alt="Jeiggar Vacation"
+                loading="lazy"
                 className="w-20 md:w-24 h-auto"
               />
             </NavLink>

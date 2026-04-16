@@ -15,6 +15,7 @@ export const TravelRequirementCard = ({
         <img
           src={image}
           alt={alt}
+          loading="lazy"
           className="h-45 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

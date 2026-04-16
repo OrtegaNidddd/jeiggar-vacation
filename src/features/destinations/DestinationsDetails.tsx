@@ -88,6 +88,7 @@ export default function DestinationDetail() {
           <img
             src={destination.imageUrl}
             alt={destination.name}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         ) : (

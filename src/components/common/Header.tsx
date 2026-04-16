@@ -25,7 +25,7 @@ export default function Header() {
                     className="text-base font-semibold text-(--text)"
                     onClick={closeMobile}
                 >
-                    <img src={placeImages.logos.mainLogo} className="h-auto w-30" alt="Logo" />
+                    <img src={placeImages.logos.mainLogo} className="h-auto w-30" alt="Logo" loading="lazy" />
                 </NavLink>
 
                 {/* Nav para PC */}

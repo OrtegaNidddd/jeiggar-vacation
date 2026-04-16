@@ -17,6 +17,7 @@ export default function PlansTrending({ content }: PlansTrendingProps) {
             <img
               src={destination.image}
               alt={destination.imageAlt}
+              loading="lazy"
               className="h-24 w-24 rounded-full border-2 border-white object-cover shadow-md"
             />
             <span className="text-xs font-semibold text-slate-600">{destination.name}</span>

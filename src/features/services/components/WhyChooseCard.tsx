@@ -13,6 +13,7 @@ export const WhyChooseCard = ({ item }: WhyChooseCardProps) => {
         <img
           src={image}
           alt={alt}
+          loading="lazy"
           className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

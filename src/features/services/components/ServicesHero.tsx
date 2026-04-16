@@ -15,6 +15,7 @@ export const ServicesHero = ({ content }: ServicesHeroProps) => {
           <img
             src={placeImages.heroImages.services.mainHero}
             alt="Servicios turísticos"
+            loading="lazy"
             className="h-105 w-full object-cover md:h-130"
           />
 

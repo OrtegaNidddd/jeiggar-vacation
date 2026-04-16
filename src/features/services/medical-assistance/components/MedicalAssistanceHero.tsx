@@ -16,6 +16,7 @@ export const MedicalAssistanceHero = ({
           <img
             src={image}
             alt={alt}
+            loading="lazy"
             className="h-[400px] w-full object-cover md:h-[500px]"
           />
 

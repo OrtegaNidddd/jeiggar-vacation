@@ -11,6 +11,7 @@ export default function PlansHero({ content }: PlansHeroProps) {
       <img
         src={content.image}
         alt={content.imageAlt}
+        loading="lazy"
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div
