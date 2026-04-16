@@ -1,153 +1,63 @@
-# React + TypeScript + Vite
+# Jeiggar Vacation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Plataforma web de viajes y turismo para explorar destinos, planes y servicios complementarios con contacto directo por WhatsApp.
 
-Currently, two official plugins are available:
+## ¿Qué es esto?
+Jeiggar Vacation es una aplicación frontend en React orientada a una agencia de viajes. Reúne información de la marca, planes, destinos nacionales e internacionales, y distintas líneas de servicio como asistencia médica, trámites, requisitos de viaje, conectividad y transporte.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+La navegación principal vive en una sola app con rutas públicas, un layout compartido, mapas interactivos para destinos nacionales y llamadas a acción hacia WhatsApp.
 
-## React Compiler
+## Tecnologías
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS 4
+- React Router DOM
+- MapLibre GL
+- AOS para animaciones de entrada
+- Lucide React para iconografía
+- shadcn y Radix UI para componentes base
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Requisitos previos
+- Node.js 20 o superior
+- npm
+- Un navegador moderno con soporte para WebGL para la vista de mapa
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Instalación
+```bash
+# TODO: completar la URL del repositorio
+ git clone <repository-url>
+cd jeiggar-vacation
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Uso local
+```bash
+npm run dev
 ```
 
+## Scripts disponibles
+- `npm run dev`: inicia Vite en modo desarrollo
+- `npm run build`: ejecuta el chequeo de tipos y genera el build de producción
+- `npm run preview`: sirve localmente el build generado
+- `npm run lint`: ejecuta ESLint en el proyecto
 
-```
-jeiggar-vacation
-├─ README.md
-├─ eslint.config.js
-├─ index.html
-├─ package-lock.json
-├─ package.json
-├─ public
-│  └─ vite.svg
-├─ src
-│  ├─ app
-│  │  ├─ AppShell.tsx
-│  │  └─ router.tsx
-│  ├─ assets
-│  │  └─ images
-│  │     ├─ amazonas.jpeg
-│  │     ├─ eje-cafetero.png
-│  │     ├─ hero-image.jpeg
-│  │     ├─ isologo.png
-│  │     ├─ logo_jeiggar.jpeg
-│  │     ├─ sierra-nevada-ancestral.jpeg
-│  │     ├─ sierra-nevada-santa-marta.jpeg
-│  │     └─ sierra-nevada.jpg
-│  ├─ components
-│  │  ├─ common
-│  │  │  ├─ Footer.tsx
-│  │  │  └─ Header.tsx
-│  │  ├─ forms
-│  │  └─ ui
-│  │     ├─ AnimatedCard.tsx
-│  │     ├─ Button.tsx
-│  │     ├─ ImageCard.tsx
-│  │     └─ SimpleCard.tsx
-│  ├─ domain
-│  │  └─ types
-│  │     ├─ AboutUs.ts
-│  │     ├─ Buttons.ts
-│  │     ├─ Cards.ts
-│  │     ├─ Footer.ts
-│  │     ├─ Landing.ts
-│  │     ├─ NavItem.ts
-│  │     └─ Value.ts
-│  ├─ features
-│  │  ├─ destinations
-│  │  ├─ landing
-│  │  │  ├─ AboutUs.tsx
-│  │  │  ├─ Contact.tsx
-│  │  │  ├─ Home.tsx
-│  │  │  └─ components
-│  │  │     ├─ About.tsx
-│  │  │     ├─ CTA.tsx
-│  │  │     ├─ Carousel.tsx
-│  │  │     ├─ FeaturedTrips.tsx
-│  │  │     ├─ Hero.tsx
-│  │  │     ├─ TravelCategories.tsx
-│  │  │     └─ ValuesSection.tsx
-│  │  ├─ map
-│  │  └─ quotes
-│  ├─ hooks
-│  │  └─ useAOS.ts
-│  ├─ index.css
-│  ├─ main.tsx
-│  └─ mocks
-│     ├─ about-us-cards.mock.ts
-│     ├─ carousel-landing.mock.ts
-│     ├─ cta-landing.mock.ts
-│     ├─ featured-trips.mock.ts
-│     ├─ footer.mock.ts
-│     ├─ hero-landing.mock.ts
-│     ├─ navigation.mock.ts
-│     ├─ travel-categories-landing.mock.ts
-│     └─ values.mock.ts
-├─ tsconfig.app.json
-├─ tsconfig.json
-├─ tsconfig.node.json
-└─ vite.config.ts
+## Estructura del proyecto
+```text
+src/
+  app/          # Router, shell de la app y utilidades de navegación global
+  assets/       # Imágenes y recursos estáticos
+  components/   # Componentes compartidos por toda la aplicación
+  domain/       # Tipos y contratos de dominio
+  features/     # Módulos por funcionalidad o sección del sitio
+  hooks/        # Hooks reutilizables
+  lib/          # Utilidades y helpers transversales
+  mocks/        # Contenido de demostración y datos estáticos
+  index.css     # Base visual, tokens y estilos globales
+  main.tsx      # Punto de entrada de React
 
+docs/
+  arquitectura.md
+  configuracion.md
 ```
+
