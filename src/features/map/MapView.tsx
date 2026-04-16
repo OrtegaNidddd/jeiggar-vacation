@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useDeferredValue, useMemo, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, ChevronLeft, ChevronRight, Search, MapPin } from 'lucide-react'
 import { Map, MapControls, MapMarker, MarkerContent, MarkerLabel, MarkerPopup } from '@/components/ui/Map'
@@ -27,6 +27,7 @@ export default function MapView({ data }: MapViewProps) {
     return window.innerWidth >= 768
   })
   const [search, setSearch] = useState('')
+  const deferredSearch = useDeferredValue(search)
 
   const isCountryLevel = mapState.level === 'country'
   const activeCity = mapState.selectedCity
@@ -86,12 +87,12 @@ export default function MapView({ data }: MapViewProps) {
     })
   }
 
-  const sidebarCities = data.cities.filter(city =>
-    city.name.toLowerCase().includes(search.toLowerCase()) ||
+  const sidebarCities = useMemo(() => data.cities.filter(city =>
+    city.name.toLowerCase().includes(deferredSearch.toLowerCase()) ||
     city.destinations.some(d =>
-      d.name.toLowerCase().includes(search.toLowerCase())
+      d.name.toLowerCase().includes(deferredSearch.toLowerCase())
     )
-  )
+  ), [data.cities, deferredSearch])
 
   return (
     <section className="px-4 pt-4" data-aos="fade-up">
@@ -140,7 +141,7 @@ export default function MapView({ data }: MapViewProps) {
                     </button>
                     <div className="mt-1.5 ml-5 space-y-1">
                       {city.destinations
-                        .filter(d => d.name.toLowerCase().includes(search.toLowerCase()))
+                        .filter(d => d.name.toLowerCase().includes(deferredSearch.toLowerCase()))
                         .map(dest => (
                           <button
                             key={dest.id}
@@ -172,7 +173,7 @@ export default function MapView({ data }: MapViewProps) {
                 </p>
 
                 {activeCity.destinations
-                  .filter(d => d.name.toLowerCase().includes(search.toLowerCase()))
+                  .filter(d => d.name.toLowerCase().includes(deferredSearch.toLowerCase()))
                   .map(dest => (
                     <div key={dest.id} className="space-y-1">
                       <button
