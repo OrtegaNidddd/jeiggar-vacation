@@ -7,25 +7,29 @@ export const useAOS = (): void => {
     let cancelled = false;
 
     async function loadAOS() {
-      const [{ default: AOS }] = await Promise.all([
-        import("aos"),
-        import("aos/dist/aos.css"),
-      ]);
+      try {
+        const [{ default: AOS }] = await Promise.all([
+          import("aos"),
+          import("aos/dist/aos.css"),
+        ]);
 
-      if (cancelled) {
+        if (cancelled) {
+          return;
+        }
+
+        if (!aosInitialized) {
+          AOS.init({
+            duration: 700,
+            easing: "ease-out-cubic",
+            once: true,
+            offset: 80,
+          });
+          aosInitialized = true;
+        } else {
+          AOS.refresh();
+        }
+      } catch {
         return;
-      }
-
-      if (!aosInitialized) {
-        AOS.init({
-          duration: 700,
-          easing: "ease-out-cubic",
-          once: true,
-          offset: 80,
-        });
-        aosInitialized = true;
-      } else {
-        AOS.refresh();
       }
     }
 
