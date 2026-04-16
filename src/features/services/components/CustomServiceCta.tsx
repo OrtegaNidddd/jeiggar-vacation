@@ -9,7 +9,7 @@ export const CustomServiceCta = ({ content }: CustomServiceCtaProps) => {
   const { title, description, buttonLabel, buttonHref } = content;
 
   return (
-    <article className="flex h-full flex-col justify-between rounded-[24px] bg-(--primary) p-8 text-white shadow-md">
+    <article data-aos="zoom-in" className="flex h-full flex-col justify-between rounded-[24px] bg-(--primary) p-8 text-white shadow-md">
       <div>
         <h3 className="text-3xl font-bold leading-tight">{title}</h3>
         <p className="mt-4 text-base leading-8 text-white/90">{description}</p>

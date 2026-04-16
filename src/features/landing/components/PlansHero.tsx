@@ -7,10 +7,11 @@ type PlansHeroProps = {
 
 export default function PlansHero({ content }: PlansHeroProps) {
   return (
-    <div className="relative overflow-hidden rounded-3xl shadow-md">
+    <div data-aos="fade-down" className="relative overflow-hidden rounded-3xl shadow-md">
       <img
         src={content.image}
         alt={content.imageAlt}
+        loading="lazy"
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div
@@ -23,15 +24,15 @@ export default function PlansHero({ content }: PlansHeroProps) {
       />
 
       <div className="relative max-w-2xl px-6 py-10 sm:px-10 sm:py-14 md:px-12 md:py-16">
-        <span className="inline-flex rounded-full border border-white/35 bg-white/15 px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.16em] text-white">
+        <span data-aos="fade-down" className="inline-flex rounded-full border border-white/35 bg-white/15 px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.16em] text-white">
           {content.badge}
         </span>
-        <h1 className="mt-5 text-4xl font-bold leading-[1.08] text-white md:text-6xl">
+        <h1 data-aos="fade-down" data-aos-delay={100} className="mt-5 text-4xl font-bold leading-[1.08] text-white md:text-6xl">
           {content.titleLineOne}
           <br />
           {content.titleLineTwo}
         </h1>
-        <p className="mt-5 max-w-xl text-base leading-7 text-slate-100 md:text-xl md:leading-8">
+        <p data-aos="fade-up" data-aos-delay={160} className="mt-5 max-w-xl text-base leading-7 text-slate-100 md:text-xl md:leading-8">
           {content.description}
         </p>
 
@@ -39,6 +40,8 @@ export default function PlansHero({ content }: PlansHeroProps) {
           to={content.primaryButton.to}
           variant="primary"
           className="mt-6 inline-flex h-12 items-center justify-center self-start px-8"
+          data-aos="fade-up"
+          data-aos-delay={220}
         >
           {content.primaryButton.label}
         </Button>

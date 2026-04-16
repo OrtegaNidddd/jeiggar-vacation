@@ -8,11 +8,12 @@ export const WhyChooseCard = ({ item }: WhyChooseCardProps) => {
   const { image, alt, title, description } = item;
 
   return (
-    <article className="group flex h-full flex-col">
+    <article data-aos="zoom-in" className="group flex h-full flex-col">
       <div className="overflow-hidden rounded-[20px] border border-(--border) bg-white shadow-sm">
         <img
           src={image}
           alt={alt}
+          loading="lazy"
           className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

@@ -6,7 +6,7 @@ import CTA from "./components/CTA";
 
 export default function Home() {
   return (
-    <div className="p-4">
+    <div data-aos="fade-up" className="p-4">
       <Hero />
       <FeaturedTrips />
       <Carousel />

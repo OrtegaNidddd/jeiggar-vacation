@@ -240,6 +240,7 @@ export default function MapView({ data }: MapViewProps) {
                       <img
                         src={city.imageUrl}
                         alt={city.name}
+                        loading="lazy"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -273,6 +274,7 @@ export default function MapView({ data }: MapViewProps) {
                       <img
                         src={dest.imageUrl}
                         alt={dest.name}
+                        loading="lazy"
                         className="w-full h-full object-cover"
                       />
                     </div>

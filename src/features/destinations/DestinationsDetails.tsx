@@ -80,14 +80,15 @@ export default function DestinationDetail() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pb-16">
+    <div className="max-w-5xl mx-auto px-4 pb-16" data-aos="fade-up">
 
       {/* Hero */}
-      <div className="relative h-72 md:h-96 rounded-2xl overflow-hidden mb-8 mt-6">
+      <div className="relative h-72 md:h-96 rounded-2xl overflow-hidden mb-8 mt-6" data-aos="fade-down">
         {destination.imageUrl ? (
           <img
             src={destination.imageUrl}
             alt={destination.name}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         ) : (
@@ -117,13 +118,13 @@ export default function DestinationDetail() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay={80}>
 
         {/* Columna izquierda */}
         <div className="lg:col-span-2 space-y-8">
 
           {/* Sobre el destino */}
-          <section>
+          <section data-aos="fade-up" data-aos-delay={120}>
             <h2 className="text-xl font-semibold text-foreground mb-3">Sobre este destino</h2>
             {destination.climate && (
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
@@ -136,7 +137,7 @@ export default function DestinationDetail() {
 
           {/* Actividades */}
           {destination.activities.length > 0 && (
-            <section>
+            <section data-aos="fade-up" data-aos-delay={160}>
               <h2 className="text-xl font-semibold text-foreground mb-3">Actividades incluidas</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {destination.activities.map((activity, i) => (
@@ -150,7 +151,7 @@ export default function DestinationDetail() {
           )}
 
           {/* Mapa */}
-          <section>
+          <section data-aos="fade-up" data-aos-delay={200}>
             <h2 className="text-xl font-semibold text-foreground mb-3">Ubicación</h2>
             <div className="h-64 rounded-xl overflow-hidden shadow">
               <Map
@@ -174,7 +175,7 @@ export default function DestinationDetail() {
 
         {/* Panel de reserva */}
         <div className="lg:col-span-1">
-          <div className="sticky top-6 bg-white border border-gray-100 rounded-2xl shadow-md p-5 space-y-4">
+          <div className="sticky top-6 bg-white border border-gray-100 rounded-2xl shadow-md p-5 space-y-4" data-aos="zoom-in" data-aos-delay={180}>
             <h3 className="text-base font-semibold text-foreground">Solicitar reserva</h3>
 
             {/* Nombre */}

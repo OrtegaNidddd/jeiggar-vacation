@@ -2,6 +2,8 @@ export type MedicalAssistanceHeroContent = {
   badge: string;
   title: string;
   description: string;
+  image: string;
+  alt: string;
 };
 
 export type MedicalCategoryItem = {
@@ -14,6 +16,7 @@ export type MedicalCategoryItem = {
 
 export type MedicalAssistanceCtaContent = {
   title: string;
+  description: string;
   buttonLabel: string;
   buttonHref?: string;
 };

@@ -1,5 +1,5 @@
 import SimpleCard from "@/components/ui/SimpleCard";
-import { travelCategoriesLandingMock } from "@/mocks/travel-categories-landing.mock";
+import { travelCategoriesLandingMock } from "@/mocks/landing";
 
 
 export default function TravelCategories() {

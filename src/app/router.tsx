@@ -14,11 +14,11 @@ import DestinationsSelector from "@/features/destinations/DestinationsSelector";
 import InternationalDestinations from "@/features/destinations/InternationalDestinations";
 
 import { ServicesPage } from "@/features/services/page/ServicesPage";
-import { MedicalAssistancePage } from "@/features/medical-assistance/page/MedicalAssistancePage";
-import { ProceduresPage } from "@/features/procedures/page/ProceduresPage";
-import { TravelRequirementsPage } from "@/features/travel-requirements/page/TravelRequirementsPage";
-import { ConnectivityPage } from "@/features/connectivity/page/ConnectivityPage";
-import { TransportPage } from "@/features/transport/page/TransportPage";
+import { MedicalAssistancePage } from "@/features/services/medical-assistance/page/MedicalAssistancePage";
+import { ProceduresPage } from "@/features/services/procedures/page/ProceduresPage";
+import { TravelRequirementsPage } from "@/features/services/travel-requirements/page/TravelRequirementsPage";
+import { ConnectivityPage } from "@/features/services/connectivity/page/ConnectivityPage";
+import { TransportPage } from "@/features/services/transport/page/TransportPage";
 
 export const router = createBrowserRouter([
   {

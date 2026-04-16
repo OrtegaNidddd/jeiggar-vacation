@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import isologo from "@/assets/images/logo_jeiggar.jpeg";
+import { placeImages } from "@/mocks/shared/place-images.mock";
 import Button from "@/components/ui/Button";
 import {
   footerBrandMock,
   footerContactMock,
   footerSectionsMock,
-} from "@/mocks/footer.mock";
+} from "@/mocks/shared";
 import {
   FOOTER_WHATSAPP_TEMPLATE,
   WHATSAPP_NUMBER,
@@ -27,14 +27,15 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-6">
 
         {/* Main grid */}
-        <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
+        <div data-aos="fade-up" className="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
 
           {/* Brand */}
           <div className="flex flex-col items-center text-center space-y-4 md:flex-row md:items-start md:text-left md:space-y-0 md:gap-4">
             <NavLink to="/" className="shrink-0">
               <img
-                src={isologo}
+                src={placeImages.logos.isologo}
                 alt="Jeiggar Vacation"
+                loading="lazy"
                 className="w-20 md:w-24 h-auto"
               />
             </NavLink>
@@ -45,8 +46,8 @@ export default function Footer() {
           </div>
 
           {/* Sections */}
-          {footerSectionsMock.map((section) => (
-            <div key={section.title}>
+          {footerSectionsMock.map((section, index) => (
+            <div key={section.title} data-aos="fade-up" data-aos-delay={index * 60}>
               <div className="text-sm font-semibold text-(--text)">
                 {section.title}
               </div>
@@ -69,7 +70,7 @@ export default function Footer() {
         </div>
 
         {/* Social buttons */}
-        <div className="mt-6 flex justify-center items-center gap-4 flex-wrap">
+        <div data-aos="fade-up" data-aos-delay={180} className="mt-6 flex justify-center items-center gap-4 flex-wrap">
           <button
             type="button"
             onClick={handleWhatsAppClick}
@@ -97,7 +98,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <div className="mt-6 flex justify-center">
+        <div data-aos="fade-up" data-aos-delay={220} className="mt-6 flex justify-center">
           <Button variant="primary"
             to={footerContactMock.quoteTo}
           >
