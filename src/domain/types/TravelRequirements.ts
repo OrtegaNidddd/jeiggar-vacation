@@ -2,6 +2,8 @@ export type TravelRequirementsHeroContent = {
   badge: string;
   title: string;
   description: string;
+  image: string;
+  alt: string;
 };
 
 export type TravelRequirementItem = {

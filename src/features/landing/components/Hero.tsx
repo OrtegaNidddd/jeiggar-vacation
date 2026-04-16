@@ -1,6 +1,6 @@
-import HeroImage from "@/assets/images/hero-image.jpeg";
+import { placeImages } from "@/mocks/shared/place-images.mock";
 import Button from "@/components/ui/Button";
-import { heroLandingMock } from "@/mocks/hero-landing.mock";
+import { heroLandingMock } from "@/mocks/landing";
 import {
     HERO_RESERVATION_TEMPLATE,
     WHATSAPP_NUMBER,
@@ -21,7 +21,7 @@ export default function Hero() {
 
                 {/* Imagen principal: no lazy, porque suele ser LCP */}
                 <img
-                    src={HeroImage}
+                    src={placeImages.heroImages.mainHero}
                     alt="Paisaje principal de Jeiggar Vacation"
                     loading="eager"
                     fetchPriority="high"

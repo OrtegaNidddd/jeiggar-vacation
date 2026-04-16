@@ -2,6 +2,8 @@ export type ProceduresHeroContent = {
   badge: string;
   title: string;
   description: string;
+  image: string;
+  alt: string;
 };
 
 export type ProceduresCountryItem = {

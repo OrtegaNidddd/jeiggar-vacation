@@ -23,10 +23,12 @@ export default function PlansCardsGrid({ cards }: PlansCardsGridProps) {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-      {cards.map((plan) => (
+    <div data-aos="fade-up" className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {cards.map((plan, index) => (
         <article
           key={plan.title}
+          data-aos="fade-up"
+          data-aos-delay={index * 90}
           className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
         >
           <div className="relative h-52 overflow-hidden">

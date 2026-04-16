@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { ctaLandingMock } from "@/mocks/cta-landing.mock";
+import { ctaLandingMock } from "@/mocks/landing";
 
 export default function CTA() {
   const {
@@ -33,7 +33,7 @@ export default function CTA() {
 
   return (
     <section className="py-14">
-      <div className="mx-auto max-w-6xl overflow-hidden rounded-[28px] border border-(--border) bg-(--bg) px-6 py-10 sm:px-10 md:px-12 md:py-12">
+      <div data-aos="fade-up" className="mx-auto max-w-6xl overflow-hidden rounded-[28px] border border-(--border) bg-(--bg) px-6 py-10 sm:px-10 md:px-12 md:py-12">
         <div className="relative">
           <div
             aria-hidden="true"
@@ -45,12 +45,14 @@ export default function CTA() {
           />
 
           <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-            <div>
+            <div data-aos="fade-right">
               <h2 className="text-2xl font-bold text-(--text)">{title}</h2>
               <p className="mt-3 max-w-xl text-xl text-(--text-muted)">{description}</p>
             </div>
 
             <form
+              data-aos="fade-left"
+              data-aos-delay={100}
               className="flex w-full flex-col gap-3 sm:flex-row lg:justify-end"
               onSubmit={handleSubmit}
             >

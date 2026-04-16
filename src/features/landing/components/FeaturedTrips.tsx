@@ -1,6 +1,6 @@
 import ImageCard from "@/components/ui/ImageCard";
 import { slugify } from "@/lib/utils";
-import { featuredTrips } from "@/mocks/featured-trips.mock";
+import { featuredTrips } from "@/mocks/landing";
 
 export default function FeaturedTrips() {
     return (

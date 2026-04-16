@@ -1,5 +1,5 @@
 import type { City } from '@/domain/types/Map'
-import { placeImages } from '@/mocks/place-images.mock'
+import { placeImages } from '@/mocks/shared'
 
 export const bogotaCity: City = {
   id: 'bogota',

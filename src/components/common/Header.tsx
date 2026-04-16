@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { navigationMock } from "@/mocks/navigation.mock";
-import LogoImage from "@/assets/images/logo_jeiggar.jpeg";
+import { navigationMock } from "@/mocks/shared";
+import { placeImages } from "@/mocks/shared/place-images.mock";
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function Header() {
     const items = useMemo(() => navigationMock, []);
 
     return (
-        <header className="sticky top-0 z-50 border-b border-(--border) bg-(--bg)">
+        <header data-aos="fade-down" className="sticky top-0 z-50 border-b border-(--border) bg-(--bg)">
             <div className="mx-auto flex max-w-6xl items-center justify-around px-4 py-3">
                 {/* Logo */}
                 <NavLink
@@ -25,7 +25,7 @@ export default function Header() {
                     className="text-base font-semibold text-(--text)"
                     onClick={closeMobile}
                 >
-                    <img src={LogoImage} className="h-auto w-30" alt="Logo" />
+                    <img src={placeImages.logos.mainLogo} className="h-auto w-30" alt="Logo" />
                 </NavLink>
 
                 {/* Nav para PC */}

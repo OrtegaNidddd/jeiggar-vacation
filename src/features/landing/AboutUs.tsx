@@ -1,6 +1,6 @@
 import AnimatedCard from "@/components/ui/AnimatedCard";
 import ValuesSection from "./components/ValuesSection";
-import { aboutUsCardsMock, aboutUsContentMock } from "@/mocks/about-us-cards.mock";
+import { aboutUsCardsMock, aboutUsContentMock } from "@/mocks/landing";
 
 export default function AboutUs() {
   return (
