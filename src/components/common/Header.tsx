@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navigationMock } from "@/mocks/shared";
-import { placeImages } from "@/mocks/shared/place-images.mock";
+import MainLogo from "@/assets/images/logos/main-logo.webp";
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -24,7 +24,15 @@ export default function Header() {
                     className="text-base font-semibold text-(--text)"
                     onClick={closeMobile}
                 >
-                    <img src={placeImages.logos.mainLogo} className="h-auto w-30" alt="Logo" loading="lazy" />
+                    <img
+                        src={MainLogo}
+                        alt="Logo"
+                        width={240}
+                        height={80}
+                        loading="eager"
+                        decoding="async"
+                        className="h-auto w-30"
+                    />
                 </NavLink>
 
                 {/* Nav para PC */}

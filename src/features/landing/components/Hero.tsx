@@ -1,4 +1,4 @@
-import { placeImages } from "@/mocks/shared/place-images.mock";
+import MainHeroImage from "@/assets/images/main-hero.webp";
 import Button from "@/components/ui/Button";
 import { heroLandingMock } from "@/mocks/landing";
 import {
@@ -21,8 +21,11 @@ export default function Hero() {
 
                 {/* Imagen principal: no lazy, porque suele ser LCP */}
                 <img
-                    src={placeImages.heroImages.mainHero}
+                    src={MainHeroImage}
                     alt="Paisaje principal de Jeiggar Vacation"
+                    width={1920}
+                    height={1080}
+                    sizes="(max-width: 768px) 100vw, 1152px"
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
@@ -79,7 +82,6 @@ export default function Hero() {
                         </Button>
                     </div>
                 </div>
-
             </div>
         </section>
     );
