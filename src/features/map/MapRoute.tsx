@@ -22,15 +22,15 @@ export default function MapRoute() {
   useEffect(() => {
     let isMounted = true;
 
-    async function loadData() {
-      const module = await import("@/mocks/map.mock");
-      if (isMounted) {
-        setData(module.colombiaMapData);
-      }
+    async function loadMapRoute() {
+      const [mockData] = await Promise.all([
+        import("@/mocks/map.mock"),
+        import("@/features/map/MapView"), // precalienta el chunk del componente
+      ]);
+      if (isMounted) setData(mockData.colombiaMapData);
     }
 
-    void loadData();
-
+    void loadMapRoute();
     return () => {
       isMounted = false;
     };
