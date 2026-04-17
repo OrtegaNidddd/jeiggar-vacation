@@ -1,4 +1,4 @@
-import { useDeferredValue, useMemo, useState, useRef } from 'react'
+import { useDeferredValue, useMemo, useState, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, ChevronLeft, ChevronRight, Search, MapPin } from 'lucide-react'
 import { Map, MapControls, MapMarker, MarkerContent, MarkerLabel, MarkerPopup } from '@/components/ui/Map'
@@ -38,61 +38,85 @@ export default function MapView({ data }: MapViewProps) {
 
   const zoom = isCountryLevel ? data.zoom : activeCity!.zoom
 
-  function handleCityClick(city: City) {
-  if (city.destinations.length === 0) {
-    mapRef.current?.flyTo({
-      center: [city.lng, city.lat],
-      zoom: city.zoom,
-      duration: 1500,
+  const normalizedSearch = useMemo(
+    () => deferredSearch.trim().toLowerCase(),
+    [deferredSearch]
+  )
+
+  const runAfterMove = useCallback((cb: () => void) => {
+    const map = mapRef.current
+    if (!map) {
+      cb()
+      return
+    }
+    const onEnd = () => {
+      map.off("moveend", onEnd)
+      cb()
+    }
+    map.on("moveend", onEnd)
+  }, [])
+
+  const handleCityClick = useCallback((city: City) => {
+    if (city.destinations.length === 0) {
+      mapRef.current?.flyTo({
+        center: [city.lng, city.lat],
+        zoom: city.zoom,
+        duration: 1200,
+      })
+    } else {
+      const lngs = city.destinations.map(d => d.lng)
+      const lats = city.destinations.map(d => d.lat)
+      mapRef.current?.fitBounds(
+        [
+          [Math.min(...lngs), Math.min(...lats)],
+          [Math.max(...lngs), Math.max(...lats)],
+        ],
+        { padding: 80, duration: 1200, maxZoom: 14 }
+      )
+    }
+
+    runAfterMove(() => {
+      setMapState({ level: "city", selectedCity: city })
     })
-  } else {
-    const lngs = city.destinations.map(d => d.lng)
-    const lats = city.destinations.map(d => d.lat)
+  }, [runAfterMove])
 
-    const sw: [number, number] = [Math.min(...lngs), Math.min(...lats)]
-    const ne: [number, number] = [Math.max(...lngs), Math.max(...lats)]
-
-    mapRef.current?.fitBounds([sw, ne], {
-      padding: 80,
-      duration: 1500,
-      maxZoom: 14,
-    })
-  }
-
-  setTimeout(() => {
-    setMapState({ level: 'city', selectedCity: city })
-  }, 1500)
-}
-
-  function handleDestinationClick(destination: Destination) {
+  const handleDestinationClick = useCallback((destination: Destination) => {
     navigate(`/destinos/${destination.slug}`)
-  }
+  }, [navigate])
 
-  function handleBack() {
+  const handleBack = useCallback(() => {
     mapRef.current?.flyTo({
       center: [data.lng, data.lat],
       zoom: data.zoom,
-      duration: 1500,
+      duration: 1200,
     })
-    setTimeout(() => {
-      setMapState({ level: 'country', selectedCity: null })
-    }, 1500)
-  }
 
-  function flyToDestination(destination: Destination) {
+    runAfterMove(() => {
+      setMapState({ level: "country", selectedCity: null })
+    })
+  }, [data.lng, data.lat, data.zoom, runAfterMove])
+
+  const flyToDestination = useCallback((destination: Destination) => {
     mapRef.current?.flyTo({
       center: [destination.lng, destination.lat],
       zoom: 14,
       duration: 1200,
     })
-  }
+  }, [])
 
-  const sidebarCities = useMemo(() => data.cities.filter(city =>
-    city.name.toLowerCase().includes(deferredSearch.toLowerCase()) ||
-    city.destinations.some(d =>
-      d.name.toLowerCase().includes(deferredSearch.toLowerCase())
-    )
-  ), [data.cities, deferredSearch])
+  const sidebarCities = useMemo(() => {
+    return data.cities
+      .map(city => ({
+        ...city,
+        filteredDestinations: city.destinations.filter(d =>
+          d.name.toLowerCase().includes(normalizedSearch)
+        ),
+      }))
+      .filter(city =>
+        city.name.toLowerCase().includes(normalizedSearch) ||
+        city.filteredDestinations.length > 0
+      )
+  }, [data.cities, normalizedSearch])
 
   return (
     <section className="px-4 pt-4" data-aos="fade-up">
@@ -141,7 +165,7 @@ export default function MapView({ data }: MapViewProps) {
                     </button>
                     <div className="mt-1.5 ml-5 space-y-1">
                       {city.destinations
-                        .filter(d => d.name.toLowerCase().includes(deferredSearch.toLowerCase()))
+                        .filter(d => d.name.toLowerCase().includes(normalizedSearch))
                         .map(dest => (
                           <button
                             key={dest.id}
@@ -173,7 +197,7 @@ export default function MapView({ data }: MapViewProps) {
                 </p>
 
                 {activeCity.destinations
-                  .filter(d => d.name.toLowerCase().includes(deferredSearch.toLowerCase()))
+                  .filter(d => d.name.toLowerCase().includes(normalizedSearch))
                   .map(dest => (
                     <div key={dest.id} className="space-y-1">
                       <button

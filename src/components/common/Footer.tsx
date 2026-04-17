@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { placeImages } from "@/mocks/shared/place-images.mock";
+import Isologo from "@/assets/images/logos/isologo.webp";
 import Button from "@/components/ui/Button";
 import {
   footerBrandMock,
@@ -33,9 +33,12 @@ export default function Footer() {
           <div className="flex flex-col items-center text-center space-y-4 md:flex-row md:items-start md:text-left md:space-y-0 md:gap-4">
             <NavLink to="/" className="shrink-0">
               <img
-                src={placeImages.logos.isologo}
+                src={Isologo}
                 alt="Jeiggar Vacation"
+                width={192}
+                height={192}
                 loading="lazy"
+                decoding="async"
                 className="w-20 md:w-24 h-auto"
               />
             </NavLink>

@@ -1,7 +1,7 @@
 import { CircleDollarSign, ShieldCheck, UserRound } from "lucide-react";
 import type { PlansPageContent } from "@/domain/types/Plans";
 
-import { placeImages } from "@/mocks/shared";
+import { placeImages } from "@/mocks/shared/place-images.mock";
 
 export const plansPageMock: PlansPageContent = {
   hero: {
