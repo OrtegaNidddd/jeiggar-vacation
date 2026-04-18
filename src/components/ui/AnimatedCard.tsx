@@ -8,7 +8,7 @@ export default function AnimatedCard({
 }: AnimatedCardProps) {
   return (
     <div
-      className="rounded-(--radius) border border-(--border) p-6 hover:bg-(--bg-muted) shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-lg hover:border-(--primary)"
+      className="rounded-lg border border-border p-6 hover:bg-(--bg-muted) shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-lg hover:border-primary"
     >
       {/* Icono + titulo */}
       <div className="text-center">
