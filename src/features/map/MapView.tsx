@@ -255,83 +255,91 @@ export default function MapView({ data }: MapViewProps) {
 
           {/* Nivel country: marcadores de ciudades */}
           {isCountryLevel &&
-            data.cities.map((city) => (
-              <MapMarker
-                key={city.id}
-                longitude={city.lng}
-                latitude={city.lat}
-                onClick={() => handleCityClick(city)}
-              >
-                <MarkerContent>
-                  <div className="size-4 rounded-full bg-primary border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform" />
-                  <MarkerLabel position="bottom">{city.name}</MarkerLabel>
-                </MarkerContent>
-                <MarkerPopup trigger="hover" className="p-0 w-56">
-                  {getCityImageUrl(city) && (
-                    <div className="h-28 overflow-hidden rounded-t-md">
-                      <img
-                        src={getCityImageUrl(city)}
-                        alt={city.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover"
-                      />
+            data.cities.map((city) => {
+              const cityImageUrl = getCityImageUrl(city)
+
+              return (
+                <MapMarker
+                  key={city.id}
+                  longitude={city.lng}
+                  latitude={city.lat}
+                  onClick={() => handleCityClick(city)}
+                >
+                  <MarkerContent>
+                    <div className="size-4 rounded-full bg-primary border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform" />
+                    <MarkerLabel position="bottom">{city.name}</MarkerLabel>
+                  </MarkerContent>
+                  <MarkerPopup trigger="hover" className="p-0 w-56">
+                    {cityImageUrl && (
+                      <div className="h-28 overflow-hidden rounded-t-md">
+                        <img
+                          src={cityImageUrl}
+                          alt={city.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="p-3 space-y-1">
+                      <h3 className="font-semibold text-sm text-foreground">{city.name}</h3>
+                      <p className="text-xs text-muted-foreground line-clamp-2">{city.description}</p>
+                      <p className="text-xs text-primary font-medium pt-1">
+                        {city.destinations.length} atractivos turísticos
+                      </p>
                     </div>
-                  )}
-                  <div className="p-3 space-y-1">
-                    <h3 className="font-semibold text-sm text-foreground">{city.name}</h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2">{city.description}</p>
-                    <p className="text-xs text-primary font-medium pt-1">
-                      {city.destinations.length} atractivos turísticos
-                    </p>
-                  </div>
-                </MarkerPopup>
-              </MapMarker>
-            ))}
+                  </MarkerPopup>
+                </MapMarker>
+              )
+            })}
 
           {/* Nivel city: marcadores de atractivos */}
           {!isCountryLevel &&
-            activeCity!.destinations.map((dest) => (
-              <MapMarker
-                key={dest.id}
-                longitude={dest.lng}
-                latitude={dest.lat}
-              >
-                <MarkerContent>
-                  <div className="size-4 rounded-full bg-rose-500 border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform" />
-                  <MarkerLabel position="bottom">{dest.name}</MarkerLabel>
-                </MarkerContent>
-                <MarkerPopup className="p-0 w-62">
-                  {getDestinationImageUrl(dest) && (
-                    <div className="h-32 overflow-hidden rounded-t-md">
-                      <img
-                        src={getDestinationImageUrl(dest)}
-                        alt={dest.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover"
-                      />
+            activeCity!.destinations.map((dest) => {
+              const destinationImageUrl = getDestinationImageUrl(dest)
+
+              return (
+                <MapMarker
+                  key={dest.id}
+                  longitude={dest.lng}
+                  latitude={dest.lat}
+                >
+                  <MarkerContent>
+                    <div className="size-4 rounded-full bg-rose-500 border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform" />
+                    <MarkerLabel position="bottom">{dest.name}</MarkerLabel>
+                  </MarkerContent>
+                  <MarkerPopup className="p-0 w-62">
+                    {destinationImageUrl && (
+                      <div className="h-32 overflow-hidden rounded-t-md">
+                        <img
+                          src={destinationImageUrl}
+                          alt={dest.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="space-y-2 p-3">
+                      <div>
+                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                          {dest.category}
+                        </span>
+                        <h3 className="font-semibold text-foreground leading-tight">{dest.name}</h3>
+                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-2">
+                        {dest.shortDescription}
+                      </p>
+                      <Button
+                        onClick={() => handleDestinationClick(dest)}
+                        variant="primary"
+                        className="w-full mt-1 text-sm px-3 py-1.5"
+                      >
+                        Ver detalles →
+                      </Button>
                     </div>
-                  )}
-                  <div className="space-y-2 p-3">
-                    <div>
-                      <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                        {dest.category}
-                      </span>
-                      <h3 className="font-semibold text-foreground leading-tight">{dest.name}</h3>
-                    </div>
-                    <p className="text-xs text-muted-foreground line-clamp-2">
-                      {dest.shortDescription}
-                    </p>
-                    <Button
-                      onClick={() => handleDestinationClick(dest)}
-                      variant="primary"
-                      className="w-full mt-1 text-sm px-3 py-1.5"
-                    >
-                      Ver detalles →
-                    </Button>
-                  </div>
-                </MarkerPopup>
-              </MapMarker>
-            ))}
+                  </MarkerPopup>
+                </MapMarker>
+              )
+            })}
         </Map>
       </div>
       </div>
