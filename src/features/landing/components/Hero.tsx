@@ -27,7 +27,7 @@ export default function Hero() {
                     width: 1920,
                     height: 1080,
                     sizes: "(max-width: 768px) 100vw, 1152px",
-                    loading: "lazy",
+                    loading: "eager",
                     fetchPriority: "high",
                     decoding: "async",
                 }}
