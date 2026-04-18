@@ -1,1 +1,0 @@
-export { colombiaMapData } from './map/colombia.mock'
