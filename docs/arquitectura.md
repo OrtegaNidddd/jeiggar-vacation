@@ -1,35 +1,44 @@
 # Arquitectura
 
 ## Visión general
-El proyecto está organizado como una SPA de React con enrutamiento por página y un layout compartido. La experiencia se apoya en contenido modular, mocks estáticos y componentes reutilizables para mantener separada la presentación de cada sección.
+Jeiggar Vacation es una SPA de React organizada por módulos funcionales. La aplicación comparte un layout global y enruta páginas públicas de landing, destinos, mapa y servicios especializados.
+
+La arquitectura combina:
+- Capa de presentación basada en componentes reutilizables.
+- Capa de dominio con tipos de datos explícitos.
+- Capa de servicios para consulta de datos en Supabase.
+- Capa de utilidades para resolver URLs públicas de storage y acciones comunes.
 
 ## Capas principales
-- `src/app`: configuración global de la aplicación, router y shell principal.
-- `src/features`: páginas y bloques por dominio funcional, como landing, destinos, servicios, conectividad y mapa.
-- `src/components`: componentes compartidos entre features, como header, footer y controles UI.
-- `src/domain`: tipos de datos y contratos que modelan el contenido de la app.
-- `src/mocks`: datos de ejemplo y contenido estructurado para renderizar la web sin depender de un backend.
-- `src/lib`: utilidades transversales, como helpers de WhatsApp y funciones de clase/estado.
-- `src/hooks`: hooks reutilizables, por ejemplo la inicialización de AOS.
+- `src/app`: composición global de la app, router y shell.
+- `src/features`: páginas y componentes por dominio funcional.
+- `src/components`: piezas compartidas (comunes y UI).
+- `src/domain`: contratos y tipos del dominio.
+- `src/lib`: integraciones transversales (`supabase.ts`, `storage.ts`, utilidades).
+- `src/mocks`: contenido estructurado de apoyo para distintas secciones.
 
-## Composición de la app
-La entrada de la aplicación vive en `src/main.tsx`, que monta el router de React Router. El layout global está en `src/app/AppShell.tsx` e incluye:
-- Header fijo.
-- Contenedor principal con el outlet de rutas.
-- Footer compartido.
-- Scroll-to-top y activación de AOS.
+## Flujo de datos
+1. Las páginas de cada módulo renderizan componentes de presentación.
+2. Cuando aplica, los módulos llaman servicios de datos en `src/features/*/*.service.ts`.
+3. Los servicios consultan Supabase con el cliente central en `src/lib/supabase.ts`.
+4. Las imágenes se resuelven con `getPublicStorageUrl` desde `src/lib/storage.ts`.
+5. La UI consume datos transformados a tipos de dominio para mantener consistencia.
 
-Las rutas están definidas en `src/app/router.tsx` y cubren la landing, destinos, servicios, conectividad y páginas de detalle.
+## Mapa y destinos
+- El mapa nacional obtiene datos mediante RPC (`get_country_map_data`) desde `src/features/map/map.service.ts`.
+- El detalle de destinos consulta la tabla `destinations` con relaciones a `cities` desde `src/features/destinations/destinations.service.ts`.
+- El módulo de mapa usa MapLibre GL a través de componentes UI propios para mantener control de interacción y estilo.
 
-## Decisiones técnicas
-- El alias `@` apunta a `src`, para evitar imports relativos largos.
-- La mayor parte del contenido visible se alimenta desde mocks y tipos, lo que facilita iterar sobre copy y diseño sin backend.
-- La integración de WhatsApp está centralizada en `src/lib/whatsapp.ts` para reutilizar plantillas y sanitización del número.
-- La vista de mapa usa MapLibre GL y un componente propio en `src/components/ui/Map.tsx`.
-- Los estilos globales y tokens están en `src/index.css`, con Tailwind 4 y variables CSS para colores, radios y sombras.
+## Navegación y layout
+- El layout base vive en `src/app/AppShell.tsx` con header, outlet y footer.
+- Las rutas se definen en `src/app/router.tsx`.
+- Se incorporan breadcrumbs reutilizables para mejorar el contexto de navegación en landing, servicios, destinos y mapa.
 
-## Organización funcional
-- Landing: portada, valores, planes, CTA y carrusel.
-- Destinos: selector, destinos nacionales, destinos internacionales y detalle por slug.
-- Servicios: servicios generales, asistencia médica, trámites, requisitos de viaje, conectividad y transporte.
-- Mapa: visualización interactiva de ciudades y atractivos turísticos de Colombia.
+## Assets y storage
+La estrategia actual prioriza rutas públicas desde Supabase Storage para imágenes de marca, destinos y servicios. El helper `getPublicStorageUrl` mantiene compatibilidad con rutas locales durante la migración.
+
+## Decisiones técnicas relevantes
+- Alias `@` para imports desde `src`.
+- Organización por features para escalar funcionalidades sin acoplar secciones.
+- Tipado explícito en `src/domain/types` para evitar contratos implícitos en la UI.
+- Integración de WhatsApp centralizada para mensajes y plantillas reutilizables.
