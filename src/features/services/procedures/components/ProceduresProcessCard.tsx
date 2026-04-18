@@ -10,7 +10,7 @@ export const ProceduresProcessCard = ({
   const { step, title, description } = item;
 
   return (
-    <article data-aos="zoom-in" className="group flex h-full flex-col rounded-[20px] border border-(--border) bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-(--primary) hover:shadow-lg">
+    <article data-aos="zoom-in" className="group flex h-full flex-col rounded-[20px] border border-border bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-primary hover:shadow-lg">
       <div className="mb-4 flex justify-center">
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-(--primary) text-sm font-bold text-white">
           {step}

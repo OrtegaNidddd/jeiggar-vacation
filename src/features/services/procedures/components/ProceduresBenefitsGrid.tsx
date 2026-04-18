@@ -9,7 +9,7 @@ export const ProceduresBenefitsGrid = ({
   items,
 }: ProceduresBenefitsGridProps) => {
   return (
-    <section className="border-b border-(--border) bg-(--bg-muted)">
+    <section className="border-b border-border bg-(--bg-muted)">
       <div className="mx-auto w-full max-w-7xl px-6 py-12 md:px-10 md:py-16">
         <div className="mx-auto max-w-3xl text-center">
           <h2 data-aos="fade-right" className="text-4xl font-bold tracking-tight text-(--text) md:text-5xl">

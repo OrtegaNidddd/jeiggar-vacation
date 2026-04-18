@@ -1,4 +1,5 @@
 import type { TransportItem } from "@/domain/types/Transport";
+import { getPublicStorageUrl } from "@/lib/storage";
 
 type TransportCardProps = {
   item: TransportItem;
@@ -6,12 +7,13 @@ type TransportCardProps = {
 
 export const TransportCard = ({ item }: TransportCardProps) => {
   const { title, image, alt, description } = item;
+  const imageUrl = getPublicStorageUrl(image, "services");
 
   return (
-    <article data-aos="zoom-in" className="group flex h-full flex-col rounded-[20px] border border-(--border) bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-(--primary) hover:shadow-lg">
+    <article data-aos="zoom-in" className="group flex h-full flex-col rounded-[20px] border border-border bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-primary hover:shadow-lg">
       <div className="overflow-hidden rounded-[16px]">
         <img
-          src={image}
+          src={imageUrl}
           alt={alt}
           loading="lazy"
           className="h-50 w-full object-cover transition-transform duration-500 group-hover:scale-105"

@@ -1,4 +1,5 @@
 import { ProceduresHero } from "../components/ProceduresHero";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { ProceduresCountriesGrid } from "../components/ProceduresCountriesGrid";
 import { ProceduresBenefitsGrid } from "../components/ProceduresBenefitsGrid";
 import { ProceduresProcessGrid } from "../components/ProceduresProcessGrid";
@@ -15,6 +16,14 @@ import { proceduresLegalMock } from "@/mocks/services/procedures";
 export const ProceduresPage = () => {
   return (
     <main data-aos="fade-up">
+      <Breadcrumbs
+        className="mb-4 pt-4"
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Servicios", to: "/servicios" },
+          { label: "Trámites y documentación" },
+        ]}
+      />
       <ProceduresHero content={proceduresHeroMock} />
       <ProceduresCountriesGrid items={proceduresCountriesMock} />
       <ProceduresBenefitsGrid items={proceduresBenefitsMock} />

@@ -9,7 +9,7 @@ type ServicesGridProps = {
 
 export const ServicesGrid = ({ services, cta }: ServicesGridProps) => {
   return (
-    <section className="border-b border-(--border) bg-(--bg-muted)">
+    <section className="border-b border-border bg-(--bg-muted)">
       <div className="mx-auto w-full max-w-7xl px-6 py-12 md:px-10 md:py-16">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {services.map((service, index) => (
