@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navigationMock } from "@/mocks/shared";
-import MainLogo from "@/assets/images/logos/main-logo.webp";
+import { getPublicStorageUrl } from "@/lib/storage";
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
+    const mainLogoUrl = getPublicStorageUrl("logos/main-logo.webp", "images");
 
     const base =
-        "px-3 py-2 text-sm font-medium rounded-(--radius) transition-colors duration-400";
+        "px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-400";
     const idle = "text-(--text-muted) hover:text-(--text) hover:bg-(--bg-muted)";
     const active = "text-(--text) bg-(--bg-muted-2) shadow-(--shadow-sm)";
 
@@ -16,7 +17,7 @@ export default function Header() {
     const items = navigationMock;
 
     return (
-        <header data-aos="fade-down" className="sticky top-0 z-50 border-b border-(--border) bg-(--bg)">
+        <header data-aos="fade-down" className="sticky top-0 z-50 border-b border-border bg-(--bg)">
             <div className="mx-auto flex max-w-6xl items-center justify-around px-4 py-3">
                 {/* Logo */}
                 <NavLink
@@ -25,7 +26,7 @@ export default function Header() {
                     onClick={closeMobile}
                 >
                     <img
-                        src={MainLogo}
+                        src={mainLogoUrl}
                         alt="Logo"
                         width={240}
                         height={80}
@@ -59,14 +60,14 @@ export default function Header() {
 
                             {/* Dropdown PC */}
                             {item.children && (
-                                <div className="absolute left-0 mt-1 hidden min-w-56 rounded-(--radius) border border-(--border) bg-(--surface) shadow-(--shadow-md) group-hover:block">
+                                <div className="absolute left-0 mt-1 hidden min-w-56 rounded-lg border border-border bg-(--surface) shadow-(--shadow-md) group-hover:block">
                                     <div className="flex flex-col p-1">
                                         {item.children.map((child) => (
                                             <NavLink
                                                 key={child.to}
                                                 to={child.to}
                                                 className={({ isActive }) =>
-                                                    `px-3 py-2 text-sm rounded-(--radius) transition-colors ${isActive
+                                                    `px-3 py-2 text-sm rounded-lg transition-colors ${isActive
                                                         ? "bg-(--bg-muted) text-(--text)"
                                                         : "text-(--text-muted) hover:bg-(--bg-muted) hover:text-(--text)"
                                                     }`
@@ -85,7 +86,7 @@ export default function Header() {
                 {/* Boton para movil */}
                 <button
                     type="button"
-                    className="md:hidden inline-flex items-center justify-center rounded-(--radius) border border-(--border) px-4 py-3 text-(--text) hover:bg-(--bg-muted)"
+                    className="md:hidden inline-flex items-center justify-center rounded-lg border border-border px-4 py-3 text-(--text) hover:bg-(--bg-muted)"
                     aria-label="Abrir menú"
                     aria-expanded={mobileOpen}
                     onClick={() => setMobileOpen((v) => !v)}
@@ -96,7 +97,7 @@ export default function Header() {
 
             {/* Nav para movil */}
             {mobileOpen && (
-                <div className="md:hidden border-t border-(--border) bg-(--bg)">
+                <div className="md:hidden border-t border-border bg-(--bg)">
                     <div className="mx-auto max-w-6xl px-4 py-3">
                         <div className="flex flex-col gap-1">
                             {items.map((item) => (
@@ -107,7 +108,7 @@ export default function Header() {
                                             onClick={closeMobile}
                                             className={({ isActive }) => {
                                                 if (item.variant === "highlight") {
-                                                    return `px-4 py-2 text-sm font-semibold rounded-(--radius) bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors w-full text-left`;
+                                                    return `px-4 py-2 text-sm font-semibold rounded-lg bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors w-full text-left`;
                                                 }
                                                 return `${base} ${isActive ? active : idle} w-full text-left`
                                             }

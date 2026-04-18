@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import Isologo from "@/assets/images/logos/isologo.webp";
 import Button from "@/components/ui/Button";
+import { getPublicStorageUrl } from "@/lib/storage";
 import {
   footerBrandMock,
   footerContactMock,
@@ -14,6 +14,7 @@ import {
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const isologoUrl = getPublicStorageUrl("logos/isologo.webp", "images");
 
   const handleWhatsAppClick = () => {
     sendWhatsAppMessage({
@@ -33,7 +34,7 @@ export default function Footer() {
           <div className="flex flex-col items-center text-center space-y-4 md:flex-row md:items-start md:text-left md:space-y-0 md:gap-4">
             <NavLink to="/" className="shrink-0">
               <img
-                src={Isologo}
+                src={isologoUrl}
                 alt="Jeiggar Vacation"
                 width={192}
                 height={192}
