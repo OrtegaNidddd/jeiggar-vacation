@@ -1,6 +1,7 @@
-import MainHeroImage from "@/assets/images/main-hero.webp";
 import Button from "@/components/ui/Button";
+import HeroCard from "@/components/common/HeroCard";
 import { heroLandingMock } from "@/mocks/landing";
+import { getPublicStorageUrl } from "@/lib/storage";
 import {
     HERO_RESERVATION_TEMPLATE,
     WHATSAPP_NUMBER,
@@ -8,6 +9,8 @@ import {
 } from "@/lib/whatsapp";
 
 export default function Hero() {
+    const mainHeroImageUrl = getPublicStorageUrl("main-hero.webp", "images");
+
     const handleReserveNow = () => {
         sendWhatsAppMessage({
             phone: WHATSAPP_NUMBER,
@@ -17,62 +20,38 @@ export default function Hero() {
 
     return (
         <section className="pt-8 pb-10">
-            <div className="relative mx-auto max-w-6xl overflow-hidden rounded-lg">
-
-                {/* Imagen principal: no lazy, porque suele ser LCP */}
-                <img
-                    src={MainHeroImage}
-                    alt="Paisaje principal de Jeiggar Vacation"
-                    width={1920}
-                    height={1080}
-                    sizes="(max-width: 768px) 100vw, 1152px"
-                    loading="eager"
-                    fetchPriority="high"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover"
-                />
-
-                {/* Overlay suave */}
-                <div className="absolute inset-0 bg-(--bg)/45 backdrop-blur-xs" />
-
-                {/* Contenido */}
-                <div className="relative z-10 flex flex-col items-center text-center px-6 py-20">
-
-                    {/* Badge */}
-                    <span
-                        data-aos="fade-down"
-                        className="text-xs tracking-wide bg-blue-100 text-(--primary-700) px-4 py-2 rounded-full font-bold mb-6"
-                    >
-                        {heroLandingMock.badge}
-                    </span>
-
-                    {/* Título */}
-                    <h1
-                        data-aos="fade-down"
-                        data-aos-delay="120"
-                        className="text-4xl! md:text-5xl! font-bold text-(--text) mb-6!"
-                    >
-                        {heroLandingMock.titlePrimary} 
+            <HeroCard
+                imageSrc={mainHeroImageUrl}
+                imageAlt="Paisaje principal de Jeiggar Vacation"
+                imageProps={{
+                    width: 1920,
+                    height: 1080,
+                    sizes: "(max-width: 768px) 100vw, 1152px",
+                    loading: "lazy",
+                    fetchPriority: "high",
+                    decoding: "async",
+                }}
+                rootClassName="mx-auto max-w-6xl shadow-xl"
+                overlayClassName="bg-(--bg)/45 backdrop-blur-xs"
+                contentClassName="mx-auto flex max-w-2xl flex-col items-center text-center"
+                badgeClassName="mb-1 border-transparent bg-blue-100 text-(--primary-700)"
+                titleClassName="mb-1 text-(--text)!"
+                descriptionClassName="text-(--text)"
+                titleAosDelay={120}
+                descriptionAosDelay={220}
+                actionsAosDelay={220}
+                badge={heroLandingMock.badge}
+                title={
+                    <>
+                        {heroLandingMock.titlePrimary}
                         <br />
                         {heroLandingMock.titleSecondary}
                         <span className="text-(--primary-700)">{heroLandingMock.highlight}</span>
-                    </h1>
-
-                    {/* Texto */}
-                    <p
-                        data-aos="fade-up"
-                        data-aos-delay="220"
-                        className="max-w-xl text-(--text) font-light"
-                    >
-                        {heroLandingMock.description}
-                    </p>
-
-                    {/* Botones */}
-                    <div
-                        data-aos="fade-up"
-                        data-aos-delay="220"
-                        className="mt-6 flex gap-4"
-                    >
+                    </>
+                }
+                description={heroLandingMock.description}
+                actions={
+                    <div className="flex flex-wrap justify-center gap-4">
                         <Button to={heroLandingMock.buttons[0].to} variant={heroLandingMock.buttons[0].variant}>
                             {heroLandingMock.buttons[0].label}
                         </Button>
@@ -81,8 +60,8 @@ export default function Hero() {
                             {heroLandingMock.buttons[1].label}
                         </Button>
                     </div>
-                </div>
-            </div>
+                }
+            />
         </section>
     );
 }

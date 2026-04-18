@@ -10,7 +10,9 @@ export type PlansHeroContent = ImageContent & {
   primaryButton: NavigableButtonConfig;
 };
 
-export type TrendingDestination = NamedImageContent;
+export type TrendingDestination = NamedImageContent & {
+  storageBucket?: "cities" | "destinations";
+};
 
 export type PlansTrendingContent = WithTitle & {
   prevButtonAriaLabel: string;

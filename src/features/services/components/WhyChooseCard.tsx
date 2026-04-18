@@ -1,4 +1,5 @@
 import type { WhyChooseItem } from "@/domain/types/Services";
+import { getPublicStorageUrl } from "@/lib/storage";
 
 type WhyChooseCardProps = {
   item: WhyChooseItem;
@@ -6,15 +7,16 @@ type WhyChooseCardProps = {
 
 export const WhyChooseCard = ({ item }: WhyChooseCardProps) => {
   const { image, alt, title, description } = item;
+  const imageUrl = getPublicStorageUrl(image, "services");
 
   return (
     <article data-aos="zoom-in" className="group flex h-full flex-col">
-      <div className="overflow-hidden rounded-[20px] border border-(--border) bg-white shadow-sm">
+      <div className="overflow-hidden rounded-[20px] border border-border bg-white shadow-sm">
         <img
-          src={image}
+          src={imageUrl}
           alt={alt}
           loading="lazy"
-          className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-55 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 

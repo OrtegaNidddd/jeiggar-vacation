@@ -1,26 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, MapPin, Thermometer, CheckCircle2, Send } from 'lucide-react'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 import { Map, MapMarker, MarkerContent, MarkerPopup } from '@/components/ui/Map'
-import { colombiaMapData } from '@/mocks/map.mock'
 import type { Destination } from '@/domain/types/Map'
+import { fetchDestinationBySlug } from '@/features/destinations/destinations.service'
+import { getPublicStorageUrl } from '@/lib/storage'
 import {
   DESTINATION_RESERVATION_TEMPLATE,
   WHATSAPP_NUMBER,
   sendWhatsAppMessage,
 } from '@/lib/whatsapp'
 
-function findDestination(slug: string): Destination | undefined {
-  for (const city of colombiaMapData.cities) {
-    const found = city.destinations.find(d => d.slug === slug)
-    if (found) return found
-  }
-}
-
 export default function DestinationDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  const destination = findDestination(slug ?? '')
+  const [destination, setDestination] = useState<Destination | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
 
   const [form, setForm] = useState({
     name: '',
@@ -33,6 +30,63 @@ export default function DestinationDetail() {
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadDestination() {
+      if (!slug) {
+        if (isMounted) {
+          setDestination(null)
+          setLoading(false)
+        }
+        return
+      }
+
+      try {
+        setLoading(true)
+        setLoadError(null)
+        const result = await fetchDestinationBySlug(slug)
+        if (isMounted) {
+          setDestination(result)
+        }
+      } catch (error) {
+        if (isMounted) {
+          setLoadError(error instanceof Error ? error.message : 'Error cargando destino')
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false)
+        }
+      }
+    }
+
+    void loadDestination()
+
+    return () => {
+      isMounted = false
+    }
+  }, [slug])
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <p className="text-lg font-medium text-muted-foreground">Cargando destino...</p>
+      </div>
+    )
+  }
+
+  if (loadError) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <p className="text-lg font-medium text-red-500">No se pudo cargar el destino.</p>
+        <p className="text-sm text-muted-foreground">{loadError}</p>
+        <button onClick={() => navigate(-1)} className="text-sm text-primary hover:underline">
+          ← Volver
+        </button>
+      </div>
+    )
+  }
+
   if (!destination) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
@@ -43,6 +97,8 @@ export default function DestinationDetail() {
       </div>
     )
   }
+
+  const imageUrl = destination.imageUrl ? getPublicStorageUrl(destination.imageUrl) : ''
 
   function validate() {
     const newErrors: Record<string, string> = {}
@@ -80,13 +136,24 @@ export default function DestinationDetail() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pb-16" data-aos="fade-up">
+    <div className="px-4 pb-16 pt-4" data-aos="fade-up">
+      <Breadcrumbs
+        className="mb-4"
+        items={[
+          { label: 'Inicio', to: '/' },
+          { label: 'Destinos', to: '/destinos' },
+          { label: 'Nacionales', to: '/destinos/nacionales' },
+          { label: destination.name },
+        ]}
+      />
+
+      <div className="mx-auto max-w-5xl">
 
       {/* Hero */}
       <div className="relative h-72 md:h-96 rounded-2xl overflow-hidden mb-8 mt-6" data-aos="fade-down">
-        {destination.imageUrl ? (
+        {imageUrl ? (
           <img
-            src={destination.imageUrl}
+            src={imageUrl}
             alt={destination.name}
             loading="lazy"
             className="w-full h-full object-cover"
@@ -296,6 +363,7 @@ export default function DestinationDetail() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )

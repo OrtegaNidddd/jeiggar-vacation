@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { carouselLandingMock } from "@/mocks/landing";
+import { getPublicStorageUrl } from "@/lib/storage";
 
 function getVisibleCards(width: number) {
 	if (width >= 1024) {
@@ -66,7 +67,7 @@ export default function Carousel() {
 
 	return (
 		<section className="py-16">
-			<div className="mx-auto max-w-6xl rounded-(--radius) bg-(--bg-muted) px-4 py-12 sm:px-6 md:px-8">
+			<div className="mx-auto max-w-6xl rounded-lg bg-(--bg-muted) px-4 py-12 sm:px-6 md:px-8">
 				<header className="mb-8 text-center">
 					<h2 data-aos="fade-up" className="text-2xl font-bold text-(--text)">
 						{title}
@@ -96,7 +97,7 @@ export default function Carousel() {
 								<div key={slide.id} className="shrink-0 px-1 md:px-1.5" style={{ width: `${100 / visibleCards}%` }}>
 									<article className="group relative aspect-square overflow-hidden rounded-sm border border-white/60">
 										<img
-											src={slide.image}
+											src={getPublicStorageUrl(slide.image)}
 											alt={slide.alt}
 											loading="lazy"
 											className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
@@ -113,7 +114,7 @@ export default function Carousel() {
 						type="button"
 						aria-label="Ver imagen anterior"
 						onClick={goPrevious}
-						className="inline-flex rounded-full border border-(--border) bg-white px-3 py-2 text-(--text)"
+						className="inline-flex rounded-full border border-border bg-white px-3 py-2 text-(--text)"
 					>
 						<ChevronLeft size={16} />
 					</button>
@@ -121,7 +122,7 @@ export default function Carousel() {
 						type="button"
 						aria-label="Ver imagen siguiente"
 						onClick={goNext}
-						className="inline-flex rounded-full border border-(--border) bg-white px-3 py-2 text-(--text)"
+						className="inline-flex rounded-full border border-border bg-white px-3 py-2 text-(--text)"
 					>
 						<ChevronRight size={16} />
 					</button>

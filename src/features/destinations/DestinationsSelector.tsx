@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 
 const destinationOptions = [
   {
@@ -15,8 +16,17 @@ const destinationOptions = [
 
 export default function DestinationsSelector() {
   return (
-    <section className="px-4 py-10" data-aos="fade-up">
-      <div className="mx-auto max-w-4xl">
+    <>
+      <Breadcrumbs
+        className="mb-4 pt-4"
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Destinos" },
+        ]}
+      />
+
+      <section className="px-4 py-10" data-aos="fade-up">
+        <div className="mx-auto max-w-4xl">
         <header className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Elige tu tipo de destino</h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -37,7 +47,8 @@ export default function DestinationsSelector() {
             </Link>
           ))}
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import type { WhyChooseServicesContent } from "@/domain/types/Services";
-import { placeImages } from "@/mocks/shared/place-images.mock";
 
 export const whyChooseServicesMock: WhyChooseServicesContent = {
   title: "¿Por qué elegir nuestra agencia?",
@@ -7,7 +6,7 @@ export const whyChooseServicesMock: WhyChooseServicesContent = {
   items: [
     {
       id: "expert-guide",
-      image: placeImages.services.teamExperts,
+      image: "team-experts.webp",
       alt: "Equipo profesional de asesores de viaje",
       title: "Guía Experta",
       description:
@@ -15,7 +14,7 @@ export const whyChooseServicesMock: WhyChooseServicesContent = {
     },
     {
       id: "global-network",
-      image: placeImages.services.globalNetwork,
+      image: "global-network.webp",
       alt: "Mapa mundial representando red global",
       title: "Red Global",
       description:
@@ -23,7 +22,7 @@ export const whyChooseServicesMock: WhyChooseServicesContent = {
     },
     {
       id: "safe-travel",
-      image: placeImages.services.safeTravel,
+      image: "safe-travel.webp",
       alt: "Caja fuerte representando seguridad en el viaje",
       title: "Viaje Seguro",
       description:

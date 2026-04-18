@@ -1,6 +1,5 @@
 import { MapPin } from "lucide-react";
 import type { FeaturedTrips } from "@/domain/types/Landing";
-import { placeImages } from "../shared/place-images.mock";
 
 export const featuredTrips: FeaturedTrips[] = [
   {
@@ -8,7 +7,7 @@ export const featuredTrips: FeaturedTrips[] = [
     slug: "eje-cafetero",
     description: "Sumérgete en el aroma del Eje Cafetero con catas privadas y estancias en haciendas tradicionales.",
     badge: "Popular",
-    image: placeImages.destinations.rutaCafePremium,
+    image: "pereira/eje-cafetero.webp",
     meta: [
       { icon: MapPin, label: "Salento" },
     ],
@@ -18,7 +17,7 @@ export const featuredTrips: FeaturedTrips[] = [
     title: "Sierra Nevada Ancestral",
     slug: "sierra-nevada",
     description: "Explora los pueblos indígenas de la Sierra Nevada y conecta con la cultura y naturaleza del Caribe colombiano.",
-    image: placeImages.destinations.sierraNevadaAncestral,
+    image: "santa-marta/sierra-nevada.webp",
     meta: [
       { icon: MapPin, label: "Santa Marta" },
     ],
@@ -29,7 +28,7 @@ export const featuredTrips: FeaturedTrips[] = [
     slug: "amazonas",
     description: "Adéntrate en la selva amazónica, navega sus ríos y descubre una biodiversidad única en el mundo.",
     badge: "Nuevo",
-    image: placeImages.destinations.amazonasProfundo,
+    image: "amazonas/amazonas.webp",
     meta: [
       { icon: MapPin, label: "Leticia" },
     ],

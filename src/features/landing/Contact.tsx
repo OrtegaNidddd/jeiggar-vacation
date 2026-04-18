@@ -1,9 +1,19 @@
 import { WHATSAPP_NUMBER } from '@/lib/whatsapp'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 
 export default function Contact() {
   return (
-    <section className="px-4 py-10" data-aos="fade-up">
-      <div className="mx-auto max-w-3xl rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+    <>
+      <Breadcrumbs
+        className="mb-4 pt-4"
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Contacto" },
+        ]}
+      />
+
+      <section className="px-4 py-10" data-aos="fade-up">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
         <h1 className="text-2xl font-bold text-foreground">Contacto</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           ¿Tienes alguna pregunta o quieres planear tu próximo viaje? Escríbenos por WhatsApp y te ayudamos a encontrar la mejor opción.
@@ -18,7 +28,8 @@ export default function Contact() {
             Escribir por WhatsApp
           </a>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }

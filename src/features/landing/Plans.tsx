@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 import { plansPageMock } from "@/mocks/landing";
 
 const PlansHero = lazy(() => import("./components/PlansHero"));
@@ -17,6 +18,12 @@ export default function Plans() {
     return (
         <section data-aos="fade-up" className="px-4 pb-12 pt-10 md:pt-14">
             <div className="mx-auto max-w-6xl space-y-14">
+                <Breadcrumbs
+                    items={[
+                        { label: "Inicio", to: "/" },
+                        { label: "Planes" },
+                    ]}
+                />
                 <Suspense fallback={<SectionFallback />}>
                     <PlansHero content={hero} />
                 </Suspense>

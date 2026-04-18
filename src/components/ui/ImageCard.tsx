@@ -13,7 +13,7 @@ export default function ImageCard({
 }: ImageCardProps) {
   return (
     <article className="block group">
-      <div className="rounded-(--radius) border border-(--border) overflow-hidden shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg bg-(--bg) h-full flex flex-col">
+      <div className="rounded-lg border border-border overflow-hidden shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg bg-(--bg) h-full flex flex-col">
 
         {/* Image area */}
         <div className="relative w-full h-48 bg-(--bg-muted) overflow-hidden">
@@ -29,7 +29,7 @@ export default function ImageCard({
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <svg
-                className="w-10 h-10 text-(--border)"
+                className="w-10 h-10 text-border"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -54,7 +54,7 @@ export default function ImageCard({
         <div className="p-5 flex-1 flex flex-col justify-between">
           <div>
             {/* Title */}
-            <Link to={to} className="hover:text-(--primary) transition-colors">
+            <Link to={to} className="hover:text-primary transition-colors">
               <h3 className="text-base font-semibold text-(--text) leading-snug mb-3">
                   {title}
               </h3>
@@ -82,7 +82,7 @@ export default function ImageCard({
 
           {/* CTA */}
           {cta && (
-            <div className="border-t border-(--border) pt-4">
+            <div className="border-t border-border pt-4">
               <Button to={to} variant={cta.variant} className="w-full">
                 {cta.label}
               </Button>

@@ -1,6 +1,7 @@
 import ImageCard from "@/components/ui/ImageCard";
 import { slugify } from "@/lib/utils";
 import { featuredTrips } from "@/mocks/landing";
+import { getPublicStorageUrl } from "@/lib/storage";
 
 export default function FeaturedTrips() {
     return (
@@ -13,7 +14,7 @@ export default function FeaturedTrips() {
                         key={trip.slug}
                         title={trip.title}
                         description={trip.description}
-                        image={trip.image}
+                        image={getPublicStorageUrl(trip.image)}
                         badge={trip.badge}
                         meta={trip.meta}
                         cta={trip.cta}
