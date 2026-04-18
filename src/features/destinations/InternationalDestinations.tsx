@@ -1,10 +1,21 @@
 import { Link } from 'react-router-dom'
+import Breadcrumbs from '@/components/common/Breadcrumbs'
 import { WHATSAPP_NUMBER } from '@/lib/whatsapp'
 
 export default function InternationalDestinations() {
   return (
-    <section className="px-4 py-10" data-aos="fade-up">
-      <div className="mx-auto max-w-3xl rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+    <>
+      <Breadcrumbs
+        className="mb-4 pt-4"
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Destinos", to: "/destinos" },
+          { label: "Internacionales" },
+        ]}
+      />
+
+      <section className="px-4 py-10" data-aos="fade-up">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
         <h1 className="text-2xl font-bold text-foreground">Destinos internacionales</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Estamos preparando el catalogo internacional. Si quieres, te ayudamos a cotizar por WhatsApp mientras
@@ -27,7 +38,8 @@ export default function InternationalDestinations() {
             Quiero asesoría
           </a>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }
