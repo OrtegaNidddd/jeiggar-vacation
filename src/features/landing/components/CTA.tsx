@@ -33,7 +33,7 @@ export default function CTA() {
 
   return (
     <section className="py-14">
-      <div data-aos="fade-up" className="mx-auto max-w-6xl overflow-hidden rounded-[28px] border border-(--border) bg-(--bg) px-6 py-10 sm:px-10 md:px-12 md:py-12">
+      <div data-aos="fade-up" className="mx-auto max-w-6xl overflow-hidden rounded-[28px] border border-border bg-(--bg) px-6 py-10 sm:px-10 md:px-12 md:py-12">
         <div className="relative">
           <div
             aria-hidden="true"

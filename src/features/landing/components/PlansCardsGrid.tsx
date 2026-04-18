@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button";
 import type { PlanCardContent } from "@/domain/types/Plans";
+import { getPublicStorageUrl } from "@/lib/storage";
 import {
   PLAN_INFO_TEMPLATE,
   WHATSAPP_NUMBER,
@@ -33,7 +34,7 @@ export default function PlansCardsGrid({ cards }: PlansCardsGridProps) {
         >
           <div className="relative h-52 overflow-hidden">
             <img
-              src={plan.image}
+              src={getPublicStorageUrl(plan.image)}
               alt={plan.imageAlt}
               loading="lazy"
               className="h-full w-full object-cover transition duration-500 hover:scale-105"

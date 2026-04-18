@@ -1,8 +1,6 @@
 import { CircleDollarSign, ShieldCheck, UserRound } from "lucide-react";
 import type { PlansPageContent } from "@/domain/types/Plans";
 
-import { placeImages } from "@/mocks/shared/place-images.mock";
-
 export const plansPageMock: PlansPageContent = {
   hero: {
     badge: "Experiencias memorables",
@@ -10,7 +8,7 @@ export const plansPageMock: PlansPageContent = {
     titleLineTwo: "Exclusivos",
     description:
       "Descubre un mundo de posibilidades diseñado por expertos colombianos. Desde la espiritualidad de las tierras santas hasta la magia de los parques temáticos.",
-    image: placeImages.heroImages.mainHero,
+    image: "santa-marta/parque-tayrona.webp",
     imageAlt: "Panorámica de destino turístico",
     primaryButton: {
       label: "Explorar más destinos",
@@ -24,38 +22,35 @@ export const plansPageMock: PlansPageContent = {
     destinations: [
       {
         name: "Bogotá",
-        image: placeImages.cities.bogota,
+        image: "bogota.webp",
         imageAlt: "Centro histórico de Bogotá",
       },
       {
         name: "Cali",
-        image: placeImages.cities.cali,
+        image: "cali.webp",
         imageAlt: "Vista urbana de Cali",
       },
       {
         name: "Cartagena",
-        image: placeImages.cities.cartagena,
+        image: "cartagena.webp",
         imageAlt: "Ciudad amurallada de Cartagena",
       },
       {
         name: "Medellín",
-        image: placeImages.cities.medellin,
+        image: "medellin.webp",
         imageAlt: "Panorámica de Medellín",
       },
       {
-        name: "Santa Marta",
-        image: placeImages.cities.santaMarta,
-        imageAlt: "Costa de Santa Marta",
-      },
-      {
         name: "Tayrona",
-        image: placeImages.destinations.parqueTayrona,
+        image: "santa-marta/parque-tayrona.webp",
         imageAlt: "Playa del Parque Tayrona",
+        storageBucket: "destinations",
       },
       {
         name: "Eje Cafetero",
-        image: placeImages.destinations.rutaCafePremium,
+        image: "pereira/eje-cafetero.webp",
         imageAlt: "Paisaje del Eje Cafetero",
+        storageBucket: "destinations",
       },
     ],
   },
@@ -64,7 +59,7 @@ export const plansPageMock: PlansPageContent = {
       title: "Peregrinación",
       description:
         "Viajes espirituales y religiosos que alimentan el alma. Recorre los lugares más sagrados del mundo con guías especializados.",
-      image: placeImages.destinations.laCandelaria,
+      image: "bogota/la-candelaria.webp",
       imageAlt: "Recorrido histórico para peregrinación",
       category: "Incluye guía",
       cta: {
@@ -75,7 +70,7 @@ export const plansPageMock: PlansPageContent = {
       title: "Cruceros",
       description:
         "Aventuras inolvidables en alta mar con todo incluido. Lujo, gastronomía y diversión mientras visitas múltiples puertos.",
-      image: placeImages.destinations.islasRosario,
+      image: "cartagena/islas-rosario.webp",
       imageAlt: "Crucero navegando por el mar",
       category: "Ruta oceánica",
       cta: {
@@ -86,7 +81,7 @@ export const plansPageMock: PlansPageContent = {
       title: "Parques",
       description:
         "La magia de Disney World, Universal y más para toda la familia. Entradas, hospedaje y traslados garantizados.",
-      image: placeImages.destinations.ciudadAmurallada,
+      image: "cartagena/ciudad-amurallada.webp",
       imageAlt: "Viaje de parques y atracciones",
       category: "Diversión temática",
       cta: {

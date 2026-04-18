@@ -1,12 +1,21 @@
 import AnimatedCard from "@/components/ui/AnimatedCard";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 import ValuesSection from "./components/ValuesSection";
 import { aboutUsCardsMock, aboutUsContentMock } from "@/mocks/landing";
 
 export default function AboutUs() {
   return (
     <div className="bg-(--bg) p-4" data-aos="fade-up">
+      <Breadcrumbs
+        className="mb-4 pt-2"
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Nosotros" },
+        ]}
+      />
+
       {/* HERO */}
-        <div className="mx-auto border-b border-(--border) max-w-6xl my-8 flex flex-col items-center text-center">
+        <div className="mx-auto border-b border-border max-w-6xl my-8 flex flex-col items-center text-center">
           <h1 data-aos="fade-down" className="text-3xl md:text-4xl font-bold text-(--text) mb-6">
             {aboutUsContentMock.title}
           </h1>

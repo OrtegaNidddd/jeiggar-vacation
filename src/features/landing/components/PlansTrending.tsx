@@ -1,4 +1,5 @@
 import type { PlansTrendingContent } from "@/domain/types/Plans";
+import { getPublicStorageUrl } from "@/lib/storage";
 
 type PlansTrendingProps = {
   content: PlansTrendingContent;
@@ -11,11 +12,11 @@ export default function PlansTrending({ content }: PlansTrendingProps) {
         <h2 data-aos="fade-right" className="text-2xl font-bold text-slate-900">{content.title}</h2>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-7">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 ">
         {content.destinations.map((destination, index) => (
           <div key={destination.name} data-aos="zoom-in" data-aos-delay={index * 50} className="flex flex-col items-center gap-2 text-center">
             <img
-              src={destination.image}
+              src={getPublicStorageUrl(destination.image, destination.storageBucket ?? "cities")}
               alt={destination.imageAlt}
               loading="lazy"
               className="h-24 w-24 rounded-full border-2 border-white object-cover shadow-md"
