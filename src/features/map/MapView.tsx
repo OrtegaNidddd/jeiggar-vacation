@@ -5,6 +5,7 @@ import { Map, MapControls, MapMarker, MarkerContent, MarkerLabel, MarkerPopup } 
 import type { MapRef } from '@/components/ui/Map'
 import Button from '@/components/ui/Button'
 import type { CountryMapData, City, Destination, MapState } from '@/domain/types/Map'
+import { getPublicStorageUrl } from '@/lib/storage'
 
 type MapViewProps = {
   data: CountryMapData
@@ -117,6 +118,12 @@ export default function MapView({ data }: MapViewProps) {
         city.filteredDestinations.length > 0
       )
   }, [data.cities, normalizedSearch])
+
+  const getCityImageUrl = (city: City) =>
+    city.imageUrl ? getPublicStorageUrl(city.imageUrl, 'cities') : ''
+
+  const getDestinationImageUrl = (destination: Destination) =>
+    destination.imageUrl ? getPublicStorageUrl(destination.imageUrl) : ''
 
   return (
     <section className="px-4 pt-4" data-aos="fade-up">
@@ -260,10 +267,10 @@ export default function MapView({ data }: MapViewProps) {
                   <MarkerLabel position="bottom">{city.name}</MarkerLabel>
                 </MarkerContent>
                 <MarkerPopup trigger="hover" className="p-0 w-56">
-                  {city.imageUrl && (
+                  {getCityImageUrl(city) && (
                     <div className="h-28 overflow-hidden rounded-t-md">
                       <img
-                        src={city.imageUrl}
+                        src={getCityImageUrl(city)}
                         alt={city.name}
                         loading="lazy"
                         className="w-full h-full object-cover"
@@ -294,10 +301,10 @@ export default function MapView({ data }: MapViewProps) {
                   <MarkerLabel position="bottom">{dest.name}</MarkerLabel>
                 </MarkerContent>
                 <MarkerPopup className="p-0 w-62">
-                  {dest.imageUrl && (
+                  {getDestinationImageUrl(dest) && (
                     <div className="h-32 overflow-hidden rounded-t-md">
                       <img
-                        src={dest.imageUrl}
+                        src={getDestinationImageUrl(dest)}
                         alt={dest.name}
                         loading="lazy"
                         className="w-full h-full object-cover"

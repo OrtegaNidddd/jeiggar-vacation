@@ -1,5 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import type { CountryMapData } from "@/domain/types/Map";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
+import { fetchCountryMapData } from './map.service'
 
 const MapView = lazy(() => import("@/features/map/MapView"));
 
@@ -18,31 +20,59 @@ function MapRouteFallback({ message }: { message: string }) {
 
 export default function MapRoute() {
   const [data, setData] = useState<CountryMapData | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
 
     async function loadMapRoute() {
-      const [mockData] = await Promise.all([
-        import("@/mocks/map.mock"),
-        import("@/features/map/MapView"), // precalienta el chunk del componente
-      ]);
-      if (isMounted) setData(mockData.colombiaMapData);
+      try {
+        const [data] = await Promise.all([
+          fetchCountryMapData('colombia'),
+          import('@/features/map/MapView'),
+        ])
+
+        if (isMounted) {
+          setData(data)
+          setLoadError(null)
+        }
+      } catch (error) {
+        if (isMounted) {
+          setData(null)
+          setLoadError(error instanceof Error ? error.message : 'No se pudo cargar el mapa')
+        }
+      }
     }
 
-    void loadMapRoute();
+    void loadMapRoute()
+
     return () => {
-      isMounted = false;
-    };
-  }, []);
+      isMounted = false
+    }
+  }, [])
+
+  if (loadError) {
+    return <MapRouteFallback message="No se pudo cargar el mapa." />;
+  }
 
   if (!data) {
     return <MapRouteFallback message="Cargando mapa..." />;
   }
 
   return (
-    <Suspense fallback={<MapRouteFallback message="Cargando visor de mapa..." />}>
-      <MapView data={data} />
-    </Suspense>
+    <div className="px-4 pt-4">
+      <Breadcrumbs
+        className="mb-4"
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Destinos", to: "/destinos" },
+          { label: "Nacionales" },
+        ]}
+      />
+
+      <Suspense fallback={<MapRouteFallback message="Cargando visor de mapa..." />}>
+        <MapView data={data} />
+      </Suspense>
+    </div>
   );
 }
