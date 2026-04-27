@@ -21,34 +21,6 @@ export const HERO_RESERVATION_TEMPLATE = [
   "Quiero reservar ahora y recibir asesoría para mi viaje.",
 ].join("\n");
 
-export const QUOTE_TEMPLATE = [
-  "*Nueva solicitud de cotización*",
-  "━━━━━━━━━━━━━━━━━━",
-  "",
-  "*Cliente:* {fullName}",
-  "*Correo:* {email}",
-  "*Teléfono:* {phone}",
-  "*Origen:* {originCity}",
-  "",
-  "*Viaje:*",
-  "Destino: {destination}",
-  "Tipo: {destinationType}",
-  "Fechas: {departureDate} → {returnDate}",
-  "Personas: {adults} adulto(s), {children} niño(s)",
-  "Motivo: {travelType}",
-  "",
-  "*Preferencias:*",
-  "Alojamiento: {accommodation}",
-  "Transporte: {transport}",
-  "Extras: {extras}",
-  "",
-  "*Presupuesto:*",
-  "{budgetRange} - {customBudget}",
-  "",
-  "*Notas:*",
-  "{comments}",
-].join("\n");
-
 export const FOOTER_WHATSAPP_TEMPLATE = [
   "Hola, Jeiggar Vacation.",
   "Te escribo desde el boton de WhatsApp del footer.",

@@ -187,7 +187,9 @@ body {
   .maplibregl-popup-tip {
     @apply hidden!;
   }
+}
 
+@layer components {
   /* ============================================================
    JEIGGAR VACATION — Quote Page & Form Styles
    Compatible con globals.css (variables ya definidas)

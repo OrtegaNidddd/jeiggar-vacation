@@ -1,5 +1,6 @@
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
 
 export default function ContactActions() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export default function ContactActions() {
 
       <div className="grid gap-3">
         <button
-            onClick={() => window.open("https://wa.me/573177338883", "_blank")}
+            onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}`, "_blank")}
             className="flex items-center justify-center gap-2 rounded-xl border-2 border-emerald-500 bg-transparent px-4 py-3 font-semibold text-emerald-600 hover:bg-emerald-50 transition"
         >
           <MessageCircle size={20} />
