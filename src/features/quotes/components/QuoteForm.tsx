@@ -159,7 +159,7 @@ export default function QuoteForm() {
 
     if (!formData.fullName.trim()) return "Ingresa el nombre completo.";
     if (!formData.email.trim()) return "Ingresa el correo electrónico.";
-    if (!formData.phone.trim()) return "Ingresa el número de WhatsApp.";
+    if (!formData.phone.trim()) return "Ingresa el número de teléfono.";
     if (!formData.destinationType) return "Selecciona el tipo de destino.";
     if (!formData.destination) return "Selecciona el destino.";
     if (!formData.departureDate) return "Selecciona la fecha de salida.";
@@ -241,7 +241,7 @@ export default function QuoteForm() {
           </label>
 
           <label>
-            WhatsApp *
+            Teléfono *
             <input
               type="tel"
               name="phone"
