@@ -82,7 +82,7 @@ function formatValue(value: string) {
   if (!value) return "No especificado";
 
   return value
-    .replace("-", " ")
+    .replace(/-/g, " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 

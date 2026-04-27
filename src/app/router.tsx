@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
       { path: "servicios/requisitos-de-viaje", element: <TravelRequirementsPage /> },
       { path: "servicios/conectividad", element: <ConnectivityPage /> },
       { path: "servicios/transporte", element: <TransportPage /> },
-      { path: "/cotizar", element: <QuotePage />, }
+      { path: "cotizar", element: <QuotePage /> }
     ]
   }
 ]);
