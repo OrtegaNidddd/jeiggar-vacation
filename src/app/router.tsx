@@ -5,7 +5,8 @@ import AppShell from "./AppShell";
 const Home = lazy(() => import("@/features/landing/Home"));
 const AboutUs = lazy(() => import("@/features/landing/AboutUs"));
 const Plans = lazy(() => import("@/features/landing/Plans"));
-const Contact = lazy(() => import("@/features/landing/Contact"));
+const ContactPage = lazy(() => import("@/features/contact/pages/ContactPage"));
+const QuotePage = lazy(() => import("@/features/quotes/pages/QuotePage"));
 const DestinationsSelector = lazy(() => import("@/features/destinations/DestinationsSelector"));
 const InternationalDestinations = lazy(() => import("@/features/destinations/InternationalDestinations"));
 const DestinationDetail = lazy(() => import("@/features/destinations/DestinationsDetails"));
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "nosotros", element: <AboutUs /> },
       { path: "planes", element: <Plans /> },
-      { path: "contacto", element: <Contact /> },
+      { path: "contacto", element: <ContactPage /> },
       { path: "destinos", element: <DestinationsSelector /> },
       { path: "destinos/nacionales", element: <MapRoute /> },
       { path: "destinos/internacionales", element: <InternationalDestinations /> },
@@ -36,7 +37,8 @@ export const router = createBrowserRouter([
       { path: "servicios/tramites-y-documentacion", element: <ProceduresPage /> },
       { path: "servicios/requisitos-de-viaje", element: <TravelRequirementsPage /> },
       { path: "servicios/conectividad", element: <ConnectivityPage /> },
-      { path: "servicios/transporte", element: <TransportPage /> }
+      { path: "servicios/transporte", element: <TransportPage /> },
+      { path: "/cotizar", element: <QuotePage />, }
     ]
   }
 ]);

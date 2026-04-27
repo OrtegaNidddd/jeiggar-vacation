@@ -2,9 +2,51 @@ type TemplateValues = Record<string, string | number>;
 
 export const WHATSAPP_NUMBER = "573208396909";
 
+export const CONTACT_FORM_TEMPLATE = [
+  "*NUEVO CONTACTO WEB*",
+  "━━━━━━━━━━━━━━━━━━",
+  "",
+  "*Cliente:* {name}",
+  "*Correo:* {email}",
+  "",
+  "*Mensaje:*",
+  "{message}",
+  "",
+  "━━━━━━━━━━━━━━━━━━",
+  "Enviado desde la página web",
+].join("\n");
+
 export const HERO_RESERVATION_TEMPLATE = [
   "Hola, Jeiggar Vacation.",
   "Quiero reservar ahora y recibir asesoría para mi viaje.",
+].join("\n");
+
+export const QUOTE_TEMPLATE = [
+  "*Nueva solicitud de cotización*",
+  "━━━━━━━━━━━━━━━━━━",
+  "",
+  "*Cliente:* {fullName}",
+  "*Correo:* {email}",
+  "*Teléfono:* {phone}",
+  "*Origen:* {originCity}",
+  "",
+  "*Viaje:*",
+  "Destino: {destination}",
+  "Tipo: {destinationType}",
+  "Fechas: {departureDate} → {returnDate}",
+  "Personas: {adults} adulto(s), {children} niño(s)",
+  "Motivo: {travelType}",
+  "",
+  "*Preferencias:*",
+  "Alojamiento: {accommodation}",
+  "Transporte: {transport}",
+  "Extras: {extras}",
+  "",
+  "*Presupuesto:*",
+  "{budgetRange} - {customBudget}",
+  "",
+  "*Notas:*",
+  "{comments}",
 ].join("\n");
 
 export const FOOTER_WHATSAPP_TEMPLATE = [
@@ -26,13 +68,6 @@ export const PLAN_INFO_TEMPLATE = [
   "Categoria: {planCategory}",
 ].join("\n");
 
-type SendWhatsAppMessageOptions = {
-  phone: string;
-  message?: string;
-  template?: string;
-  values?: TemplateValues;
-};
-
 export const DESTINATION_RESERVATION_TEMPLATE = [
   "*Nueva solicitud de reserva*",
   "",
@@ -45,7 +80,17 @@ export const DESTINATION_RESERVATION_TEMPLATE = [
   "Contacto: {contact}",
 ].join("\n");
 
-export function buildWhatsAppMessage(template: string, values: TemplateValues = {}): string {
+type SendWhatsAppMessageOptions = {
+  phone: string;
+  message?: string;
+  template?: string;
+  values?: TemplateValues;
+};
+
+export function buildWhatsAppMessage(
+  template: string,
+  values: TemplateValues = {}
+): string {
   return template.replace(/\{(\w+)\}/g, (_, key: string) => {
     const value = values[key];
     return value === undefined ? "" : String(value);
@@ -65,7 +110,10 @@ export function sendWhatsAppMessage({
     return;
   }
 
-  const url = `https://api.whatsapp.com/send?phone=${sanitizedPhone}&text=${encodeURIComponent(finalMessage)}`;
+  const url = `https://api.whatsapp.com/send?phone=${sanitizedPhone}&text=${encodeURIComponent(
+    finalMessage
+  )}`;
+
   const popup = window.open(url, "_blank", "noopener,noreferrer");
 
   if (!popup) {
