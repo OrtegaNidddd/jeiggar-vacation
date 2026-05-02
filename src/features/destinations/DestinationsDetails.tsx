@@ -4,7 +4,7 @@ import { ArrowLeft, MapPin, Thermometer, CheckCircle2, Send } from 'lucide-react
 import Breadcrumbs from '@/components/common/Breadcrumbs'
 import { Map, MapMarker, MarkerContent, MarkerPopup } from '@/components/ui/Map'
 import type { Destination } from '@/domain/types/Map'
-import { fetchDestinationBySlug } from '@/features/destinations/destinations.service'
+import { fetchDestinationBySlug } from '@/features/destinations/services/destinations.service'
 import { getPublicStorageUrl } from '@/lib/storage'
 import {
   DESTINATION_RESERVATION_TEMPLATE,
