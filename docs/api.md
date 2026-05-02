@@ -10,33 +10,33 @@ El cliente se define en `src/lib/supabase.ts` usando `@supabase/supabase-js` y v
 
 Si faltan variables, el cliente lanza un error para evitar ejecuciones con configuración incompleta.
 
-## Resolución de recursos públicos
+## Resolución de recursos públicos e Imágenes
 `src/lib/storage.ts` expone `getPublicStorageUrl(path, bucket?)` para construir URLs públicas de archivos en Supabase Storage.
 
-Comportamiento:
-- Si `path` ya es URL absoluta, se usa tal cual.
-- Si `path` apunta a assets locales (`/assets/...`), se conserva para compatibilidad.
-- En otros casos, construye URL pública con bucket y base de Supabase.
+El proyecto utiliza un bucket llamado `destinations` para almacenar las imágenes de los destinos subidas desde el panel admin.
+- Las imágenes se nombran como `slug-timestamp.ext`.
+- Se almacena solo la ruta relativa en la base de datos.
 
 ## Servicios de datos disponibles
 
-### Destinos
-Archivo: `src/features/destinations/destinations.service.ts`
+### Destinos (Público)
+Archivo: `src/features/destinations/services/destinations.service.ts`
 
-Función pública:
-- `fetchDestinationBySlug(slug: string): Promise<Destination | null>`
+Funciones:
+- `fetchDestinationBySlug(slug: string)`: Obtiene el detalle de un destino.
+- `fetchFeaturedDestinations()`: Obtiene los destinos marcados como destacados para el Home.
 
-Resumen:
-- Consulta `destinations` y relación con `cities`.
-- Mapea columnas de base de datos al tipo de dominio `Destination`.
-- Devuelve `null` cuando no existe el slug consultado.
+### Destinos (Admin)
+Archivo: `src/features/destinations/services/destinationsAdmin.service.ts`
+
+Funciones para CRUD administrativo (requieren sesión activa):
+- `fetchAllDestinations()`
+- `fetchDestinationById(id: string)`
+- `upsertDestination(payload: any)`
+- `deleteDestination(id: string)`
 
 ### Mapa
 Archivo: `src/features/map/map.service.ts`
 
 Función pública:
-- `fetchCountryMapData(slug = 'colombia'): Promise<CountryMapData>`
-
-Resumen:
-- Ejecuta RPC `get_country_map_data` en Supabase.
-- Lanza error si la consulta falla o si no hay datos.
+- `fetchCountryMapData(slug = 'colombia')`: Ejecuta RPC `get_country_map_data`.
