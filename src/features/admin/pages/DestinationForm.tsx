@@ -5,6 +5,8 @@ import {
   createDestination,
   updateDestination,
   fetchDestinationById,
+  createCity,
+  createCountry,
   type DestinationType,
 } from '@/features/destinations/services/destinationsAdmin.service'
 import { getPublicStorageUrl } from '@/lib/storage'
@@ -104,6 +106,26 @@ export default function DestinationForm() {
   const [saving, setSaving]   = useState(false)
   const [error, setError]     = useState<string | null>(null)
 
+  const [showNewCity, setShowNewCity] = useState(false)
+  const [newCity, setNewCity] = useState({ name: '', lat: '', lng: '', zoom: '12', description: '', sort_order: '1' })
+  const [creatingCity, setCreatingCity] = useState(false)
+  const [newCityImage, setNewCityImage] = useState<File | null>(null)
+  const [newCityPreview, setNewCityPreview] = useState<string | null>(null)
+
+  const [showNewCountry, setShowNewCountry] = useState(false)
+  const [newCountry, setNewCountry] = useState({ name: '', lat: '', lng: '', zoom: '5', description: '', sort_order: '1' })
+  const [creatingCountry, setCreatingCountry] = useState(false)
+
+  useEffect(() => {
+    if (newCityImage) {
+      const url = URL.createObjectURL(newCityImage)
+      setNewCityPreview(url)
+      return () => URL.revokeObjectURL(url)
+    } else {
+      setNewCityPreview(null)
+    }
+  }, [newCityImage])
+
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -196,6 +218,87 @@ export default function DestinationForm() {
   function handleNameChange(val: string) {
     set('name', val)
     if (!isEdit) set('slug', generateSlug(val))
+  }
+
+  async function handleCreateCity() {
+    if (!newCity.name.trim() || !newCity.lat || !newCity.lng) return
+    setCreatingCity(true)
+    const slug = generateSlug(newCity.name)
+    const defaultCountry = countries.find(c => c.slug === 'colombia' || c.name.toLowerCase() === 'colombia')
+    const countryId = defaultCountry ? defaultCountry.id : (countries[0]?.id || '')
+    
+    let finalImageUrl = null
+    if (newCityImage) {
+      const fileExt = newCityImage.name.split('.').pop()
+      const fileName = `city-${slug}-${Date.now()}.${fileExt}`
+      
+      const { error: uploadError } = await supabase.storage
+        .from('destinations')
+        .upload(fileName, newCityImage, { upsert: true })
+
+      if (uploadError) {
+        setError('Error al subir la imagen de la ciudad: ' + uploadError.message)
+        setCreatingCity(false)
+        return
+      }
+      finalImageUrl = fileName
+    }
+
+    const { data, error } = await createCity({ 
+      name: newCity.name, 
+      slug, 
+      country_id: countryId,
+      lat: parseFloat(newCity.lat),
+      lng: parseFloat(newCity.lng),
+      zoom: parseFloat(newCity.zoom) || 12,
+      description: newCity.description || `${newCity.name}, destino turístico.`,
+      sort_order: parseInt(newCity.sort_order) || 1,
+      image_url: finalImageUrl,
+      is_active: true
+    })
+    setCreatingCity(false)
+    
+    if (error) {
+      setError('Error creando ciudad: ' + error.message)
+      return
+    }
+    
+    if (data) {
+      setCities(prev => [...prev, { id: data.id, name: data.name }].sort((a, b) => a.name.localeCompare(b.name)))
+      set('city_id', data.id)
+      setNewCity({ name: '', lat: '', lng: '', zoom: '12', description: '', sort_order: '1' })
+      setNewCityImage(null)
+      setShowNewCity(false)
+    }
+  }
+
+  async function handleCreateCountry() {
+    if (!newCountry.name.trim() || !newCountry.lat || !newCountry.lng) return
+    setCreatingCountry(true)
+    const slug = generateSlug(newCountry.name)
+    const { data, error } = await createCountry({ 
+      name: newCountry.name, 
+      slug,
+      lat: parseFloat(newCountry.lat),
+      lng: parseFloat(newCountry.lng),
+      zoom: parseFloat(newCountry.zoom) || 5,
+      description: newCountry.description || `${newCountry.name}, destino turístico.`,
+      sort_order: parseInt(newCountry.sort_order) || 1,
+      is_active: true
+    })
+    setCreatingCountry(false)
+    
+    if (error) {
+      setError('Error creando país: ' + error.message)
+      return
+    }
+    
+    if (data) {
+      setCountries(prev => [...prev, { id: data.id, name: data.name }].sort((a, b) => a.name.localeCompare(b.name)))
+      set('country_id', data.id)
+      setNewCountry({ name: '', lat: '', lng: '', zoom: '5', description: '', sort_order: '1' })
+      setShowNewCountry(false)
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -434,34 +537,157 @@ export default function DestinationForm() {
 
           {isNational ? (
             <div>
-              <Label>Ciudad {isNational && '*'}</Label>
-              <Select
-                value={form.city_id}
-                onChange={e => set('city_id', e.target.value)}
-                required={isNational}
-              >
-                <option value="">Selecciona una ciudad...</option>
-                {cities.map(c => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-              </Select>
+              <div className="flex items-center justify-between">
+                <Label>Ciudad {isNational && '*'}</Label>
+                {!showNewCity && (
+                  <button type="button" onClick={() => setShowNewCity(true)} className="text-xs text-primary font-medium hover:underline">
+                    + Nueva ciudad
+                  </button>
+                )}
+              </div>
+              {showNewCity ? (
+                <div className="space-y-3 p-4 border border-border rounded-xl bg-(--bg-muted)/50 mt-2">
+                  <h4 className="text-sm font-semibold text-(--text)">Crear nueva ciudad</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="col-span-2">
+                      <Label>Nombre *</Label>
+                      <Input value={newCity.name} onChange={e => setNewCity(prev => ({ ...prev, name: e.target.value }))} placeholder="Ej: San Gil" autoFocus />
+                    </div>
+                    <div>
+                      <Label>Latitud *</Label>
+                      <Input type="number" step="any" value={newCity.lat} onChange={e => setNewCity(prev => ({ ...prev, lat: e.target.value }))} placeholder="6.5563" />
+                    </div>
+                    <div>
+                      <Label>Longitud *</Label>
+                      <Input type="number" step="any" value={newCity.lng} onChange={e => setNewCity(prev => ({ ...prev, lng: e.target.value }))} placeholder="-73.1352" />
+                    </div>
+                    <div>
+                      <Label>Zoom</Label>
+                      <Input type="number" step="any" value={newCity.zoom} onChange={e => setNewCity(prev => ({ ...prev, zoom: e.target.value }))} />
+                    </div>
+                    <div>
+                      <Label>Orden</Label>
+                      <Input type="number" value={newCity.sort_order} onChange={e => setNewCity(prev => ({ ...prev, sort_order: e.target.value }))} />
+                    </div>
+                    <div className="col-span-2">
+                      <Label>Descripción</Label>
+                      <Textarea value={newCity.description} onChange={e => setNewCity(prev => ({ ...prev, description: e.target.value }))} placeholder="Descripción de la ciudad..." rows={2} />
+                    </div>
+                    <div className="col-span-2 mt-2">
+                      <Label>Imagen de la ciudad (Opcional)</Label>
+                      <div className="flex items-center gap-4 mt-1">
+                        {newCityPreview && (
+                          <div className="relative">
+                            <img src={newCityPreview} alt="Vista previa" className="h-16 w-16 object-cover rounded-lg border border-border" />
+                            <button
+                              type="button"
+                              onClick={() => setNewCityImage(null)}
+                              className="absolute -top-2 -right-2 bg-red-100 text-red-600 rounded-full p-0.5 hover:bg-red-200"
+                            >
+                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                        )}
+                        <label className="cursor-pointer px-4 py-2 bg-(--bg-muted) border border-border rounded-xl text-sm font-medium hover:bg-gray-100 transition-colors">
+                          Seleccionar imagen
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            className="hidden" 
+                            onChange={e => {
+                              if (e.target.files && e.target.files.length > 0) {
+                                setNewCityImage(e.target.files[0])
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-2 mt-4">
+                    <button type="button" onClick={() => setShowNewCity(false)} className="px-4 py-2 border border-border text-(--text-muted) text-sm rounded-xl hover:bg-white transition-colors">Cancelar</button>
+                    <button type="button" onClick={handleCreateCity} disabled={creatingCity || !newCity.name.trim() || !newCity.lat || !newCity.lng} className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-xl hover:bg-(--primary-700) disabled:opacity-50 transition-colors">
+                      {creatingCity ? 'Guardando...' : 'Guardar ciudad'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Select
+                  value={form.city_id}
+                  onChange={e => set('city_id', e.target.value)}
+                  required={isNational}
+                >
+                  <option value="">Selecciona una ciudad...</option>
+                  {cities.map(c => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </Select>
+              )}
             </div>
           ) : (
             <div>
-              <Label>País</Label>
-              <Select
-                value={form.country_id}
-                onChange={e => set('country_id', e.target.value)}
-              >
-                <option value="">Selecciona un país...</option>
-                {countries.map(c => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-              </Select>
+              <div className="flex items-center justify-between">
+                <Label>País *</Label>
+                {!showNewCountry && (
+                  <button type="button" onClick={() => setShowNewCountry(true)} className="text-xs text-primary font-medium hover:underline">
+                    + Nuevo país
+                  </button>
+                )}
+              </div>
+              {showNewCountry ? (
+                <div className="space-y-3 p-4 border border-border rounded-xl bg-(--bg-muted)/50 mt-2">
+                  <h4 className="text-sm font-semibold text-(--text)">Crear nuevo país</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="col-span-2">
+                      <Label>Nombre *</Label>
+                      <Input value={newCountry.name} onChange={e => setNewCountry(prev => ({ ...prev, name: e.target.value }))} placeholder="Ej: México" autoFocus />
+                    </div>
+                    <div>
+                      <Label>Latitud *</Label>
+                      <Input type="number" step="any" value={newCountry.lat} onChange={e => setNewCountry(prev => ({ ...prev, lat: e.target.value }))} placeholder="23.6345" />
+                    </div>
+                    <div>
+                      <Label>Longitud *</Label>
+                      <Input type="number" step="any" value={newCountry.lng} onChange={e => setNewCountry(prev => ({ ...prev, lng: e.target.value }))} placeholder="-102.5528" />
+                    </div>
+                    <div>
+                      <Label>Zoom</Label>
+                      <Input type="number" step="any" value={newCountry.zoom} onChange={e => setNewCountry(prev => ({ ...prev, zoom: e.target.value }))} />
+                    </div>
+                    <div>
+                      <Label>Orden</Label>
+                      <Input type="number" value={newCountry.sort_order} onChange={e => setNewCountry(prev => ({ ...prev, sort_order: e.target.value }))} />
+                    </div>
+                    <div className="col-span-2">
+                      <Label>Descripción</Label>
+                      <Textarea value={newCountry.description} onChange={e => setNewCountry(prev => ({ ...prev, description: e.target.value }))} placeholder="Descripción del país..." rows={2} />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-2 mt-2">
+                    <button type="button" onClick={() => setShowNewCountry(false)} className="px-4 py-2 border border-border text-(--text-muted) text-sm rounded-xl hover:bg-white transition-colors">Cancelar</button>
+                    <button type="button" onClick={handleCreateCountry} disabled={creatingCountry || !newCountry.name.trim() || !newCountry.lat || !newCountry.lng} className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-xl hover:bg-(--primary-700) disabled:opacity-50 transition-colors">
+                      {creatingCountry ? 'Guardando...' : 'Guardar país'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Select
+                  value={form.country_id}
+                  onChange={e => set('country_id', e.target.value)}
+                  required={!isNational}
+                >
+                  <option value="">Selecciona un país...</option>
+                  {countries.map(c => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </Select>
+              )}
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 mt-4">
             <div>
               <Label>Latitud {isNational && '*'}</Label>
               <Input
