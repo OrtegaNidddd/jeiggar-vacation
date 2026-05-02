@@ -55,7 +55,7 @@ export default function HeroCard({
   return (
     <div
       className={cn(
-        "relative flex min-h-105 items-center overflow-hidden rounded-3xl md:min-h-130",
+        "relative flex min-h-[480px] sm:min-h-[520px] md:min-h-[600px] items-center overflow-hidden rounded-2xl md:rounded-3xl",
         rootClassName,
       )}
     >

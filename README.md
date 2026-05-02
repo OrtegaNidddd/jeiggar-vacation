@@ -1,11 +1,9 @@
 # Jeiggar Vacation
 
-> Plataforma web de viajes para explorar destinos y servicios turísticos con contacto directo por WhatsApp y datos integrados desde Supabase.
+> Plataforma turística moderna para la exploración y reserva de destinos en Colombia e internacionales.
 
 ## ¿Qué es esto?
-Jeiggar Vacation es una aplicación frontend construida con React para una agencia de viajes. Centraliza contenido de marca, planes, destinos nacionales e internacionales, y servicios como conectividad, asistencia médica, trámites, transporte y requisitos de viaje.
-
-El proyecto usa rutas públicas en una SPA, componentes compartidos, un mapa interactivo para destinos nacionales y una capa de servicios para consultar información desde Supabase.
+Es una aplicación web diseñada para ofrecer experiencias de viaje personalizadas. Permite a los usuarios explorar un mapa interactivo de destinos, consultar detalles de planes turísticos y gestionar reservas a través de canales directos como WhatsApp.
 
 ## Tecnologías
 - React 19
@@ -13,9 +11,9 @@ El proyecto usa rutas públicas en una SPA, componentes compartidos, un mapa int
 - Vite
 - Tailwind CSS 4
 - React Router DOM
-- Supabase JavaScript SDK
+- Supabase JavaScript SDK (Auth, DB, Storage)
 - MapLibre GL
-- AOS
+- AOS (Animate On Scroll)
 - Lucide React
 - shadcn y Radix UI
 
@@ -57,14 +55,25 @@ npm run dev
 - `npm run preview`: levanta una vista previa local del build.
 - `npm run lint`: ejecuta ESLint sobre el código fuente.
 
+## Panel de Administración
+El proyecto incluye un panel de gestión privada en la ruta `/admin`.
+- **Autenticación**: Integrado con Supabase Auth.
+- **Funcionalidades**: CRUD de destinos, gestión de destacados y subida de imágenes a Storage.
+
 ## Estructura del proyecto
 ```text
 src/
   app/          # Router, shell principal y utilidades de navegación global
   assets/       # Recursos estáticos (imágenes y contenido multimedia)
+  auth/         # Contexto y hooks de autenticación con Supabase
   components/   # Componentes compartidos y UI reutilizable
   domain/       # Tipos y contratos de dominio
-  features/     # Módulos por funcionalidad (landing, destinos, mapa, servicios)
+  features/     # Módulos por funcionalidad
+    admin/      # Panel de gestión de contenidos y autenticación
+    landing/    # Secciones principales del home y páginas informativas
+    destinations/# Detalle de destinos y servicios de consulta
+    map/        # Módulo de mapa interactivo
+    services/   # Páginas de servicios especializados
   hooks/        # Hooks reutilizables
   lib/          # Integraciones y utilidades transversales (Supabase, storage, WhatsApp)
   mocks/        # Contenido estructurado para secciones y componentes

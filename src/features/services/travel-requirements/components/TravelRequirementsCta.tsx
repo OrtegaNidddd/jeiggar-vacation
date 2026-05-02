@@ -24,7 +24,7 @@ export const TravelRequirementsCta = ({
         <div className="mt-6" data-aos="fade-up" data-aos-delay={120}>
           <Link
             to={buttonHref ?? "/contacto"}
-            className="inline-flex items-center justify-center rounded-full bg-(--primary) px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-(--primary-700)"
+            className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-(--primary-700)"
           >
             {buttonLabel}
           </Link>

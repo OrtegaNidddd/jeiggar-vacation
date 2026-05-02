@@ -1,44 +1,31 @@
 # Arquitectura
 
 ## Visión general
-Jeiggar Vacation es una SPA de React organizada por módulos funcionales. La aplicación comparte un layout global y enruta páginas públicas de landing, destinos, mapa y servicios especializados.
+Jeiggar Vacation es una SPA de React organizada por módulos funcionales. La aplicación se divide en dos grandes áreas: la web pública y el panel administrativo.
 
-La arquitectura combina:
-- Capa de presentación basada en componentes reutilizables.
-- Capa de dominio con tipos de datos explícitos.
-- Capa de servicios para consulta de datos en Supabase.
-- Capa de utilidades para resolver URLs públicas de storage y acciones comunes.
+## Áreas Principales
+1.  **Web Pública**: Gestionada por `AppShell.tsx`, incluye header y footer global.
+2.  **Panel Admin**: Gestionada por `AdminLayout.tsx`, protegida por autenticación y con navegación lateral propia.
+
+## Autenticación y Seguridad
+- **Supabase Auth**: Se utiliza para gestionar el acceso al panel administrativo.
+- **ProtectedRoute**: Componente que envuelve las rutas de `/admin` para verificar la sesión del usuario.
+- **Contexto de Auth**: Ubicado en `src/auth/`, centraliza el estado del usuario y las funciones de login/logout.
 
 ## Capas principales
-- `src/app`: composición global de la app, router y shell.
-- `src/features`: páginas y componentes por dominio funcional.
-- `src/components`: piezas compartidas (comunes y UI).
-- `src/domain`: contratos y tipos del dominio.
-- `src/lib`: integraciones transversales (`supabase.ts`, `storage.ts`, utilidades).
-- `src/mocks`: contenido estructurado de apoyo para distintas secciones.
+- `src/app`: Composición global, definición de rutas dinámicas.
+- `src/features`: Lógica de negocio y páginas por dominio (landing, admin, destinations, map, services).
+- `src/components`: UI atómica y componentes compartidos.
+- `src/domain`: Contratos de datos (Typescript types/interfaces).
+- `src/lib`: Integraciones de terceros (Supabase, WhatsApp templates, storage helper).
 
-## Flujo de datos
-1. Las páginas de cada módulo renderizan componentes de presentación.
-2. Cuando aplica, los módulos llaman servicios de datos en `src/features/*/*.service.ts`.
-3. Los servicios consultan Supabase con el cliente central en `src/lib/supabase.ts`.
-4. Las imágenes se resuelven con `getPublicStorageUrl` desde `src/lib/storage.ts`.
-5. La UI consume datos transformados a tipos de dominio para mantener consistencia.
+## Flujo de Datos Administrativo
+1. El usuario accede a `/admin/login`.
+2. Tras autenticarse, el `AuthContext` guarda la sesión.
+3. El `AdminLayout` renderiza las herramientas de gestión.
+4. Los servicios en `destinationsAdmin.service.ts` interactúan con la base de datos permitiendo escritura.
+5. El sistema de subida de imágenes procesa los archivos, los sube a Supabase Storage y guarda la referencia en la DB.
 
-## Mapa y destinos
-- El mapa nacional obtiene datos mediante RPC (`get_country_map_data`) desde `src/features/map/map.service.ts`.
-- El detalle de destinos consulta la tabla `destinations` con relaciones a `cities` desde `src/features/destinations/destinations.service.ts`.
-- El módulo de mapa usa MapLibre GL a través de componentes UI propios para mantener control de interacción y estilo.
-
-## Navegación y layout
-- El layout base vive en `src/app/AppShell.tsx` con header, outlet y footer.
-- Las rutas se definen en `src/app/router.tsx`.
-- Se incorporan breadcrumbs reutilizables para mejorar el contexto de navegación en landing, servicios, destinos y mapa.
-
-## Assets y storage
-La estrategia actual prioriza rutas públicas desde Supabase Storage para imágenes de marca, destinos y servicios. El helper `getPublicStorageUrl` mantiene compatibilidad con rutas locales durante la migración.
-
-## Decisiones técnicas relevantes
-- Alias `@` para imports desde `src`.
-- Organización por features para escalar funcionalidades sin acoplar secciones.
-- Tipado explícito en `src/domain/types` para evitar contratos implícitos en la UI.
-- Integración de WhatsApp centralizada para mensajes y plantillas reutilizables.
+## Navegación
+- Se utilizan `Breadcrumbs` dinámicos para mejorar la experiencia de usuario en profundidad de navegación.
+- El router (`src/app/router.tsx`) utiliza `lazy loading` para optimizar el tamaño de los bundles por sección.
