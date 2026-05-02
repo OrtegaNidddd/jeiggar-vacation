@@ -59,3 +59,11 @@ export async function deleteDestination(id: string) {
 export async function toggleActive(id: string, value: boolean) {
   return supabase.from('destinations').update({ is_active: value }).eq('id', id)
 }
+
+export async function createCity(data: Record<string, unknown>) {
+  return supabase.from('cities').insert(data).select().single()
+}
+
+export async function createCountry(data: Record<string, unknown>) {
+  return supabase.from('countries').insert(data).select().single()
+}
