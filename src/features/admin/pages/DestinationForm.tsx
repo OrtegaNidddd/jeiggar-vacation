@@ -24,7 +24,7 @@ function generateSlug(name: string) {
 }
 
 interface City { id: string; name: string; country?: { name: string } }
-interface Country { id: string; name: string }
+interface Country { id: string; name: string; slug: string }
 
 const EMPTY = {
   name: '',
@@ -294,7 +294,7 @@ export default function DestinationForm() {
     }
     
     if (data) {
-      setCountries(prev => [...prev, { id: data.id, name: data.name }].sort((a, b) => a.name.localeCompare(b.name)))
+      setCountries(prev => [...prev, { id: data.id, name: data.name, slug: data.slug }].sort((a, b) => a.name.localeCompare(b.name)))
       set('country_id', data.id)
       setNewCountry({ name: '', lat: '', lng: '', zoom: '5', description: '', sort_order: '1' })
       setShowNewCountry(false)
