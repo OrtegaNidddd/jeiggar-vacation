@@ -1,11 +1,19 @@
 import ContactInfo from "../components/ContactInfo";
 import ContactActions from "../components/ContactActions";
 import ContactForm from "../components/ContactForm";
+import Breadcrumbs from "@/components/common/Breadcrumbs";
 
 export default function ContactPage() {
   return (
     <main className="bg-slate-50">
       <section className="mx-auto max-w-6xl px-4 py-16">
+        <Breadcrumbs
+          className="mb-8"
+          items={[
+            { label: "Inicio", to: "/" },
+            { label: "Contacto" },
+          ]}
+        />
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-bold text-slate-900">
             Contacto

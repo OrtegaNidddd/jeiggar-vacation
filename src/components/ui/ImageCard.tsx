@@ -44,7 +44,7 @@ export default function ImageCard({
 
           {/* Badge */}
           {badge && (
-            <span className="absolute top-3 left-3 bg-(--primary) text-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+            <span className="absolute top-3 left-3 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
               {badge}
             </span>
           )}

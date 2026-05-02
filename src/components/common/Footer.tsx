@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Button from "@/components/ui/Button";
 import { getPublicStorageUrl } from "@/lib/storage";
 import {
@@ -11,6 +11,7 @@ import {
   WHATSAPP_NUMBER,
   sendWhatsAppMessage,
 } from "@/lib/whatsapp";
+import { LockKeyhole } from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -116,7 +117,16 @@ export default function Footer() {
             © {year} Jeiggar Vacation. Todos los derechos reservados.
           </span>
 
-          <span>Powered by N&N</span>
+          <span className="flex items-center justify-center gap-3.5">
+          
+            N&N
+
+            <Link to="/admin/login" >
+              <LockKeyhole className="w-4 h-4"/>
+            </Link>
+          </span>
+          
+
         </div>
 
       </div>

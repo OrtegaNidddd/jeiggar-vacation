@@ -67,7 +67,7 @@ export default function CTA() {
               />
               <button
                 type="submit"
-                className="rounded-full bg-(--primary) px-8 py-3 text-base font-semibold text-white transition hover:bg-(--primary-700)"
+                className="rounded-full bg-primary px-8 py-3 text-base font-semibold text-white transition hover:bg-(--primary-700)"
               >
                 {buttonLabel}
               </button>

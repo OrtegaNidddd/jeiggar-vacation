@@ -44,7 +44,8 @@ export default function Hero() {
                 title={
                     <>
                         {heroLandingMock.titlePrimary}
-                        <br />
+                        <br className="hidden md:block" />
+                        <span className="md:hidden"> </span>
                         {heroLandingMock.titleSecondary}
                         <span className="text-(--primary-700)">{heroLandingMock.highlight}</span>
                     </>

@@ -45,7 +45,7 @@ export default function Header() {
                                     to={item.to}
                                     className={({ isActive }) => {
                                         if (item.variant === "highlight") {
-                                            return `px-4 py-2 text-sm font-semibold rounded-full bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors duration-400`;
+                                            return `px-4 py-2 text-sm font-semibold rounded-full bg-primary text-white! hover:bg-(--primary-700) transition-colors duration-400`;
                                         }
                                         return `px-3 py-2 text-sm font-semibold rounded-full ${isActive ? active : idle}`;
                                     }}
@@ -108,7 +108,7 @@ export default function Header() {
                                             onClick={closeMobile}
                                             className={({ isActive }) => {
                                                 if (item.variant === "highlight") {
-                                                    return `px-4 py-2 text-sm font-semibold rounded-lg bg-(--primary) text-white! hover:bg-(--primary-700) transition-colors w-full text-left`;
+                                                    return `px-4 py-2 text-sm font-semibold rounded-lg bg-primary text-white! hover:bg-(--primary-700) transition-colors w-full text-left`;
                                                 }
                                                 return `${base} ${isActive ? active : idle} w-full text-left`
                                             }
