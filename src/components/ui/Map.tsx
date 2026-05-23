@@ -15,6 +15,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { MapContext, useMap } from "./MapContext";
 import { createPortal } from "react-dom";
 import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react";
 
@@ -82,20 +83,6 @@ function useResolvedTheme(themeProp?: "light" | "dark"): Theme {
   return themeProp ?? detectedTheme;
 }
 
-type MapContextValue = {
-  map: MapLibreGL.Map | null;
-  isLoaded: boolean;
-};
-
-const MapContext = createContext<MapContextValue | null>(null);
-
-function useMap() {
-  const context = useContext(MapContext);
-  if (!context) {
-    throw new Error("useMap must be used within a Map component");
-  }
-  return context;
-}
 
 /** Map viewport state */
 type MapViewport = {
@@ -1499,7 +1486,6 @@ function MapClusterLayer<
 
 export {
   Map,
-  useMap,
   MapMarker,
   MarkerContent,
   MarkerPopup,

@@ -1,0 +1,493 @@
+\documentclass[12pt,letterpaper]{article}
+
+% -------------------------------------------------
+% Formato general tipo APA 7.ª edición
+% -------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{mathptmx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{graphicx}
+\usepackage{ragged2e}
+\usepackage{seqsplit}
+\usepackage{float}
+\usepackage{etoolbox}
+
+% Márgenes APA: 1 pulgada
+\geometry{margin=1in}
+\setlength{\headheight}{15pt}
+
+% Interlineado APA: doble espacio
+\doublespacing
+
+% Sangría APA: primera línea de cada párrafo 0.5 pulgadas
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{0pt}
+
+% Alineación recomendada por APA: margen izquierdo alineado y derecho irregular
+\raggedright
+
+% Encabezado y numeración APA
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% Colores y enlaces
+\definecolor{apaBlue}{HTML}{1F4E79}
+\definecolor{codeBg}{HTML}{F6F8FA}
+\definecolor{codeFrame}{HTML}{D0D7DE}
+\definecolor{quoteBg}{HTML}{F7F7F7}
+\definecolor{quoteFrame}{HTML}{BDBDBD}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=apaBlue,
+    citecolor=black,
+    pdftitle={Diccionario de Datos: Jeiggar Vacation},
+    pdfauthor={NICK ORTEGA}
+}
+
+% Jerarquía de títulos compatible con APA
+\titleformat{\section}
+  {\normalfont\centering\bfseries\Large}
+  {\thesection.}{0.5em}{}
+
+\titleformat{\subsection}
+  {\normalfont\bfseries\large}
+  {\thesubsection}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\itshape\normalsize}
+  {\thesubsubsection}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{1.5em}{1em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.8em}
+\titlespacing*{\subsubsection}{0pt}{1em}{0.6em}
+
+% Cada capítulo/sección principal inicia en una nueva hoja
+\pretocmd{\section}{\clearpage}{}{}
+
+% Código fuente
+\lstdefinelanguage{sql}{
+    keywords={SELECT,FROM,WHERE,AND,OR,TRUE,FALSE,NULL,CREATE,TABLE,FUNCTION,RETURNS,TRIGGER,LANGUAGE,STABLE,INSERT,UPDATE,DELETE,PRIMARY,KEY,FOREIGN,REFERENCES,CHECK,UNIQUE,DEFAULT},
+    sensitive=false,
+    comment=[l]{--},
+    morestring=[b]'
+}
+
+\lstdefinestyle{codeblock}{
+    backgroundcolor=\color{codeBg},
+    frame=single,
+    rulecolor=\color{codeFrame},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    breakatwhitespace=false,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    tabsize=2
+}
+\lstset{style=codeblock}
+
+\newtcolorbox{infobox}{
+    colback=quoteBg,
+    colframe=quoteFrame,
+    boxrule=0.8pt,
+    arc=1mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm
+}
+
+% Texto técnico con posibilidad de corte de línea dentro de tablas
+\DeclareRobustCommand{\code}[1]{\texorpdfstring{\begingroup\ttfamily\footnotesize\def\_{\textunderscore\allowbreak}#1\endgroup}{#1}}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcommand{\dash}{---}
+\newcommand{\yes}{Sí}
+\newcommand{\no}{No}
+
+% Ajuste para tablas largas
+\setlength{\LTpre}{0.8em}
+\setlength{\LTpost}{0.8em}
+\renewcommand{\arraystretch}{1.25}
+\BeforeBeginEnvironment{longtable}{\begingroup\singlespacing\footnotesize\setlength{\tabcolsep}{3pt}}
+\AfterEndEnvironment{longtable}{\endgroup}
+
+\begin{document}
+
+% -------------------------------------------------
+% Portada tipo APA 7 estudiante
+% -------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1.5in}
+
+    {\bfseries\Large Manual de Código: Plataforma Web de Gestión de Destinos y Administración de Servicios Turísticos\par}
+    \vspace{0.5in}
+
+    {Estudiantes de IV Semestre\par}
+    \vspace{0.2in}
+
+    {Fundación de Estudios Superiores Comfanorte (FESC)\par}
+    {Ingeniería de Software\par}
+    \vspace{0.2in}
+
+    {Diccionario de Datos\par}
+    \vspace{0.2in}
+
+    {Docente: Norly Alexandra Aguilar Quintero \par}
+    \vspace{0.2in}
+
+    {Mayo de 2026\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+La base de datos de \textbf{Jeiggar Vacation} está alojada en Supabase, sobre PostgreSQL 15 o superior, y soporta una plataforma de turismo que permite explorar destinos nacionales e internacionales a través de un mapa interactivo. El sistema gestiona una jerarquía geográfica de tres niveles: países, ciudades y destinos.
+
+\begin{longtable}{L{0.45\textwidth} L{0.35\textwidth}}
+\toprule
+\textbf{Elemento} & \textbf{Cantidad} \\
+\midrule
+Tablas & 4 \\
+Funciones SQL & 2 \\
+Triggers & 3 \\
+Índices & 9 \\
+Políticas RLS & 14 \\
+Extensiones & 4: \code{pg\_stat\_statements}, \code{pgcrypto}, \code{supabase\_vault}, \code{uuid-ossp} \\
+\bottomrule
+\end{longtable}
+
+\section{Modelo Relacional}
+
+El esquema sigue una jerarquía geográfica donde cada país contiene ciudades y cada ciudad contiene destinos. Los destinos pueden también relacionarse directamente con un país para representar destinos internacionales sin ciudad específica. La tabla \code{profiles} extiende a los usuarios de Supabase Auth con el rol de administrador.
+
+\begin{longtable}{L{0.22\textwidth} L{0.22\textwidth} L{0.18\textwidth} L{0.28\textwidth}}
+\toprule
+\textbf{Tabla origen} & \textbf{Tabla destino} & \textbf{Cardinalidad} & \textbf{FK / Detalle} \\
+\midrule
+\code{countries} & \code{cities} & 1:N & \code{countries.id} $\rightarrow$ \code{cities.country\_id}; eliminación en cascada. \\
+\code{countries} & \code{destinations} & 1:N & \code{countries.id} $\rightarrow$ \code{destinations.country\_id}. \\
+\code{cities} & \code{destinations} & 1:N & \code{cities.id} $\rightarrow$ \code{destinations.city\_id}; eliminación en cascada. \\
+\code{auth.users} & \code{profiles} & 1:1 & \code{auth.users.id} $\rightarrow$ \code{profiles.id}; eliminación en cascada. \\
+\bottomrule
+\end{longtable}
+
+\section{Descripción de Tablas}
+
+\subsection{\code{countries}: Países}
+
+Almacena los países disponibles en la plataforma. Es el nivel raíz de la jerarquía geográfica.
+
+\begin{longtable}{L{0.19\textwidth} L{0.20\textwidth} L{0.09\textwidth} L{0.17\textwidth} L{0.25\textwidth}}
+\toprule
+\textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
+\midrule
+\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único del país; llave primaria. \\
+\code{name} & \code{text} & NO & \dash & Nombre oficial del país. Ejemplo: Colombia. \\
+\code{slug} & \code{text} & NO & \dash & Identificador URL amigable único. Ejemplo: \code{colombia}. \\
+\code{lat} & \code{double precision} & NO & \dash & Latitud del centro geográfico del país. \\
+\code{lng} & \code{double precision} & NO & \dash & Longitud del centro geográfico del país. \\
+\code{zoom} & \code{numeric(4,2)} & NO & \dash & Nivel de zoom inicial en MapLibre/Mapbox al centrar la vista en el país. Rango típico: 4--7. \\
+\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de imagen representativa del país. \\
+\code{description} & \code{text} & SÍ & \code{NULL} & Descripción general del país para mostrar en la interfaz. \\
+\code{is\_active} & \code{boolean} & NO & \code{true} & Controla la visibilidad pública. Solo los registros activos son accesibles sin autenticación admin. \\
+\code{sort\_order} & \code{integer} & NO & \code{0} & Orden de presentación en listados. Menor número equivale a mayor prioridad. \\
+\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de creación del registro. \\
+\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de la última actualización, gestionada automáticamente por \code{trg\_countries\_updated\_at}. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection*{Restricciones}
+\begin{longtable}{L{0.34\textwidth} L{0.22\textwidth} L{0.34\textwidth}}
+\toprule
+\textbf{Nombre} & \textbf{Tipo} & \textbf{Detalle} \\
+\midrule
+\code{countries\_pkey} & PRIMARY KEY & \code{id} \\
+\code{countries\_slug\_key} & UNIQUE & \code{slug} \\
+\bottomrule
+\end{longtable}
+
+\subsection{\code{cities}: Ciudades}
+
+Almacena las ciudades o regiones turísticas dentro de cada país.
+
+\begin{longtable}{L{0.19\textwidth} L{0.20\textwidth} L{0.09\textwidth} L{0.17\textwidth} L{0.25\textwidth}}
+\toprule
+\textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
+\midrule
+\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único de la ciudad; llave primaria. \\
+\code{country\_id} & \code{uuid} & NO & \dash & Llave foránea hacia \code{countries.id}. Al eliminar el país, las ciudades se eliminan en cascada. \\
+\code{name} & \code{text} & NO & \dash & Nombre de la ciudad o región. Ejemplo: Cúcuta. \\
+\code{slug} & \code{text} & NO & \dash & Identificador URL amigable. Único por país mediante \code{country\_id + slug}. \\
+\code{lat} & \code{double precision} & NO & \dash & Latitud del centro de la ciudad. \\
+\code{lng} & \code{double precision} & NO & \dash & Longitud del centro de la ciudad. \\
+\code{zoom} & \code{numeric(4,2)} & NO & \dash & Nivel de zoom en el mapa MapLibre al centrar la vista en la ciudad. Rango típico: 10--13. \\
+\code{description} & \code{text} & NO & \dash & Descripción de la ciudad para la tarjeta informativa en el mapa. \\
+\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de imagen representativa de la ciudad. \\
+\code{is\_active} & \code{boolean} & NO & \code{true} & Visibilidad pública del registro. \\
+\code{sort\_order} & \code{integer} & NO & \code{0} & Orden de presentación en listados. \\
+\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Fecha de creación. \\
+\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Fecha de última actualización mediante trigger automático. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection*{Restricciones}
+\begin{longtable}{L{0.34\textwidth} L{0.22\textwidth} L{0.34\textwidth}}
+\toprule
+\textbf{Nombre} & \textbf{Tipo} & \textbf{Detalle} \\
+\midrule
+\code{cities\_pkey} & PRIMARY KEY & \code{id} \\
+\code{cities\_country\_id\_slug\_key} & UNIQUE & \code{country\_id, slug} \\
+\code{cities\_country\_id\_fkey} & FOREIGN KEY & \code{country\_id} $\rightarrow$ \code{countries.id} ON DELETE CASCADE \\
+\bottomrule
+\end{longtable}
+
+\subsection{\code{destinations}: Destinos turísticos}
+
+Es la tabla central de la plataforma. Contiene cada punto de interés turístico con su información geográfica, descriptiva y multimedia. Un destino puede ser nacional, asociado a una ciudad, o internacional, asociado directamente a un país.
+
+\begin{longtable}{L{0.18\textwidth} L{0.20\textwidth} L{0.08\textwidth} L{0.16\textwidth} L{0.28\textwidth}}
+\toprule
+\textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
+\midrule
+\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único del destino; llave primaria. \\
+\code{city\_id} & \code{uuid} & SÍ & \code{NULL} & Llave foránea hacia \code{cities.id}. Nulo para destinos internacionales. Cascada al eliminar ciudad. \\
+\code{country\_id} & \code{uuid} & SÍ & \code{NULL} & Llave foránea hacia \code{countries.id}. Permite asociar destinos directamente a un país. \\
+\code{name} & \code{text} & NO & \dash & Nombre del destino. Ejemplo: Lago de Maracaibo. \\
+\code{slug} & \code{text} & NO & \dash & Identificador URL amigable único global. \\
+\code{short\_description} & \code{text} & NO & \dash & Descripción corta para tarjetas y previsualizaciones. Máximo recomendado: 160 caracteres. \\
+\code{description} & \code{text} & NO & \dash & Descripción completa del destino para la vista de detalle. \\
+\code{category} & \code{text} & NO & \dash & Categoría turística. Ejemplos: Naturaleza, Cultura, Aventura, Gastronomía. \\
+\code{destination\_type} & \code{text} & NO & \dash & Tipo de destino: \code{national} o \code{international}. Tiene restricción CHECK. \\
+\code{lat} & \code{double precision} & NO & \dash & Latitud exacta del destino para el marcador en el mapa. \\
+\code{lng} & \code{double precision} & NO & \dash & Longitud exacta del destino para el marcador en el mapa. \\
+\code{climate} & \code{text} & SÍ & \code{NULL} & Descripción del clima del destino. Ejemplos: Tropical, frío de montaña. \\
+\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de imagen principal del destino. \\
+\code{activities} & \code{text[]} & NO & \code{\{\}} & Arreglo de actividades disponibles. Ejemplos: senderismo, kayak, fotografía. \\
+\code{is\_active} & \code{boolean} & NO & \code{true} & Visibilidad pública. \\
+\code{is\_featured} & \code{boolean} & NO & \code{false} & Indica si el destino aparece en la sección de destacados en la página de inicio. \\
+\code{sort\_order} & \code{integer} & NO & \code{0} & Orden dentro de la ciudad o país. \\
+\code{sort\_order\_home} & \code{integer} & NO & \code{0} & Orden en la sección de destacados de la página de inicio. \\
+\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Fecha de creación. \\
+\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Fecha de última actualización mediante trigger automático. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection*{Restricciones}
+\begin{longtable}{L{0.34\textwidth} L{0.22\textwidth} L{0.34\textwidth}}
+\toprule
+\textbf{Nombre} & \textbf{Tipo} & \textbf{Detalle} \\
+\midrule
+\code{destinations\_pkey} & PRIMARY KEY & \code{id} \\
+\code{destinations\_slug\_key} & UNIQUE & \code{slug} \\
+\code{destinations\_destination\_type\_check} & CHECK & \code{destination\_type IN ('national', 'international')} \\
+\code{destinations\_city\_id\_fkey} & FOREIGN KEY & \code{city\_id} $\rightarrow$ \code{cities.id} ON DELETE CASCADE \\
+\code{destinations\_country\_id\_fkey} & FOREIGN KEY & \code{country\_id} $\rightarrow$ \code{countries.id} \\
+\bottomrule
+\end{longtable}
+
+\subsection{\code{profiles}: Perfiles de usuario}
+
+Extiende la tabla \code{auth.users} de Supabase para asignar roles dentro de la plataforma. Actualmente solo existe el rol \code{admin}, que habilita operaciones de escritura sobre todas las tablas.
+
+\begin{longtable}{L{0.19\textwidth} L{0.20\textwidth} L{0.09\textwidth} L{0.17\textwidth} L{0.25\textwidth}}
+\toprule
+\textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
+\midrule
+\code{id} & \code{uuid} & NO & \dash & Llave foránea hacia \code{auth.users.id}. También es la llave primaria. Se elimina en cascada al borrar el usuario. \\
+\code{role} & \code{text} & NO & \dash & Rol del usuario. Único valor permitido: \code{admin}, mediante restricción CHECK. \\
+\code{created\_at} & \code{timestamptz} & SÍ & \code{now()} & Fecha de asignación del perfil. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection*{Restricciones}
+\begin{longtable}{L{0.34\textwidth} L{0.22\textwidth} L{0.34\textwidth}}
+\toprule
+\textbf{Nombre} & \textbf{Tipo} & \textbf{Detalle} \\
+\midrule
+\code{profiles\_pkey} & PRIMARY KEY & \code{id} \\
+\code{profiles\_role\_check} & CHECK & \code{role = 'admin'} \\
+\code{profiles\_id\_fkey} & FOREIGN KEY & \code{id} $\rightarrow$ \code{auth.users.id} ON DELETE CASCADE \\
+\bottomrule
+\end{longtable}
+
+\section{Índices}
+
+Todos los índices utilizan el método B-Tree y optimizan las consultas más frecuentes de la plataforma.
+
+\begin{longtable}{L{0.30\textwidth} L{0.20\textwidth} L{0.23\textwidth} L{0.17\textwidth}}
+\toprule
+\textbf{Nombre} & \textbf{Tabla} & \textbf{Columna(s)} & \textbf{Propósito} \\
+\midrule
+\code{idx\_cities\_country\_id} & \code{cities} & \code{country\_id} & Acelera JOIN y filtros por país. \\
+\code{idx\_cities\_slug} & \code{cities} & \code{slug} & Búsqueda rápida por slug de ciudad. \\
+\code{idx\_destinations\_city\_id} & \code{destinations} & \code{city\_id} & Acelera JOIN ciudad-destino. \\
+\code{idx\_destinations\_category} & \code{destinations} & \code{category} & Filtro por categoría turística. \\
+\code{idx\_destinations\_slug} & \code{destinations} & \code{slug} & Búsqueda rápida por slug. \\
+\code{idx\_dest\_active} & \code{destinations} & \code{is\_active} & Filtro de registros activos. \\
+\code{idx\_dest\_featured} & \code{destinations} & \code{is\_featured} & Filtro de destacados en home. \\
+\code{idx\_dest\_type} & \code{destinations} & \code{destination\_type} & Filtro nacional / internacional. \\
+\bottomrule
+\end{longtable}
+
+\section{Triggers}
+
+\begin{longtable}{L{0.32\textwidth} L{0.18\textwidth} L{0.18\textwidth} L{0.22\textwidth}}
+\toprule
+\textbf{Nombre} & \textbf{Tabla} & \textbf{Evento} & \textbf{Descripción} \\
+\midrule
+\code{trg\_countries\_updated\_at} & \code{countries} & BEFORE UPDATE & Llama a \code{set\_updated\_at()} para actualizar automáticamente la columna \code{updated\_at}. \\
+\code{trg\_cities\_updated\_at} & \code{cities} & BEFORE UPDATE & Llama a \code{set\_updated\_at()} para actualizar automáticamente la columna \code{updated\_at}. \\
+\code{trg\_destinations\_updated\_at} & \code{destinations} & BEFORE UPDATE & Llama a \code{set\_updated\_at()} para actualizar automáticamente la columna \code{updated\_at}. \\
+\bottomrule
+\end{longtable}
+
+\section{Funciones Almacenadas}
+
+\subsection{\code{set\_updated\_at()}}
+
+\begin{infobox}
+\textbf{Tipo:} TRIGGER FUNCTION. \textbf{Lenguaje:} PL/pgSQL. \textbf{Retorna:} \code{trigger}.
+\end{infobox}
+
+Asigna el timestamp actual, mediante \code{now()}, al campo \code{updated\_at} del registro modificado. Es invocada por los tres triggers de auditoría.
+
+\subsection{\code{get\_country\_map\_data(p\_country\_slug text)}}
+
+\begin{infobox}
+\textbf{Tipo:} SQL FUNCTION. \textbf{Lenguaje:} SQL. \textbf{Volatilidad:} STABLE. \textbf{Retorna:} \code{jsonb}.
+\end{infobox}
+
+Es la RPC principal del mapa interactivo. Recibe el slug de un país y devuelve un objeto \code{jsonb} completamente anidado con la siguiente estructura:
+
+\begin{lstlisting}[language=sql]
+pais -> {
+  id,
+  name,
+  slug,
+  lat,
+  lng,
+  zoom,
+  cities: [
+    {
+      id,
+      name,
+      slug,
+      lat,
+      lng,
+      zoom,
+      description,
+      imageUrl,
+      destinations: [
+        {
+          id,
+          name,
+          slug,
+          shortDescription,
+          description,
+          category,
+          imageUrl,
+          lat,
+          lng,
+          cityId,
+          cityName,
+          activities,
+          climate
+        }
+      ]
+    }
+  ]
+}
+\end{lstlisting}
+
+Los filtros aplicados devuelven solo ciudades activas y destinos activos con \code{destination\_type = 'national'}. El resultado está ordenado por \code{sort\_order} y luego por nombre. Los permisos permiten acceso por \code{anon}, \code{authenticated} y \code{service\_role}.
+
+\section{Políticas de Seguridad: Row Level Security}
+
+RLS está habilitado en las cuatro tablas. Las políticas siguen el patrón de lectura pública y escritura exclusiva para administradores.
+
+\begin{longtable}{L{0.25\textwidth} L{0.19\textwidth} L{0.15\textwidth} L{0.18\textwidth} L{0.13\textwidth}}
+\toprule
+\textbf{Política} & \textbf{Tabla} & \textbf{Operación} & \textbf{Rol} & \textbf{Condición} \\
+\midrule
+Public read countries & \code{countries} & SELECT & anon, authenticated & \code{is\_active = true} \\
+\code{countries\_admin\_insert} & \code{countries} & INSERT & admin & Perfil con \code{role='admin'} \\
+\code{countries\_admin\_update} & \code{countries} & UPDATE & admin & Perfil con \code{role='admin'} \\
+\code{countries\_admin\_delete} & \code{countries} & DELETE & admin & Perfil con \code{role='admin'} \\
+Public read cities & \code{cities} & SELECT & anon, authenticated & \code{is\_active = true} \\
+\code{cities\_admin\_insert} & \code{cities} & INSERT & admin & Perfil con \code{role='admin'} \\
+\code{cities\_admin\_update} & \code{cities} & UPDATE & admin & Perfil con \code{role='admin'} \\
+\code{cities\_admin\_delete} & \code{cities} & DELETE & admin & Perfil con \code{role='admin'} \\
+Public read destinations & \code{destinations} & SELECT & anon, authenticated & \code{is\_active = true} \\
+\code{dest\_admin\_select} & \code{destinations} & SELECT & admin & Sin restricción adicional \\
+\code{dest\_admin\_insert} & \code{destinations} & INSERT & admin & Perfil con \code{role='admin'} \\
+\code{dest\_admin\_update} & \code{destinations} & UPDATE & admin & Perfil con \code{role='admin'} \\
+\code{dest\_admin\_delete} & \code{destinations} & DELETE & admin & Perfil con \code{role='admin'} \\
+\code{profiles\_self\_select} & \code{profiles} & SELECT & authenticated & \code{id = auth.uid()} \\
+\bottomrule
+\end{longtable}
+
+\section{Extensiones PostgreSQL}
+
+\begin{longtable}{L{0.25\textwidth} L{0.20\textwidth} L{0.45\textwidth}}
+\toprule
+\textbf{Extensión} & \textbf{Schema} & \textbf{Descripción} \\
+\midrule
+\code{uuid-ossp} & \code{extensions} & Generación de UUIDs mediante \code{uuid\_generate\_v4()}. \\
+\code{pgcrypto} & \code{extensions} & Funciones criptográficas usadas internamente por Supabase Auth. \\
+\code{pg\_stat\_statements} & \code{extensions} & Estadísticas de rendimiento de consultas SQL. \\
+\code{supabase\_vault} & \code{vault} & Almacenamiento seguro de secretos gestionado por Supabase. \\
+\bottomrule
+\end{longtable}
+
+\section{Glosario}
+
+\begin{longtable}{L{0.26\textwidth} L{0.64\textwidth}}
+\toprule
+\textbf{Término} & \textbf{Definición} \\
+\midrule
+\code{slug} & Versión URL-amigable del nombre, en minúsculas y con guiones. Ejemplo: \code{norte-de-santander}. \\
+\code{zoom} & Nivel de zoom del mapa MapLibre/Mapbox. Controla qué tan cerca o lejos aparece la cámara al seleccionar un país o ciudad. La escala va de 0, mundo, a 22, edificio. \\
+\code{is\_active} & Bandera booleana que controla la visibilidad pública sin eliminar el registro. \\
+\code{is\_featured} & Bandera que marca destinos para mostrar en la sección de destacados de la página de inicio. \\
+\code{destination\_type} & Distingue destinos nacionales, dentro del país base de la aplicación, de destinos internacionales. \\
+\code{activities} & Array de texto con actividades turísticas disponibles en el destino. \\
+\code{sort\_order} & Entero que define el orden de presentación en listados. Se ordena ASC, por lo que 0 aparece primero. \\
+\code{RLS} & Row Level Security: mecanismo de PostgreSQL que restringe qué filas puede ver o modificar cada usuario según políticas definidas. \\
+\code{RPC} & Remote Procedure Call: función SQL invocada desde el cliente mediante la API de Supabase, por ejemplo \code{POST /rest/v1/rpc/}. \\
+\bottomrule
+\end{longtable}
+
+\newpage
+\section*{Referencias}
+\addcontentsline{toc}{section}{Referencias}
+
+Documentación oficial de PostgreSQL. (s. f.). \textit{PostgreSQL documentation}. Recuperado el 3 de mayo de 2026, de \url{https://www.postgresql.org/docs/}
+
+Documentación oficial de Supabase. (s. f.). \textit{Supabase Docs}. Recuperado el 3 de mayo de 2026, de \url{https://supabase.com/docs}
+
+Supabase. (s. f.). \textit{Row Level Security}. Recuperado el 3 de mayo de 2026, de \url{https://supabase.com/docs/guides/database/postgres/row-level-security}
+
+
+\end{document}

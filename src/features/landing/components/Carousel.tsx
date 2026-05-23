@@ -24,10 +24,15 @@ export default function Carousel() {
 	const maxStartIndex = Math.max(0, slides.length - visibleCards);
 	const maxStartIndexRef = useRef(maxStartIndex);
 
+	// Sync ref via effect to satisfy linter
 	useEffect(() => {
 		maxStartIndexRef.current = maxStartIndex;
-		setActiveIndex((current) => Math.min(current, maxStartIndex));
 	}, [maxStartIndex]);
+
+	// Clamp state during render to avoid useEffect cascading renders
+	if (activeIndex > maxStartIndex) {
+		setActiveIndex(maxStartIndex);
+	}
 	const currentIndex = Math.min(activeIndex, maxStartIndex);
 
 	useEffect(() => {
