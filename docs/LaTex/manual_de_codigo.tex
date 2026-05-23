@@ -1,21 +1,23 @@
-
 \documentclass[12pt,letterpaper]{article}
-
 % -------------------------------------------------
 % Formato general tipo APA 7.ª edición
 % -------------------------------------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-tabla]{babel}
+\shorthandoff{"} % desactiva los shorthands de comillas dobles de babel (" activa) para listings
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{indentfirst}
 \usepackage{mathptmx}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{hyperref}
+\usepackage{xurl} % mejora los cortes de línea en \url/\nolinkurl (útil dentro de tablas)
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{booktabs}
+\usepackage{caption}
+\usepackage{needspace}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -25,25 +27,33 @@
 \usepackage{ragged2e}
 \usepackage{float}
 \usepackage{etoolbox}
-
+% -------------------------------------------------
+% Mejora visual de tablas
+% -------------------------------------------------
+\definecolor{tableStripe}{HTML}{F2F4F7}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\arrayrulewidth}{0.8pt}
+\setlength{\tabcolsep}{8pt}
+\setlength{\LTpre}{0pt}
+\setlength{\LTpost}{0pt}
+\captionsetup[table]{font=small,labelfont=bf}
+\AtBeginEnvironment{longtable}{%
+  \setlength{\tabcolsep}{5pt}%
+  \rowcolors{2}{tableStripe}{white}%
+}
 % Márgenes APA: 1 pulgada
 \geometry{margin=1in}
 \setlength{\headheight}{15pt}
-
 % Interlineado APA: doble espacio
 \doublespacing
-
 % Sangría APA: primera línea de cada párrafo 0.5 pulgadas
 \setlength{\parindent}{0.5in}
 \setlength{\parskip}{0pt}
-
 % Listas con sangría controlada
 \setlist[itemize]{leftmargin=0.5in}
 \setlist[enumerate]{leftmargin=0.5in}
-
-% Alineación recomendada por APA: margen izquierdo alineado y derecho irregular
+% Alineación recomendada por APA
 \raggedright
-
 % -------------------------------------------------
 % Encabezado y numeración APA
 % -------------------------------------------------
@@ -51,7 +61,6 @@
 \fancyhf{}
 \rhead{\thepage}
 \renewcommand{\headrulewidth}{0pt}
-
 % -------------------------------------------------
 % Colores y enlaces
 % -------------------------------------------------
@@ -60,7 +69,6 @@
 \definecolor{codeFrame}{HTML}{D0D7DE}
 \definecolor{quoteBg}{HTML}{F7F7F7}
 \definecolor{quoteFrame}{HTML}{BDBDBD}
-
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -69,33 +77,24 @@
     pdftitle={Manual de Código: Jeiggar Vacation},
     pdfauthor={NICK ORTEGA}
 }
-
 % -------------------------------------------------
-% Jerarquía de títulos compatible con APA
-% Nivel 1: centrado, negrita
-% Nivel 2: alineado a la izquierda, negrita
-% Nivel 3: alineado a la izquierda, negrita cursiva
+% Jerarquía de títulos APA
 % -------------------------------------------------
 \titleformat{\section}
   {\normalfont\centering\bfseries\Large}
   {\thesection.}{0.5em}{}
-
 \titleformat{\subsection}
   {\normalfont\bfseries\large}
   {\thesubsection}{0.5em}{}
-
 \titleformat{\subsubsection}
   {\normalfont\bfseries\itshape\normalsize}
   {\thesubsubsection}{0.5em}{}
-
 \titlespacing*{\section}{0pt}{1.5em}{1em}
 \titlespacing*{\subsection}{0pt}{1.2em}{0.8em}
 \titlespacing*{\subsubsection}{0pt}{1em}{0.6em}
-
 % -------------------------------------------------
 % Código fuente
 % -------------------------------------------------
-
 \lstdefinelanguage{typescript}{
     keywords={const,let,var,function,return,export,import,from,type,interface,extends,if,else,await,async,null,true,false,default,new,class},
     sensitive=true,
@@ -105,7 +104,6 @@
     morestring=[b]",
     morestring=[b]`
 }
-
 \lstdefinestyle{codeblock}{
     backgroundcolor=\color{codeBg},
     frame=single,
@@ -116,6 +114,8 @@
     columns=fullflexible,
     keepspaces=true,
     showstringspaces=false,
+    % Bloques largos SÍ pueden cruzar páginas (no samepage).
+    % Para bloques cortos que NO deben cortarse se usa \needspace antes.
     literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
              {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
              {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {ü}{{\"u}}1 {Ü}{{\"U}}1
@@ -124,35 +124,29 @@
     tabsize=2
 }
 \lstset{style=codeblock}
-
 \newtcolorbox{infobox}{
     colback=quoteBg,
     colframe=quoteFrame,
     boxrule=0.8pt,
     arc=1mm,
-    left=2mm,
-    right=2mm,
-    top=1mm,
-    bottom=1mm
+    left=2mm, right=2mm,
+    top=1mm,  bottom=1mm
 }
-
-\newcommand{\code}[1]{\texttt{#1}}
-
-% Ajuste para tablas largas
+\newcommand{\code}[1]{\nolinkurl{#1}}
 \setlength{\LTpre}{0.8em}
 \setlength{\LTpost}{0.8em}
 
-
-
-% Cada sección principal inicia en una nueva hoja
-\pretocmd{\section}{\clearpage}{}{}
-
-% Macro para insertar diagramas como imágenes sin romper la compilación
-\newcommand{\diagramfiguresmall}[3]{%
+% -------------------------------------------------
+% Macros para diagramas
+% -------------------------------------------------
+% [H]: posición fija exacta donde se invoca (paquete float).
+% Usado para TODOS los diagramas para evitar que aparezcan
+% lejos de su contexto.
+\newcommand{\diagramfigurehere}[3]{%
 \begin{figure}[H]
 \centering
 \IfFileExists{#1}{%
-    \includegraphics[width=0.85\textwidth]{#1}%
+    \includegraphics[width=0.9\textwidth,height=0.65\textheight,keepaspectratio]{#1}%
 }{%
     \fbox{%
         \begin{minipage}[c][2.5in][c]{0.88\textwidth}
@@ -161,116 +155,163 @@
         Inserta aquí la imagen correspondiente en la ruta:\\[0.3em]
         \texttt{#1}
         \end{minipage}%
-    }
+    }%
 }
 \caption{#2}
 \label{#3}
 \end{figure}
 }
 
-\begin{document}
+% Alias semántico para el diagrama ER de página completa
+\newcommand{\diagramfigurefullpage}[3]{%
+\begin{figure}[H]
+\centering
+\IfFileExists{#1}{%
+    \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{#1}%
+}{%
+    \fbox{%
+        \begin{minipage}[c][4in][c]{0.95\textwidth}
+        \centering
+        \textbf{Espacio reservado para el diagrama}\\[0.5em]
+        Inserta aquí la imagen correspondiente en la ruta:\\[0.3em]
+        \texttt{#1}
+        \end{minipage}%
+    }%
+}
+\caption{#2}
+\label{#3}
+\end{figure}
+}
 
+% Compatibilidad: \diagramfiguresmall ahora es igual a \diagramfigurehere
+\newcommand{\diagramfiguresmall}[3]{\diagramfigurehere{#1}{#2}{#3}}
+
+\begin{document}
 % -------------------------------------------------
 % Portada tipo APA 7 estudiante
 % -------------------------------------------------
 \begin{titlepage}
     \centering
     \vspace*{1.5in}
-
     {\bfseries\Large Manual de Código: Plataforma Web de Gestión de Destinos y Administración de Servicios Turísticos\par}
     \vspace{0.5in}
-
     {Estudiantes de IV Semestre\par}
     \vspace{0.2in}
-
     {Fundación de Estudios Superiores Comfanorte (FESC)\par}
     {Ingeniería de Software\par}
     \vspace{0.2in}
-
     {Manual de Codigo del Proyecto\par}
     \vspace{0.2in}
-
-    {Docente: Norly Alexandra Aguilar Quintero \par}
+    {Docente: Norly Alexandra Aguilar Quintero\par}
     \vspace{0.2in}
-
     {Mayo de 2026\par}
 \end{titlepage}
-
 \newpage
 \tableofcontents
 \newpage
+\listoffigures
+\newpage
+
+% =================================================
 \section{Visión General}
+% =================================================
 
 \textbf{Jeiggar Vacation} es una plataforma web de agencia de viajes turísticos, pensada para el mercado colombiano con proyección internacional. Permite a los usuarios explorar destinos nacionales e internacionales, cotizar planes por WhatsApp y acceder a información de servicios complementarios como asistencia médica, transporte, conectividad y trámites.
 
 El sistema se divide en dos grandes áreas:
 
-\begin{longtable}{>{\bfseries}p{0.25\textwidth} p{0.65\textwidth}}
-\toprule
+\Needspace{7\baselineskip}
+\begin{longtable}{|>{\bfseries}p{0.25\textwidth}|p{0.65\textwidth}|}
+\hline
 Área & Descripción \\
-\midrule
+\hline
 Web Pública & Catálogo de destinos, mapas interactivos, formularios de cotización y páginas institucionales. \\
+\hline
 Panel Admin & CMS protegido por autenticación para gestionar destinos mediante CRUD completo con subida de imágenes. \\
-\bottomrule
+\hline
 \end{longtable}
 
 \subsection*{Flujo de datos de alto nivel}
 
-\diagramfiguresmall{diagramas/flujo-datos-alto-nivel.png}{Flujo de datos de alto nivel del sistema Jeiggar Vacation.}{fig:flujo-datos-alto-nivel}
+\diagramfigurehere{diagramas/flujo-datos-alto-nivel.png}{Flujo de datos de alto nivel del sistema Jeiggar Vacation.}{fig:flujo-datos-alto-nivel}
 
+% =================================================
 \section{Stack Tecnológico}
+% =================================================
 
 \subsection{Dependencias de producción}
 
-\begin{longtable}{p{0.32\textwidth} p{0.18\textwidth} p{0.40\textwidth}}
-\toprule
+\Needspace{16\baselineskip}
+\begin{longtable}{|p{0.32\textwidth}|p{0.18\textwidth}|p{0.40\textwidth}|}
+\hline
 \textbf{Paquete} & \textbf{Versión} & \textbf{Uso} \\
-\midrule
+\hline
 \code{react} & \code{\string^19.2} & UI reactiva \\
+\hline
 \code{react-dom} & \code{\string^19.2} & Renderizado DOM \\
+\hline
 \code{react-router-dom} & \code{\string^7.13} & Enrutamiento SPA \\
+\hline
 \code{@supabase/supabase-js} & \code{\string^2.103} & Cliente BaaS: DB, Auth y Storage \\
+\hline
 \code{tailwindcss} & \code{\string^4.2} & Utilidades CSS \\
+\hline
 \code{@tailwindcss/vite} & \code{\string^4.2} & Plugin Vite para TailwindCSS 4 \\
+\hline
 \code{lucide-react} & \code{\string^1.3} & Iconografía SVG \\
+\hline
 \code{maplibre-gl} & \code{\string^5.21} & Mapas interactivos para destinos nacionales \\
+\hline
 \code{radix-ui} & \code{\string^1.4} & Primitivos accesibles de UI \\
+\hline
 \code{shadcn} & \code{\string^4.0} & Componentes UI sobre Radix \\
+\hline
 \code{aos} & \code{\string^2.3} & Animaciones scroll \\
+\hline
 \code{@fontsource-variable/geist} & \code{\string^5.2} & Tipografía Geist \\
+\hline
 \code{clsx} + \code{tailwind-merge} & latest & Composición dinámica de clases \\
-\bottomrule
+\hline
 \end{longtable}
 
 \subsection{Herramientas de desarrollo}
 
-\begin{longtable}{p{0.32\textwidth} p{0.18\textwidth} p{0.40\textwidth}}
-\toprule
+\Needspace{9\baselineskip}
+\begin{longtable}{|p{0.32\textwidth}|p{0.18\textwidth}|p{0.40\textwidth}|}
+\hline
 \textbf{Paquete} & \textbf{Versión} & \textbf{Uso} \\
-\midrule
+\hline
 \code{vite} & \code{\string^7.3} & Bundler / dev server \\
+\hline
 \code{typescript} & \code{\string~5.9} & Tipado estático \\
+\hline
 \code{eslint} & \code{\string^9.39} & Linting \\
+\hline
 \code{@vitejs/plugin-react} & \code{\string^5.1} & Soporte JSX con Fast Refresh \\
-\bottomrule
+\hline
 \end{longtable}
 
+% =================================================
 \section{Arquitectura del Proyecto}
+% =================================================
 
 El proyecto sigue una \textbf{arquitectura Feature-Sliced} adaptada. Cada feature es un módulo autónomo con sus propias páginas, componentes y servicios.
 
 \subsection{Estructura de carpetas}
 
+% Este bloque es largo (~35 líneas) y puede cruzar páginas normalmente.
+% \needspace garantiza que al menos las primeras líneas no queden solas.
+\Needspace{8\baselineskip}
 \begin{lstlisting}[language={}]
 jeiggar-vacation/
 |---- src/
 |   |---- app/                    # Bootstrap: router, shell, scroll
-|   |   |---- router.tsx          # Definición centralizada de rutas
-|   |   |---- AppShell.tsx        # Layout público (header + footer + <Outlet/>)
-|   |   `---- ScrollToTop.tsx     # Restaura scroll en cada navegación
+|   |   |---- router.tsx          # Definicion centralizada de rutas
+|   |   |---- AppShell.tsx        # Layout publico (header + footer + <Outlet/>)
+|   |   `---- ScrollToTop.tsx     # Restaura scroll en cada navegacion
 |   |
-|   |---- auth/                   # Módulo de autenticación
-|   |   |---- AuthContext.tsx     # Provider: sesión, isAdmin, signIn/signOut
+|   |---- auth/                   # Modulo de autenticacion
+|   |   |---- AuthContext.tsx     # Provider: sesion, isAdmin, signIn/signOut
 |   |   |---- authContext.ts      # createContext (separado para evitar ciclos)
 |   |   |---- useAuth.ts          # Hook consumidor del contexto
 |   |   `---- ProtectedRoute.tsx  # Guard: redirige a /admin/login si no autenticado
@@ -280,22 +321,22 @@ jeiggar-vacation/
 |   |       |---- Map.ts          # Destination, City, Country...
 |   |       |---- Plans.ts        # Plan, PlanCard...
 |   |       |---- Landing.ts      # Hero, Stat...
-|   |       `---- ...             # Un archivo por entidad/sección
+|   |       `---- ...             # Un archivo por entidad/seccion
 |   |
 |   |---- lib/                    # Utilidades compartidas
 |   |   |---- supabase.ts         # Singleton del cliente Supabase
-|   |   |---- storage.ts          # Helper para URLs públicas de Storage
-|   |   |---- utils.ts            # cn() y helpers genéricos
-|   |   `---- whatsapp.ts         # Número y generador de links de WhatsApp
+|   |   |---- storage.ts          # Helper para URLs publicas de Storage
+|   |   |---- utils.ts            # cn() y helpers genericos
+|   |   `---- whatsapp.ts         # Numero y generador de links de WhatsApp
 |   |
 |   |---- components/             # Componentes UI reutilizables
-|   |   |---- ui/                 # Átomos: ImageCard, Badge, Spinner...
-|   |   |---- forms/              # Componentes de formulario genéricos
+|   |   |---- ui/                 # Atomos: ImageCard, Badge, Spinner...
+|   |   |---- forms/              # Componentes de formulario genericos
 |   |   `---- common/             # Breadcrumbs, Navbar, Footer...
 |   |
 |   |---- hooks/                  # Custom hooks globales
-|   |---- mocks/                  # Datos estáticos de relleno
-|   `---- features/               # Módulos de negocio
+|   |---- mocks/                  # Datos estaticos de relleno
+|   `---- features/               # Modulos de negocio
 |       |---- admin/
 |       |---- contact/
 |       |---- destinations/
@@ -304,8 +345,8 @@ jeiggar-vacation/
 |       |---- quotes/
 |       `---- services/
 |
-|---- public/                     # Assets estáticos públicos
-|---- docs/                       # Documentación adicional
+|---- public/                     # Assets estaticos publicos
+|---- docs/                       # Documentacion adicional
 |---- .env.local                  # Variables de entorno locales
 |---- .env.example                # Plantilla de variables de entorno
 |---- vite.config.ts
@@ -317,11 +358,12 @@ jeiggar-vacation/
 
 Cada feature sigue esta convención interna:
 
+\Needspace{10\baselineskip}
 \begin{lstlisting}[language={}]
 features/
 `---- <nombre-feature>/
-    |---- pages/              # Páginas conectadas al router
-    |---- components/         # Componentes específicos del feature
+    |---- pages/              # Paginas conectadas al router
+    |---- components/         # Componentes especificos del feature
     |---- services/           # Llamadas a Supabase/API
     |---- hooks/              # Hooks propios del feature
     `---- index.ts            # Barrel export opcional
@@ -329,32 +371,46 @@ features/
 
 \subsection{Diagrama de módulos y dependencias}
 
-\diagramfiguresmall{diagramas/modulos-y-dependencias.png}{Diagrama de módulos y dependencias del proyecto.}{fig:modulos-dependencias}
+\diagramfigurehere{diagramas/modulos-y-dependencias.png}{Diagrama de módulos y dependencias del proyecto.}{fig:modulos-dependencias}
 
 \subsection{Sistema de rutas}
 
 Las rutas se definen en \code{src/app/router.tsx} usando \textbf{React Router v7} con \code{createBrowserRouter}. Todas las páginas usan \code{React.lazy()} para code splitting automático.
 
-\begin{longtable}{p{0.32\textwidth} p{0.38\textwidth} p{0.18\textwidth}}
-\toprule
+\Needspace{17\baselineskip}
+\begin{longtable}{|p{0.32\textwidth}|p{0.38\textwidth}|p{0.18\textwidth}|}
+\hline
 \textbf{Ruta} & \textbf{Componente} & \textbf{Protegida} \\
-\midrule
+\hline
 \code{/} & \code{Home} & No \\
+\hline
 \code{/nosotros} & \code{AboutUs} & No \\
+\hline
 \code{/destinos} & \code{DestinationsSelector} & No \\
+\hline
 \code{/destinos/nacionales} & \code{MapRoute} & No \\
+\hline
 \code{/destinos/internacionales} & \code{InternationalDestinations} & No \\
+\hline
 \code{/destinos/:slug} & \code{DestinationDetail} & No \\
+\hline
 \code{/servicios} & \code{ServicesPage} & No \\
+\hline
 \code{/cotizar} & \code{QuotePage} & No \\
+\hline
 \code{/admin} & \code{AdminDashboard} & Sí \\
+\hline
 \code{/admin/destinos} & \code{DestinationList} & Sí \\
+\hline
 \code{/admin/destinos/nuevo} & \code{DestinationForm} & Sí \\
+\hline
 \code{/admin/destinos/:id/editar} & \code{DestinationForm} & Sí \\
-\bottomrule
+\hline
 \end{longtable}
 
+% =================================================
 \section{Guía de Configuración}
+% =================================================
 
 \subsection{Prerrequisitos}
 
@@ -366,18 +422,16 @@ Las rutas se definen en \code{src/app/router.tsx} usando \textbf{React Router v7
 
 \subsection{Instalación paso a paso}
 
+\Needspace{12\baselineskip}
 \begin{lstlisting}[language=bash]
 # 1. Clonar el repositorio
 git clone <url-del-repo>
 cd jeiggar-vacation
-
 # 2. Instalar dependencias
 npm install
-
 # 3. Configurar variables de entorno
 cp .env.example .env.local
 # Editar .env.local con tus credenciales reales
-
 # 4. Levantar servidor de desarrollo
 npm run dev
 \end{lstlisting}
@@ -388,11 +442,11 @@ El servidor arrancará en \code{http://localhost:5173} por defecto.
 
 Edita el archivo \code{.env.local} con los valores de tu proyecto Supabase: Panel $\rightarrow$ Project Settings $\rightarrow$ API.
 
+\Needspace{7\baselineskip}
 \begin{lstlisting}[language={}]
 # URL del proyecto Supabase
 VITE_SUPABASE_URL=https://xxxxxxxxxxxxxxxx.supabase.co
-
-# Anon key (clave pública, segura para el frontend)
+# Anon key (clave publica, segura para el frontend)
 VITE_SUPABASE_ANON_KEY=sb_publishable_xxxxxxxxxxxxxxxx
 \end{lstlisting}
 
@@ -406,23 +460,27 @@ VITE_SUPABASE_ANON_KEY=sb_publishable_xxxxxxxxxxxxxxxx
 
 \subsection{Scripts disponibles}
 
-\begin{longtable}{p{0.22\textwidth} p{0.28\textwidth} p{0.40\textwidth}}
-\toprule
+\Needspace{9\baselineskip}
+\begin{longtable}{|p{0.22\textwidth}|p{0.28\textwidth}|p{0.40\textwidth}|}
+\hline
 \textbf{Script} & \textbf{Comando} & \textbf{Descripción} \\
-\midrule
+\hline
 Desarrollo & \code{npm run dev} & Dev server con HMR en puerto 5173 \\
 Build & \code{npm run build} & Compila TS + bundle de producción en \code{/dist} \\
 Preview & \code{npm run preview} & Sirve el build de producción localmente \\
 Linting & \code{npm run lint} & Ejecuta ESLint sobre todo el código \\
-\bottomrule
+\hline
 \end{longtable}
 
+% =================================================
 \section{Documentación de Lógica Core}
+% =================================================
 
 \subsection{Cliente Supabase: \code{src/lib/supabase.ts}}
 
 El cliente es un \textbf{singleton} inicializado una sola vez. Si las variables de entorno no están definidas, lanza un error descriptivo en tiempo de inicio, evitando errores silenciosos en runtime.
 
+\Needspace{5\baselineskip}
 \begin{lstlisting}[language=typescript]
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 \end{lstlisting}
@@ -433,20 +491,22 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 Convierte rutas relativas almacenadas en la base de datos a URLs públicas completas de Supabase Storage.
 
+\Needspace{5\baselineskip}
 \begin{lstlisting}[language=typescript]
 getPublicStorageUrl(path: string, bucket = 'destinations'): string
 \end{lstlisting}
 
 El helper maneja tres casos de forma retrocompatible:
 
-\begin{longtable}{p{0.28\textwidth} p{0.30\textwidth} p{0.32\textwidth}}
-\toprule
+\Needspace{8\baselineskip}
+\begin{longtable}{|p{0.28\textwidth}|p{0.30\textwidth}|p{0.32\textwidth}|}
+\hline
 \textbf{Caso} & \textbf{Input} & \textbf{Output} \\
-\midrule
+\hline
 URL absoluta legado & \code{https://...} & La misma URL sin cambios \\
 Asset local Vite & \code{/assets/foto.jpg} & La misma ruta local \\
 Ruta relativa nuevo & \code{eje-cafetero-1234.jpg} & URL completa de Supabase Storage \\
-\bottomrule
+\hline
 \end{longtable}
 
 \subsection{Servicio de Destinos Públicos: \code{destinations.service.ts}}
@@ -457,7 +517,7 @@ Este servicio centraliza todas las consultas \textbf{de lectura} que usa la web 
 
 \subsubsection*{Flujo de datos}
 
-\diagramfiguresmall{diagramas/flujo-servicio-destinos-publicos.png}{Flujo de datos del servicio de destinos públicos.}{fig:flujo-servicio-destinos}
+\diagramfigurehere{diagramas/flujo-servicio-destinos-publicos.png}{Flujo de datos del servicio de destinos públicos.}{fig:flujo-servicio-destinos}
 
 \subsubsection*{Funciones disponibles}
 
@@ -490,6 +550,7 @@ Este servicio centraliza todas las consultas \textbf{de lectura} que usa la web 
 
 Un patrón consistente en este servicio es la normalización del JOIN anidado de Supabase, que puede devolver un objeto o un array según el contexto:
 
+\Needspace{6\baselineskip}
 \begin{lstlisting}[language=typescript]
 // Supabase puede retornar city como objeto {} o array [{}]
 const city = Array.isArray(d.city) ? d.city[0] : d.city
@@ -497,14 +558,15 @@ const city = Array.isArray(d.city) ? d.city[0] : d.city
 
 También convierte las claves de \code{snake\_case} de la DB a \code{camelCase} de TypeScript:
 
-\begin{longtable}{p{0.42\textwidth} p{0.42\textwidth}}
-\toprule
+\Needspace{8\baselineskip}
+\begin{longtable}{|p{0.42\textwidth}|p{0.42\textwidth}|}
+\hline
 \textbf{BD: snake\_case} & \textbf{TypeScript: camelCase} \\
-\midrule
+\hline
 \code{short\_description} & \code{shortDescription} \\
 \code{image\_url} & \code{imageUrl} \\
 \code{city\_id} & \code{cityId} \\
-\bottomrule
+\hline
 \end{longtable}
 
 \subsection{Formulario de Destinos Admin: \code{DestinationForm.tsx}}
@@ -515,14 +577,15 @@ Este es el componente más complejo del sistema. Sirve tanto para \textbf{crear}
 
 \subsubsection*{Estado del componente}
 
-\diagramfiguresmall{diagramas/estado-destination-form.png}{Diagrama de estados del componente DestinationForm.}{fig:estado-destination-form}
+\diagramfigurehere{diagramas/estado-destination-form.png}{Diagrama de estados del componente DestinationForm.}{fig:estado-destination-form}
 
 \subsubsection*{Variables de estado principales}
 
-\begin{longtable}{p{0.26\textwidth} p{0.24\textwidth} p{0.40\textwidth}}
-\toprule
+\Needspace{14\baselineskip}
+\begin{longtable}{|p{0.26\textwidth}|p{0.24\textwidth}|p{0.40\textwidth}|}
+\hline
 \textbf{Estado} & \textbf{Tipo} & \textbf{Descripción} \\
-\midrule
+\hline
 \code{form} & \code{typeof EMPTY} & Todos los campos del destino \\
 \code{cities / countries} & \code{City[] / Country[]} & Listas para los selectores \\
 \code{loading} & \code{boolean} & Muestra spinner mientras carga en modo edición \\
@@ -532,25 +595,27 @@ Este es el componente más complejo del sistema. Sirve tanto para \textbf{crear}
 \code{previewUrl} & \code{string | null} & Blob URL para preview local de la imagen \\
 \code{showNewCity} & \code{boolean} & Muestra u oculta el subformulario de nueva ciudad \\
 \code{showNewCountry} & \code{boolean} & Muestra u oculta el subformulario de nuevo país \\
-\bottomrule
+\hline
 \end{longtable}
 
 \subsubsection*{Lógica de \code{handleSubmit}}
 
 El proceso de guardado sigue este orden estricto para evitar guardar referencias rotas:
 
+\Needspace{10\baselineskip}
 \begin{lstlisting}[language={}]
 1. Subir imagen a Supabase Storage -> obtener nombre de archivo
 2. Construir payload con image_url = nombre del archivo
-3. Llamar createDestination() o updateDestination() según modo
+3. Llamar createDestination() o updateDestination() segun modo
 4. Si OK -> navegar a /admin/destinos
-5. Si error de slug duplicado (código 23505) -> mostrar mensaje específico
+5. Si error de slug duplicado (codigo 23505) -> mostrar mensaje especifico
 \end{lstlisting}
 
 \subsubsection*{Subformularios inline: Ciudad / País}
 
 El formulario permite crear una ciudad o país \textbf{sin salir de la pantalla}. El flujo es:
 
+\Needspace{13\baselineskip}
 \begin{lstlisting}[language={}]
 Clic "+ Nueva ciudad"
   -> showNewCity = true
@@ -560,24 +625,25 @@ Clic "+ Nueva ciudad"
       -> Subir imagen de ciudad (opcional)
       -> createCity() en Supabase
       -> Agregar ciudad a la lista local (setCities)
-      -> Seleccionar la nueva ciudad automáticamente (set('city_id', data.id))
+      -> Seleccionar la nueva ciudad automaticamente (set('city_id', data.id))
       -> showNewCity = false
 \end{lstlisting}
 
 \subsubsection*{Generación automática de slug}
 
+\Needspace{15\baselineskip}
 \begin{lstlisting}[language=typescript]
 function generateSlug(name: string) {
   return name
     .toLowerCase()
     .normalize('NFD')                    // Descomponer acentos
-    .replace(/[\u0300-\u036f]/g, '')     // Eliminar diacríticos (á->a)
-    .replace(/[^a-z0-9\s-]/g, '')       // Solo alfanuméricos y guiones
+    .replace(/[\u0300-\u036f]/g, '')     // Eliminar diacriticos (a->a)
+    .replace(/[^a-z0-9\s-]/g, '')       // Solo alfanumericos y guiones
     .trim()
-    .replace(/\s+/g, '-')              // Espacios -> guiones
-    .replace(/-+/g, '-')               // Múltiples guiones -> uno
+    .replace(/\s+/g, '-')               // Espacios -> guiones
+    .replace(/-+/g, '-')                // Multiples guiones -> uno
 }
-// "Cañón del Chicamocha" -> "canon-del-chicamocha"
+// "Canon del Chicamocha" -> "canon-del-chicamocha"
 \end{lstlisting}
 
 El slug se autogenera mientras el usuario escribe el nombre en modo creación, pero es editable manualmente.
@@ -586,10 +652,11 @@ El slug se autogenera mientras el usuario escribe el nombre en modo creación, p
 
 El módulo de auth usa el patrón \textbf{Context + Provider} de React con Supabase Auth.
 
-\diagramfiguresmall{diagramas/flujo-autenticacion.png}{Flujo general del módulo de autenticación.}{fig:flujo-autenticacion}
+\diagramfigurehere{diagramas/flujo-autenticacion.png}{Flujo general del módulo de autenticación.}{fig:flujo-autenticacion}
 
 \textbf{Lógica de \code{isAdmin}:} La autenticación de Supabase verifica la identidad del usuario, pero el rol \code{admin} se verifica en la tabla \code{profiles} del proyecto. Un usuario puede tener sesión activa pero no ser admin. \code{ProtectedRoute} verifica ambas condiciones.
 
+\Needspace{10\baselineskip}
 \begin{lstlisting}[language=typescript]
 // src/auth/AuthContext.tsx
 const { data } = await supabase
@@ -597,18 +664,20 @@ const { data } = await supabase
   .select('role')
   .eq('id', sess.user.id)
   .single()
-
 setIsAdmin(data?.role === 'admin')
 \end{lstlisting}
 
+% =================================================
 \section{Estándares de Código}
+% =================================================
 
 \subsection{Convenciones de nombrado}
 
-\begin{longtable}{p{0.30\textwidth} p{0.30\textwidth} p{0.30\textwidth}}
-\toprule
+\Needspace{16\baselineskip}
+\begin{longtable}{|p{0.30\textwidth}|p{0.30\textwidth}|p{0.30\textwidth}|}
+\hline
 \textbf{Elemento} & \textbf{Convención} & \textbf{Ejemplo} \\
-\midrule
+\hline
 Componentes React & \code{PascalCase} & \code{DestinationForm}, \code{ImageCard} \\
 Funciones y variables & \code{camelCase} & \code{handleSubmit}, \code{fetchDestinations} \\
 Tipos e Interfaces & \code{PascalCase} & \code{Destination}, \code{City} \\
@@ -619,33 +688,28 @@ Archivos de hooks & \code{camelCase.ts} & \code{useAuth.ts} \\
 Archivos de tipos & \code{PascalCase.ts} & \code{Map.ts}, \code{Plans.ts} \\
 Rutas URL & \code{kebab-case} en español & \code{/destinos/internacionales} \\
 Slugs de destinos & \code{kebab-case} sin acentos & \code{canon-del-chicamocha} \\
-\bottomrule
+\hline
 \end{longtable}
 
 \subsection{Estructura de un componente funcional}
 
 El orden de declaraciones dentro de un componente sigue esta secuencia:
 
+\Needspace{22\baselineskip}
 \begin{lstlisting}[language=typescript]
 export default function MiComponente({ prop1, prop2 }: Props) {
   // 1. Hooks del router (useParams, useNavigate)
   const { id } = useParams()
-
   // 2. Estado local
   const [loading, setLoading] = useState(false)
-
   // 3. Contextos y hooks personalizados
   const { session } = useAuth()
-
   // 4. Efectos (useEffect)
   useEffect(() => { ... }, [id])
-
   // 5. Handlers y funciones derivadas
   function handleSubmit() { ... }
-
   // 6. Early returns (loading, error, empty states)
   if (loading) return <Spinner />
-
   // 7. JSX principal
   return (
     <div>...</div>
@@ -662,10 +726,10 @@ export default function MiComponente({ prop1, prop2 }: Props) {
     \item Para tipos de Supabase, tipar la respuesta usando el tipo propio de la función y no \code{as any}.
 \end{itemize}
 
+\Needspace{7\baselineskip}
 \begin{lstlisting}[language=typescript]
 // Correcto
 const city = Array.isArray(data.city) ? data.city[0] : data.city
-
 // Incorrecto
 const city = (data as any).city
 \end{lstlisting}
@@ -674,11 +738,11 @@ const city = (data as any).city
 
 Usar el alias \code{@/} para rutas absolutas desde \code{src/}. Nunca usar rutas relativas que suban más de un nivel, como \code{../../}.
 
+\Needspace{9\baselineskip}
 \begin{lstlisting}[language=typescript]
 // Correcto
 import { supabase } from '@/lib/supabase'
 import type { Destination } from '@/domain/types/Map'
-
 // Incorrecto
 import { supabase } from '../../../lib/supabase'
 \end{lstlisting}
@@ -693,26 +757,29 @@ El alias \code{@/} está configurado en \code{vite.config.ts} y en \code{tsconfi
     \item Separación estricta: \code{destinations.service.ts} solo lectura para web pública; \code{destinationsAdmin.service.ts} CRUD para panel admin.
 \end{itemize}
 
+% =================================================
 \section{Flujo de Trabajo}
+% =================================================
 
 \subsection{Añadir un nuevo destino como Administrador}
 
+\Needspace{22\baselineskip}
 \begin{lstlisting}[language={}]
 1. Ir a /admin/destinos
 2. Clic en "Nuevo destino"
 3. Seleccionar tipo: Nacional o Internacional
-4. Completar información básica:
-   - Nombre (el slug se genera automáticamente)
-   - Categoría (ej: "Naturaleza", "Cultural")
-   - Descripción corta (<=160 caracteres)
-   - Descripción completa
+4. Completar informacion basica:
+   - Nombre (el slug se genera automaticamente)
+   - Categoria (ej: "Naturaleza", "Cultural")
+   - Descripcion corta (<=160 caracteres)
+   - Descripcion completa
 5. Subir imagen (drag & drop o clic)
-6. Ubicación:
+6. Ubicacion:
    - Nacional -> seleccionar ciudad (o crear una nueva inline)
-   - Internacional -> seleccionar país (o crear uno nuevo inline)
+   - Internacional -> seleccionar pais (o crear uno nuevo inline)
    - Ingresar coordenadas lat/lng
 7. Detalles adicionales: clima, actividades separadas por coma
-8. Publicación:
+8. Publicacion:
    - Activar "Publicado" para que sea visible en la web
    - Activar "Destacado en el home" si debe aparecer en portada
 9. Clic en "Crear destino"
@@ -722,6 +789,7 @@ El alias \code{@/} está configurado en \code{vite.config.ts} y en \code{tsconfi
 
 Sigue estos pasos para mantener la consistencia arquitectónica:
 
+\Needspace{6\baselineskip}
 \begin{lstlisting}[language=bash]
 # Ejemplo: agregar un feature de "blog"
 mkdir -p src/features/blog/pages
@@ -735,10 +803,10 @@ mkdir -p src/features/blog/services
     \item Registrar la ruta en \code{src/app/router.tsx}.
 \end{enumerate}
 
+\Needspace{8\baselineskip}
 \begin{lstlisting}[language=typescript]
 // En router.tsx
 const BlogPage = lazy(() => import('@/features/blog/pages/BlogPage'))
-
 // Dentro del array de children del AppShell:
 { path: 'blog', element: <BlogPage /> }
 \end{lstlisting}
@@ -761,41 +829,46 @@ Cuando se añade un campo nuevo a una tabla de Supabase:
 
 \subsubsection*{Ramas}
 
-\begin{longtable}{p{0.24\textwidth} p{0.32\textwidth} p{0.34\textwidth}}
-\toprule
+\Needspace{9\baselineskip}
+\begin{longtable}{|p{0.24\textwidth}|p{0.32\textwidth}|p{0.34\textwidth}|}
+\hline
 \textbf{Prefijo} & \textbf{Uso} & \textbf{Ejemplo} \\
-\midrule
+\hline
 \code{feature/} & Nueva funcionalidad & \code{feature/filtro-destinos} \\
 \code{fix/} & Corrección de bug & \code{fix/slug-duplicado} \\
 \code{chore/} & Mantenimiento, dependencias & \code{chore/actualizar-supabase} \\
 \code{docs/} & Documentación & \code{docs/manual-codigo} \\
-\bottomrule
+\hline
 \end{longtable}
 
 \subsubsection*{Commits: Conventional Commits}
 
+\Needspace{8\baselineskip}
 \begin{lstlisting}[language={}]
-feat: añadir filtro por categoría en destinos
-fix: corregir normalización de city en fetchDestinationBySlug
+feat: anadir filtro por categoria en destinos
+fix: corregir normalizacion de city en fetchDestinationBySlug
 chore: actualizar @supabase/supabase-js a 2.103
-docs: añadir sección de auth al manual
+docs: anadir seccion de auth al manual
 \end{lstlisting}
 
+% =================================================
 \section{Base de Datos}
+% =================================================
 
 \subsection{Tablas principales}
 
-\diagramfiguresmall{diagramas/modelo-entidad-relacion.png}{Modelo entidad-relación de la base de datos del sistema.}{fig:modelo-er}
+\diagramfigurefullpage{diagramas/modelo-entidad-relacion.png}{Modelo entidad-relación de la base de datos del sistema.}{fig:modelo-er}
 
 \subsection{Campo \code{destination\_type}}
 
-\begin{longtable}{p{0.25\textwidth} p{0.35\textwidth} p{0.30\textwidth}}
-\toprule
+\Needspace{8\baselineskip}
+\begin{longtable}{|p{0.25\textwidth}|p{0.35\textwidth}|p{0.30\textwidth}|}
+\hline
 \textbf{Valor} & \textbf{Descripción} & \textbf{Relación geográfica} \\
-\midrule
+\hline
 \code{national} & Destino dentro de Colombia & Vinculado a una \code{city} \\
 \code{international} & Destino fuera de Colombia & Vinculado a un \code{country} \\
-\bottomrule
+\hline
 \end{longtable}
 
 \begin{infobox}
@@ -808,22 +881,24 @@ El bucket \code{destinations} almacena todas las imágenes de destinos y ciudade
 
 \subsubsection*{Convención de nombres de archivo}
 
-\begin{longtable}{p{0.25\textwidth} p{0.36\textwidth} p{0.29\textwidth}}
-\toprule
+\Needspace{8\baselineskip}
+{\small
+\begin{longtable}{|p{0.22\textwidth}|p{0.33\textwidth}|p{0.33\textwidth}|}
+\hline
 \textbf{Tipo} & \textbf{Formato} & \textbf{Ejemplo} \\
-\midrule
+\hline
 Imagen de destino & \code{\{slug\}-\{timestamp\}.\{ext\}} & \code{canon-del-chicamocha-1746301234.jpg} \\
 Imagen de ciudad & \code{city-\{slug\}-\{timestamp\}.\{ext\}} & \code{city-san-gil-1746301234.webp} \\
-\bottomrule
+\hline
 \end{longtable}
+}
 
 La ruta relativa, por ejemplo \code{canon-del-chicamocha-1746301234.jpg}, es lo que se guarda en la columna \code{image\_url} de la base de datos. La función \code{getPublicStorageUrl()} construye la URL completa en tiempo de renderizado.
 
-
-
-\newpage
+% =================================================
 \section*{Referencias}
 \addcontentsline{toc}{section}{Referencias}
+% =================================================
 
 Documentación oficial de React. (s. f.). \textit{React}. Recuperado el 3 de mayo de 2026, de \url{https://react.dev/}
 

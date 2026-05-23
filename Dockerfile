@@ -6,6 +6,15 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+# --- Registrar variables de entorno ---
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_ANON_KEY
+
+# Se pasan al entorno global de la compilación
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+# -------------------------------------------------
+
 # Copiar el resto del código y compilar
 COPY . .
 RUN npm run build
