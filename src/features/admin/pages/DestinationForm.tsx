@@ -119,10 +119,14 @@ export default function DestinationForm() {
   useEffect(() => {
     if (newCityImage) {
       const url = URL.createObjectURL(newCityImage)
-      setNewCityPreview(url)
-      return () => URL.revokeObjectURL(url)
+      const timeoutId = setTimeout(() => setNewCityPreview(url), 0)
+      return () => {
+        clearTimeout(timeoutId)
+        URL.revokeObjectURL(url)
+      }
     } else {
-      setNewCityPreview(null)
+      const timeoutId = setTimeout(() => setNewCityPreview(null), 0)
+      return () => clearTimeout(timeoutId)
     }
   }, [newCityImage])
 
@@ -133,10 +137,14 @@ export default function DestinationForm() {
   useEffect(() => {
     if (imageFile) {
       const url = URL.createObjectURL(imageFile)
-      setPreviewUrl(url)
-      return () => URL.revokeObjectURL(url)
+      const timeoutId = setTimeout(() => setPreviewUrl(url), 0)
+      return () => {
+        clearTimeout(timeoutId)
+        URL.revokeObjectURL(url)
+      }
     } else {
-      setPreviewUrl(null)
+      const timeoutId = setTimeout(() => setPreviewUrl(null), 0)
+      return () => clearTimeout(timeoutId)
     }
   }, [imageFile])
 
