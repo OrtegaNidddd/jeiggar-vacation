@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  frontend:
+    build: .
+    container_name: jeiggar-app
+    restart: unless-stopped
+    # NOTA: No es necesario mapear "ports" al VPS (ej. "3001:3001") 
+    # porque NPM hablará directamente con el contenedor por la red interna.
+    networks:
+      - nginx-proxy-network
+
+networks:
+  nginx-proxy-network:
+    external: true
