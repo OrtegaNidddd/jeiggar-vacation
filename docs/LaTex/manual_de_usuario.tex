@@ -1,0 +1,791 @@
+\documentclass[12pt,letterpaper]{article}
+
+% -------------------------------------------------
+% Codificación y compatibilidad de fuente (Arial / Helvetica)
+% -------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+
+% Configuración para usar Helvetica (clon directo de Arial) en TODO el documento
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\shorthandoff{"}
+
+% -------------------------------------------------
+% Formato general tipo APA
+% -------------------------------------------------
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{needspace}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{ragged2e}
+\usepackage{float}
+\usepackage{etoolbox}
+\usepackage{tocloft}
+
+% -------------------------------------------------
+% Márgenes, interlineado y párrafos
+% -------------------------------------------------
+\geometry{margin=1in}
+\setlength{\headheight}{15pt}
+\doublespacing
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{0pt}
+\raggedright
+
+% -------------------------------------------------
+% Listas
+% -------------------------------------------------
+\setlist[itemize]{leftmargin=0.5in}
+\setlist[enumerate]{leftmargin=0.5in}
+
+% -------------------------------------------------
+% Encabezado y numeración
+% -------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% -------------------------------------------------
+% Colores y enlaces
+% -------------------------------------------------
+\definecolor{apaBlue}{HTML}{1F4E79}
+\definecolor{tableStripe}{HTML}{F2F4F7}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=apaBlue,
+    citecolor=black,
+    pdftitle={Manual de Usuario: Jeiggar Vacation},
+    pdfauthor={NELLY CANO Y NICK ORTEGA}
+}
+
+% -------------------------------------------------
+% Tablas
+% -------------------------------------------------
+\renewcommand{\arraystretch}{1.15}
+\setlength{\arrayrulewidth}{0.8pt}
+\setlength{\tabcolsep}{8pt}
+\setlength{\LTpre}{0.8em}
+\setlength{\LTpost}{0.8em}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+\AtBeginEnvironment{longtable}{%
+  \setlength{\tabcolsep}{5pt}%
+  \rowcolors{2}{tableStripe}{white}%
+}
+
+\captionsetup[table]{font={small,sf},labelfont=bf}
+\captionsetup[figure]{font={small,sf},labelfont=bf}
+
+% -------------------------------------------------
+% Títulos (Todos en tamaño 12pt / \normalsize)
+% -------------------------------------------------
+\titleformat{\section}
+  {\normalfont\centering\bfseries\normalsize}
+  {\thesection.}{0.5em}{}
+
+\titleformat{\subsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsection}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\itshape\normalsize}
+  {\thesubsubsection}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{1.5em}{1em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.8em}
+\titlespacing*{\subsubsection}{0pt}{1em}{0.6em}
+
+% Cada capítulo/sección principal inicia en hoja nueva
+\pretocmd{\section}{\clearpage}{}{}
+
+% -------------------------------------------------
+% Comandos de utilidad (Fuentes unificadas a Arial/Helvetica)
+% -------------------------------------------------
+\newcommand{\code}[1]{\nolinkurl{#1}}
+\newcommand{\dash}{---}
+\newcommand{\step}[2]{\noindent\textbf{Paso #1.} #2\par\medskip}
+
+% Figura con estructura solicitada: Nombre arriba, imagen, descripción debajo.
+\newcommand{\screenshotfigure}[4]{%
+\begin{figure}[H]
+\centering
+\refstepcounter{figure}
+\addcontentsline{lof}{figure}{\protect\numberline{\thefigure}#2}
+\textbf{Figura \thefigure. #2}
+\par\vspace{0.4cm}
+\IfFileExists{#1}{%
+  \includegraphics[width=0.92\textwidth]{#1}%
+}{%
+  \fbox{\parbox{0.92\textwidth}{\centering\vspace{1.5cm}%
+    \textit{[Captura de pantalla pendiente: #2]}\\[0.3cm]%
+    \small #1%
+    \vspace{1.5cm}}}%
+}
+\par\vspace{0.3cm}
+\textit{Descripción de la imagen: #3}
+\label{#4}
+\end{figure}
+}
+
+\begin{document}
+
+% ==================================================================
+% PORTADA (Todo explícitamente en tamaño 12pt)
+% ==================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{0.5in}
+
+    % 1. Nombres completos de los estudiantes (Reemplazado el texto genérico)
+    {\normalsize\bfseries
+    Jairo Andres Rincon Blanco \\
+    Laura Valentina Rozzo Espinel\\
+    Mary Fernanda Rodriguez Morales\\
+    Nelly Fabiola Cano Oviedo\\
+    Nestór Iván Granados Valenzuela\\
+    Nick Alejandro Ortega Mendez\\
+    Valery Gabriela Alarcon Peña\\
+    \par}
+    \vspace{0.6in}
+
+    % 2. Programa académico
+    {\normalsize Ingeniería de Software \par}
+    \vspace{0.4in}
+
+    % 3. Nombre completo de la FESC
+    {\normalsize Fundación de Estudios Superiores Comfanorte (FESC) \par}
+    \vspace{0.6in}
+
+    % 4. Nombre de la asignatura
+    {\normalsize\bfseries Sistemas Operativos \par}
+    \vspace{0.4in}
+
+    % 5. Identificación del Proyecto (PPA) y Título
+    {\normalsize Proyecto Pedagógico de Aula (PPA) \par}
+    \vspace{0.5in}
+    {\normalsize\bfseries MANUAL DE USUARIO: PLATAFORMA WEB DE GESTIÓN DE DESTINOS Y ADMINISTRACIÓN DE SERVICIOS TURÍSTICOS\par}
+    \vspace{0.6in}
+
+    % 6. Nombre completo de la docente (Corregido a Norly Alejandra)
+    {\normalsize Norly Alejandra Aguilar Quintero \par}
+    
+    \vfill
+    {\normalsize San José de Cúcuta, Mayo de 2026 \par}
+\end{titlepage}
+
+% ==================================================================
+% ÍNDICES
+% ==================================================================
+\newpage
+\tableofcontents
+
+\newpage
+\addcontentsline{toc}{section}{Índice de tablas}
+\listoftables
+
+\newpage
+\addcontentsline{toc}{section}{Índice de figuras}
+\listoffigures
+
+% ==================================================================
+\clearpage
+\section*{Introducción}
+\addcontentsline{toc}{section}{Introducción}
+% ==================================================================
+
+Bienvenido al manual de usuario de Jeiggar Vacation. Este documento describe cómo navegar, utilizar y administrar la plataforma web, incluyendo tanto las funcionalidades disponibles para los visitantes como las herramientas del panel administrativo.
+
+Jeiggar Vacation es una plataforma digital diseñada para conectar a los viajeros con destinos turísticos nacionales e internacionales, planes vacacionales y servicios especializados. La interfaz está pensada para ser intuitiva, accesible desde cualquier dispositivo y fácil de operar sin conocimientos técnicos previos.
+
+Este manual cubre todas las secciones del sitio web y el flujo completo del panel de administración. Se recomienda leerlo en orden la primera vez; para consultas puntuales, se puede utilizar el índice de contenidos.
+
+El documento está dirigido a dos tipos de usuarios. En primer lugar, a los clientes o visitantes de la plataforma, quienes podrán consultar destinos, planes, servicios y canales de contacto. En segundo lugar, al usuario administrativo, encargado de gestionar la información publicada dentro del sistema.
+
+% ==================================================================
+\section{Objetivos}
+% ==================================================================
+
+Esta sección presenta los propósitos principales del sistema Jeiggar Vacation, explicando la función general de la plataforma y los beneficios que ofrece tanto para los clientes como para el equipo administrativo.
+
+El objetivo de Jeiggar Vacation es centralizar la oferta turística de la agencia en un entorno digital moderno que permita a los visitantes explorar destinos y planes, y al equipo interno gestionar ese contenido de forma sencilla y eficiente.
+
+La plataforma está diseñada para:
+
+\begin{itemize}
+    \item Presentar destinos turísticos nacionales e internacionales de manera visual y organizada.
+    \item Mostrar planes vacacionales con sus beneficios y características.
+    \item Ofrecer información clara sobre los servicios premium disponibles.
+    \item Facilitar el contacto directo entre los visitantes y la agencia.
+    \item Permitir al equipo administrador gestionar destinos nacionales e internacionales del sitio desde un panel centralizado.
+\end{itemize}
+
+% ==================================================================
+\section{Requisitos del Sistema}
+% ==================================================================
+
+En esta sección se describen las condiciones mínimas necesarias para utilizar correctamente la plataforma. Se incluyen los requisitos técnicos para los usuarios clientes y los requisitos de acceso para el personal administrativo.
+
+\subsection{Requisitos Técnicos}
+
+Para usar la plataforma sin inconvenientes se recomienda:
+
+\begin{itemize}
+    \item \textbf{Navegador actualizado:} Google Chrome, Microsoft Edge, Mozilla Firefox o Brave.
+    \item \textbf{Conexión a internet:} estable para una experiencia fluida con el mapa interactivo.
+    \item \textbf{Resolución de pantalla:} mínimo 1366~×~768 píxeles en escritorio. En dispositivos móviles, cualquier resolución estándar es compatible.
+\end{itemize}
+
+Para una mejor experiencia visual, especialmente en la sección de mapas y destinos, se recomienda usar un navegador actualizado.
+
+\subsection{Requisitos de Acceso al Panel Administrativo}
+
+Para ingresar al panel administrativo es indispensable contar con:
+
+\begin{itemize}
+    \item Correo electrónico registrado y autorizado por el administrador principal.
+    \item Contraseña asignada. Si es la primera vez que se ingresa, se deben solicitar las credenciales al administrador del sistema.
+\end{itemize}
+
+Las credenciales administrativas son personales e intransferibles. No deben compartirse con personas externas al equipo autorizado.
+
+% ==================================================================
+\section{Manual de Usuario Cliente}
+% ==================================================================
+
+Esta sección está dirigida a los clientes o visitantes de Jeiggar Vacation. Aquí se explica cómo navegar por el sitio web, consultar destinos, revisar planes turísticos, conocer servicios disponibles y utilizar los canales de contacto.
+
+\subsection{Página de Inicio}
+
+La página de inicio es el punto de entrada principal de la plataforma. En ella se presenta la identidad visual de Jeiggar Vacation, los accesos principales de navegación y una síntesis de los servicios turísticos ofrecidos.
+
+\screenshotfigure
+{assets/pantalla-home.png}
+{Vista general de la página de inicio de Jeiggar Vacation}
+{Se observa la página principal del sitio web, con el encabezado, el banner de presentación, los botones de acción y las secciones iniciales de destinos y servicios. Esta vista sirve como punto de partida para que el usuario explore la plataforma.}
+{fig:home}
+
+Al acceder a \url{https://ppa-nick.shop/}, el visitante llega directamente a la página de inicio. Desde esta vista puede desplazarse por las secciones principales o utilizar el menú superior para ingresar a una sección específica.
+
+La página de inicio incluye:
+
+\begin{itemize}
+    \item \textbf{Logo y menú de navegación:} ubicados en la parte superior del sitio.
+    \item \textbf{Banner principal:} contiene una imagen destacada y botones de acción rápida como \textbf{Explorar Destinos} y \textbf{Reservar ahora}.
+    \item \textbf{Destinos destacados:} presenta una selección visual de lugares turísticos.
+    \item \textbf{Servicios premium:} resume los servicios complementarios ofrecidos por la agencia.
+    \item \textbf{Información de contacto rápido:} permite al visitante comunicarse con la agencia.
+\end{itemize}
+
+\subsection{Menú de Navegación}
+
+El menú de navegación permite al usuario acceder rápidamente a las diferentes secciones del sitio web. Esta herramienta facilita el desplazamiento entre páginas sin necesidad de regresar manualmente a la página de inicio.
+
+\screenshotfigure
+{assets/menu-navegacion.png}
+{Menú de navegación principal}
+{Se muestra el menú superior de la plataforma con las opciones principales del sitio. También se observa el submenú de destinos, desde donde el usuario puede seleccionar destinos nacionales o internacionales.}
+{fig:menu}
+
+\begin{longtable}{|L{0.22\textwidth}|L{0.65\textwidth}|}
+\caption{Opciones del menú de navegación}\\
+\hline
+\textbf{Opción} & \textbf{Descripción} \\
+\hline
+Inicio & Regresa a la página principal de la plataforma. \\
+\hline
+Destinos & Despliega un submenú con las opciones \textbf{Destinos Nacionales} y \textbf{Destinos Internacionales}. \\
+\hline
+Planes & Muestra los planes vacacionales disponibles según el tipo de viajero. \\
+\hline
+Servicios & Lista los servicios premium ofrecidos por la agencia. \\
+\hline
+Nosotros & Presenta información institucional de Jeiggar Vacation. \\
+\hline
+Contacto & Muestra el formulario y los canales de comunicación directa con la agencia. \\
+\hline
+\end{longtable}
+
+\subsection{Destinos Nacionales}
+
+La sección de destinos nacionales permite consultar lugares turísticos ubicados dentro de Colombia. Esta sección combina un mapa interactivo con un listado organizado de ciudades y puntos de interés.
+
+\screenshotfigure
+{assets/destinos-nacionales-mapa.png}
+{Sección de destinos nacionales}
+{Se observa el mapa interactivo de Colombia junto con el listado de ciudades disponibles. Esta vista permite seleccionar una ciudad y visualizar los lugares turísticos asociados mediante marcadores geográficos.}
+{fig:destinos-nacionales}
+
+Para explorar un destino nacional, el usuario debe seguir estos pasos:
+
+\begin{enumerate}
+    \item Hacer clic en \textbf{Destinos} en el menú superior.
+    \item Seleccionar \textbf{Destinos Nacionales} en el submenú.
+    \item Utilizar el mapa interactivo o el listado lateral para elegir una ciudad.
+    \item Al seleccionar una ciudad, el mapa se centra en ella y aparecen sus puntos turísticos.
+    \item Hacer clic sobre un marcador para ver el nombre y la descripción del lugar.
+\end{enumerate}
+
+Un \textbf{marcador} es un punto visual ubicado sobre el mapa que representa la posición geográfica de un destino turístico. Cada marcador permite identificar la ubicación aproximada del lugar y consultar información básica, como el nombre del destino y una breve descripción. En esta plataforma, los marcadores facilitan la exploración visual de los destinos nacionales.
+
+\screenshotfigure
+{assets/destinos-nacionales-detalle.png}
+{Detalle de un destino nacional seleccionado}
+{Se muestra un marcador seleccionado dentro del mapa interactivo. Esta imagen permite identificar cómo se visualiza la información básica de un destino nacional al hacer clic sobre el punto geográfico correspondiente.}
+{fig:detalle-nacional}
+
+Actualmente la plataforma cuenta con destinos en las siguientes ciudades:
+
+\begin{itemize}
+    \item Bogotá.
+    \item Medellín.
+    \item Cartagena.
+    \item Cali.
+    \item Santa Marta.
+    \item Norte de Santander.
+\end{itemize}
+
+El listado de ciudades y destinos es administrado desde el panel administrativo. Si un destino no aparece en la plataforma, es posible que aún no haya sido publicado por el equipo encargado.
+
+\subsection{Destinos Internacionales}
+
+La sección de destinos internacionales presenta una galería de lugares fuera de Colombia que forman parte del portafolio turístico de la agencia.
+
+\screenshotfigure
+{assets/destinos-internacionales.png}
+{Galería de destinos internacionales}
+{Se observan las tarjetas de destinos internacionales disponibles en la plataforma. Cada tarjeta presenta una imagen representativa, el país, la categoría turística y una breve descripción del destino.}
+{fig:destinos-internacionales}
+
+Para explorar un destino internacional, el usuario debe seguir estos pasos:
+
+\begin{enumerate}
+    \item Hacer clic en \textbf{Destinos} en el menú superior.
+    \item Seleccionar \textbf{Destinos Internacionales}.
+    \item Revisar las tarjetas de destinos disponibles.
+    \item Hacer clic en \textbf{Ver detalles} sobre cualquier tarjeta para consultar la información completa del destino.
+\end{enumerate}
+
+Cada tarjeta de destino internacional muestra:
+
+\begin{itemize}
+    \item Imagen representativa del lugar.
+    \item Categoría turística, por ejemplo playa, montaña, ciudad o cultura.
+    \item País al que pertenece.
+    \item Descripción breve del destino.
+    \item Botón \textbf{Ver detalles} con información ampliada.
+\end{itemize}
+
+\subsection{Planes Turísticos}
+
+La sección de planes agrupa experiencias de viaje organizadas por tipo. Su finalidad es orientar al usuario según sus intereses, presupuesto o propósito de viaje.
+
+\screenshotfigure
+{assets/planes-turisticos.png}
+{Sección de planes turísticos}
+{Se muestran las categorías de planes turísticos ofrecidas por Jeiggar Vacation. Esta sección permite al cliente identificar experiencias de viaje según el tipo de actividad o destino de interés.}
+{fig:planes}
+
+Los tipos de planes disponibles son:
+
+\begin{itemize}
+    \item \textbf{Planes de peregrinación:} rutas espirituales y religiosas dentro y fuera del país.
+    \item \textbf{Cruceros:} paquetes de viaje marítimo con itinerarios definidos.
+    \item \textbf{Parques temáticos:} experiencias de entretenimiento familiar.
+    \item \textbf{Destinos tendencia:} lugares más solicitados de la temporada.
+\end{itemize}
+
+Cada plan puede incluir beneficios como:
+
+\begin{itemize}
+    \item \textbf{Atención 24/7:} acompañamiento durante el viaje.
+    \item \textbf{Pagos flexibles:} opciones de financiamiento y cuotas.
+    \item \textbf{Guías expertos:} personal calificado en cada destino.
+\end{itemize}
+
+Para conocer el detalle de precios y disponibilidad de un plan, el usuario debe utilizar el botón de contacto o comunicarse directamente por WhatsApp con el equipo de la agencia.
+
+\subsection{Servicios Premium}
+
+La sección de servicios premium complementa la oferta turística con soluciones especializadas para que el viaje sea más organizado, seguro y cómodo.
+
+\screenshotfigure
+{assets/servicios-premium.png}
+{Servicios premium disponibles}
+{Se observan las tarjetas de servicios premium ofrecidos por la agencia. Cada tarjeta resume un servicio complementario relacionado con asistencia médica, documentación, conectividad o transporte.}
+{fig:servicios}
+
+\begin{longtable}{|L{0.28\textwidth}|L{0.60\textwidth}|}
+\caption{Servicios premium de la plataforma}\\
+\hline
+\textbf{Servicio} & \textbf{Descripción} \\
+\hline
+Asistencia médica & Orientación y gestión de seguros médicos de viaje para destinos nacionales e internacionales. \\
+\hline
+Trámites y documentación & Apoyo en la gestión de visas, pasaportes y documentos requeridos para viajar. \\
+\hline
+Requisitos de viaje & Información sobre documentos y condiciones de entrada a cada destino. \\
+\hline
+Conectividad & Soluciones de datos móviles y tarjetas SIM internacionales para mantenerse comunicado en el exterior. \\
+\hline
+Transporte & Coordinación de traslados terrestres y aéreos dentro del itinerario del viajero. \\
+\hline
+\end{longtable}
+
+\subsection{Nosotros}
+
+La sección \textbf{Nosotros} permite al visitante conocer la identidad, historia y valores de Jeiggar Vacation antes de tomar una decisión de compra.
+
+\screenshotfigure
+{assets/nosotros.png}
+{Sección Nosotros}
+{Se muestra la sección institucional de Jeiggar Vacation. En esta vista se presenta información relacionada con la historia, filosofía de trabajo y objetivos de la agencia.}
+{fig:nosotros}
+
+Esta sección contiene:
+
+\begin{itemize}
+    \item \textbf{Historia:} origen y trayectoria de la agencia.
+    \item \textbf{Filosofía de trabajo:} principios y valores que guían el servicio.
+    \item \textbf{Objetivos:} compromiso de la agencia con sus clientes y destinos.
+\end{itemize}
+
+\subsection{Contacto y Formularios}
+
+Esta sección permite al usuario comunicarse con Jeiggar Vacation mediante canales directos y formularios digitales. Aquí se integran tanto el formulario de contacto general como el formulario de cotización, explicando sus campos, validaciones, funcionamiento y comportamiento esperado.
+
+\screenshotfigure
+{assets/seccion-contacto.png}
+{Sección de contacto}
+{Se observa la sección de contacto con los canales de atención disponibles y el formulario web. Esta vista permite al visitante enviar consultas o comunicarse directamente con la agencia.}
+{fig:contacto}
+
+Los canales de atención disponibles son:
+
+\begin{itemize}
+    \item \textbf{Dirección física:} para visitas presenciales.
+    \item \textbf{Número telefónico:} para consultas rápidas por llamada.
+    \item \textbf{WhatsApp:} enlace directo para iniciar una conversación con el equipo.
+    \item \textbf{Formulario web:} permite enviar un mensaje sin salir del sitio.
+\end{itemize}
+
+Para utilizar el formulario de contacto, el usuario debe:
+
+\begin{enumerate}
+    \item Ingresar a la sección \textbf{Contacto} desde el menú principal.
+    \item Completar el campo de \textbf{nombre completo}.
+    \item Escribir un \textbf{correo electrónico válido}, ya que será el medio de respuesta.
+    \item Redactar el \textbf{mensaje} con la consulta o solicitud.
+    \item Hacer clic en el botón \textbf{Enviar}.
+\end{enumerate}
+
+El sistema espera que los campos obligatorios estén completos. Si el correo no tiene un formato válido o falta información requerida, el formulario puede impedir el envío hasta que el usuario corrija los datos.
+
+\screenshotfigure
+{assets/formulario-cotizacion.png}
+{Formulario de cotización}
+{Se muestra el formulario de cotización utilizado para solicitar información detallada sobre un viaje. Esta vista permite registrar datos del cliente, destino de interés, cantidad de personas, fecha aproximada y presupuesto.}
+{fig:cotizacion}
+
+Para utilizar el formulario de cotización, el usuario debe:
+
+\begin{enumerate}
+    \item Hacer clic en el botón \textbf{Solicitar cotización}.
+    \item Completar los campos solicitados en el formulario.
+    \item Verificar que la información ingresada sea correcta.
+    \item Hacer clic en \textbf{Solicitar cotización por WhatsApp}.
+\end{enumerate}
+
+El formulario de cotización recopila la información necesaria para que la agencia pueda responder de forma más precisa. Entre los campos que puede incluir se encuentran datos personales del cliente, destino solicitado, número de viajeros, fechas estimadas, presupuesto y observaciones adicionales.
+
+Al hacer clic en el botón de envío por WhatsApp, el sistema organiza los datos ingresados y los dirige al canal de comunicación de la agencia. El comportamiento esperado es que el usuario pueda continuar la conversación con un asesor, quien revisará la solicitud y brindará información personalizada.
+
+% ==================================================================
+\section{Manual de Usuario Administrativo}
+% ==================================================================
+
+Esta sección está dirigida al usuario administrador de Jeiggar Vacation. Su propósito es explicar el ingreso al panel administrativo, la gestión de destinos, el manejo de países y ciudades, y las buenas prácticas para mantener actualizada la información visible en el sitio web.
+
+\subsection{Acceso al Panel Administrativo}
+
+El panel administrativo es el área privada desde la cual el equipo de Jeiggar Vacation gestiona el contenido visible en el sitio web, como destinos, planes, servicios e imágenes.
+
+\screenshotfigure
+{assets/footer-candado.png}
+{Acceso al panel administrativo desde el pie de página}
+{Se muestra el ícono de candado ubicado en el pie de página del sitio web. Este elemento permite acceder de forma discreta a la pantalla de inicio de sesión del panel administrativo.}
+{fig:footer-candado}
+
+El acceso al panel no está visible en el menú principal. Para llegar a él:
+
+\begin{enumerate}
+    \item Desplazarse hasta el final de la página principal, en el pie de página.
+    \item Ubicar el ícono de \textbf{candado}.
+    \item Hacer clic sobre el ícono.
+    \item El sistema redirige a la pantalla de inicio de sesión.
+\end{enumerate}
+
+El acceso al panel está ubicado de esta manera para evitar exposición innecesaria. Solo el equipo interno autorizado debe conocer esta ruta.
+
+\subsection{Inicio de Sesión}
+
+El inicio de sesión permite validar que el usuario cuenta con permisos administrativos para ingresar al sistema de gestión.
+
+\screenshotfigure
+{assets/login-admin.png}
+{Pantalla de inicio de sesión del panel administrativo}
+{Se observa el formulario de autenticación del panel administrativo. Esta vista solicita el correo electrónico y la contraseña del usuario autorizado para permitir el ingreso al sistema.}
+{fig:login-admin}
+
+Para iniciar sesión:
+
+\begin{enumerate}
+    \item Ingresar el \textbf{correo electrónico} autorizado en el primer campo.
+    \item Escribir la \textbf{contraseña} en el segundo campo.
+    \item Hacer clic en el botón \textbf{Ingresar}.
+\end{enumerate}
+
+Si las credenciales son correctas, el sistema redirige al panel administrativo. Si son incorrectas, muestra un mensaje de error y permite intentar nuevamente.
+
+En caso de olvidar la contraseña, el usuario debe comunicarse con el administrador principal del sistema para solicitar el restablecimiento. No se deben utilizar credenciales de otros miembros del equipo.
+
+\subsection{Vista General del Panel Administrativo}
+
+Después de iniciar sesión, el administrador accede a la vista general del panel. Esta pantalla permite consultar el estado del sistema y acceder a los módulos de gestión disponibles.
+
+\screenshotfigure
+{assets/panel-admin-dashboard.png}
+{Vista general del panel administrativo}
+{Se muestra la pantalla principal del panel administrativo. Desde esta vista el administrador puede consultar información general y acceder a los módulos de gestión del sistema.}
+{fig:dashboard}
+
+\begin{longtable}{|L{0.22\textwidth}|L{0.66\textwidth}|}
+\caption{Módulos disponibles en el panel administrativo}\\
+\hline
+\textbf{Módulo} & \textbf{Función} \\
+\hline
+\textbf{Destinos} & Crear, editar, publicar o eliminar destinos nacionales e internacionales. Dentro del formulario de creación de destinos, permite seleccionar ciudades o países existentes mediante un menú desplegable. También permite crear una nueva ciudad o país mediante un botón integrado en el mismo formulario, sin necesidad de vistas independientes para editar o eliminar estos elementos. \\
+\hline
+\end{longtable}
+
+\subsection{Gestión de Destinos}
+
+El módulo de destinos es el área principal de administración turística dentro de la plataforma. Desde aquí se controla la información geográfica, textual y visual que posteriormente aparece en el sitio web.
+
+\screenshotfigure
+{assets/admin-crear-destino.png}
+{Formulario para crear un nuevo destino}
+{Se muestra el formulario administrativo utilizado para registrar un nuevo destino. En esta vista el administrador puede ingresar información como nombre, descripción, ubicación, categoría, coordenadas, imagen y estado de publicación.}
+{fig:crear-destino}
+
+Para crear un nuevo destino:
+
+\begin{enumerate}
+    \item Ingresar al módulo \textbf{Destinos} desde el menú lateral del panel.
+    \item Hacer clic en el botón \textbf{Nuevo destino} o \textbf{Agregar}.
+    \item Completar el campo \textbf{nombre} del destino.
+    \item Escribir una \textbf{descripción} clara y detallada.
+    \item Seleccionar el \textbf{país} y la \textbf{ciudad}, según corresponda.
+    \item Elegir la \textbf{categoría turística}.
+    \item Ingresar las \textbf{coordenadas geográficas}, es decir, latitud y longitud.
+    \item Cargar una \textbf{imagen representativa} desde el equipo o mediante una dirección válida.
+    \item Activar la opción \textbf{Publicado} si se desea que el destino sea visible de inmediato.
+    \item Hacer clic en \textbf{Guardar}.
+\end{enumerate}
+
+El formulario debe completarse con información coherente y verificable. Las coordenadas deben corresponder al destino registrado para que el marcador aparezca correctamente en el mapa. La imagen debe representar el lugar turístico y tener buena calidad visual.
+
+\screenshotfigure
+{assets/admin-listado-destinos.png}
+{Listado administrativo de destinos}
+{Se observa el listado de destinos registrados en el panel administrativo. Esta vista permite revisar la información existente y acceder a las acciones de edición o eliminación.}
+{fig:listado-destinos}
+
+Para editar o eliminar un destino:
+
+\begin{enumerate}
+    \item Ubicar el registro dentro del listado de destinos.
+    \item Hacer clic en el ícono de \textbf{lápiz} para editar.
+    \item Realizar los cambios necesarios en el formulario.
+    \item Hacer clic en \textbf{Guardar}.
+    \item Si se requiere eliminar, hacer clic en el ícono de \textbf{papelera}.
+    \item Confirmar la acción cuando el sistema lo solicite.
+\end{enumerate}
+
+Eliminar un destino es una acción permanente. Si no se desea mostrar temporalmente un destino, se recomienda desactivar la opción \textbf{Publicado} en lugar de eliminarlo. De esta forma, el destino deja de ser visible para los clientes, pero su información se conserva en el sistema.
+
+\subsection{Gestión de Países y Ciudades}
+
+Los países y ciudades permiten organizar jerárquicamente los destinos dentro de la plataforma. Esta estructura facilita que los destinos nacionales e internacionales se clasifiquen correctamente.
+
+\screenshotfigure
+{assets/admin-ciudades.png}
+{Gestión de ciudades en el panel administrativo}
+{Se muestra la interfaz relacionada con el registro o selección de ciudades dentro del panel administrativo. Esta función permite organizar destinos nacionales y asociarlos con una ubicación específica.}
+{fig:admin-ciudades}
+
+Los países se usan principalmente para agrupar destinos internacionales. Para agregar un nuevo país:
+
+\begin{enumerate}
+    \item Ir al formulario de creación de destino.
+    \item Seleccionar la opción \textbf{Internacional}.
+    \item Hacer clic en \textbf{Nuevo país}.
+    \item Ingresar el nombre del país.
+    \item Registrar latitud y longitud, cuando aplique.
+    \item Agregar imagen o bandera si el sistema lo solicita.
+    \item Ingresar el orden de visualización, si se desea controlar la posición en la que aparece.
+    \item Guardar el registro.
+\end{enumerate}
+
+Las ciudades se utilizan para los destinos nacionales y definen los municipios o zonas que aparecen en el mapa interactivo. Para agregar una nueva ciudad:
+
+\begin{enumerate}
+    \item Ir al formulario de creación de destino.
+    \item Seleccionar la opción \textbf{Nacional}.
+    \item Hacer clic en \textbf{Nueva ciudad}.
+    \item Ingresar el nombre de la ciudad.
+    \item Escribir una descripción.
+    \item Registrar latitud y longitud.
+    \item Agregar una imagen si el sistema lo solicita.
+    \item Ingresar el orden de visualización, si se desea controlar la posición en el mapa interactivo.
+    \item Guardar el registro.
+\end{enumerate}
+
+Las coordenadas de una ciudad se pueden obtener desde Google Maps. Para ello, se busca la ciudad, se hace clic derecho sobre el punto deseado y se copian los valores de latitud y longitud.
+
+\subsection{Cierre de Sesión}
+
+El cierre de sesión es una acción de seguridad que debe realizarse al finalizar el trabajo en el panel administrativo, especialmente cuando se usa un equipo compartido.
+
+Para cerrar sesión:
+
+\begin{enumerate}
+    \item Ubicar el botón \textbf{Cerrar sesión}, localizado en la parte inferior izquierda de la barra lateral de navegación.
+    \item Hacer clic en \textbf{Cerrar sesión}.
+    \item Verificar que el sistema redirija a la pantalla de inicio de sesión.
+\end{enumerate}
+
+No se debe cerrar únicamente la pestaña del navegador como sustituto del cierre de sesión. Siempre se debe utilizar el botón oficial para garantizar que la sesión quede finalizada correctamente.
+
+% ==================================================================
+\section{Advertencias y Buenas Prácticas}
+% ==================================================================
+
+Esta sección presenta recomendaciones generales para el uso adecuado de la plataforma, tanto para los clientes como para el equipo administrativo.
+
+Para todos los usuarios se recomienda:
+
+\begin{itemize}
+    \item Usar siempre una conexión a internet estable, especialmente al consultar mapas o cargar imágenes.
+    \item Mantener el navegador actualizado para garantizar compatibilidad.
+    \item Verificar la información ingresada antes de guardar o enviar formularios.
+    \item Revisar que los datos personales o de contacto estén correctamente escritos.
+\end{itemize}
+
+Para el equipo administrador se recomienda:
+
+\begin{itemize}
+    \item Mantener las credenciales de acceso de forma personal e intransferible.
+    \item No dejar el panel administrativo abierto en equipos sin supervisión.
+    \item Antes de eliminar un destino, evaluar si es mejor desactivarlo temporalmente.
+    \item Utilizar imágenes con buena calidad y con derechos de uso adecuados.
+    \item Revisar la información antes de publicarla.
+    \item Comunicar al desarrollador cualquier comportamiento inesperado del sistema.
+\end{itemize}
+
+% ==================================================================
+\section{Preguntas Frecuentes}
+% ==================================================================
+
+Esta sección resuelve inquietudes comunes relacionadas con el uso de la plataforma y del panel administrativo.
+
+\subsection*{Ingreso al panel administrativo}
+\addcontentsline{toc}{subsection}{Ingreso al panel administrativo}
+
+Para ingresar al panel administrativo, el usuario autorizado debe dirigirse al pie de página de la página principal, hacer clic en el ícono de candado y utilizar sus credenciales.
+
+\subsection*{Problemas de inicio de sesión}
+\addcontentsline{toc}{subsection}{Problemas de inicio de sesión}
+
+Si no se puede iniciar sesión, se debe verificar que el correo y la contraseña sean correctos. Si el problema persiste, se debe comunicar la situación al administrador del sistema para restablecer las credenciales.
+
+\subsection*{Destino publicado que no aparece en el sitio}
+\addcontentsline{toc}{subsection}{Destino publicado que no aparece en el sitio}
+
+Si un destino fue publicado pero no aparece en el sitio, se debe confirmar que la opción \textbf{Publicado} esté activada. Si está activada, se recomienda esperar unos segundos y actualizar la página.
+
+\subsection*{Funcionamiento en dispositivos móviles}
+\addcontentsline{toc}{subsection}{Funcionamiento en dispositivos móviles}
+
+La plataforma funciona en celulares y tabletas porque cuenta con diseño adaptable. Sin embargo, para administrar información desde el panel, se recomienda utilizar un computador de escritorio o portátil.
+
+\subsection*{Registro de coordenadas}
+\addcontentsline{toc}{subsection}{Registro de coordenadas}
+
+Para agregar coordenadas a un destino, se debe buscar el lugar en Google Maps, hacer clic derecho sobre el punto exacto y copiar los valores de latitud y longitud. Luego, estos datos se ingresan en los campos correspondientes del formulario.
+
+\subsection*{Desactivación de destinos}
+\addcontentsline{toc}{subsection}{Desactivación de destinos}
+
+Un destino puede desactivarse sin eliminarlo. Para ello, se debe ingresar al formulario de edición y desactivar la opción \textbf{Publicado}. El destino dejará de mostrarse en el sitio, pero su información se conservará.
+
+\subsection*{Comunicación con la agencia}
+\addcontentsline{toc}{subsection}{Comunicación con la agencia}
+
+El cliente puede comunicarse con la agencia mediante el formulario de contacto, el enlace de WhatsApp o el número telefónico disponible en la sección \textbf{Contacto}.
+
+% ==================================================================
+\section{Bibliografía}
+\addcontentsline{toc}{section}{Bibliografía}
+% ==================================================================
+
+Esta sección define los principales términos utilizados en el manual, con el fin de facilitar la comprensión del funcionamiento de la plataforma.
+
+\begin{longtable}{|L{0.28\textwidth}|L{0.60\textwidth}|}
+\caption{Glosario de términos del manual}\\
+\hline
+\textbf{Término} & \textbf{Definición} \\
+\hline
+Destino turístico & Lugar registrado en la plataforma para actividades de viaje y recreación. Puede ser nacional o internacional. \\
+\hline
+Panel administrativo & Área privada del sistema que permite gestionar el contenido del sitio. Solo es accesible con credenciales autorizadas. \\
+\hline
+Panel principal & Pantalla inicial del panel administrativo, donde se muestra información general del sistema y accesos a los módulos. \\
+\hline
+Interruptor de publicación & Control visual que permite activar o desactivar la visibilidad de un destino dentro del sitio web. \\
+\hline
+Publicado & Estado de un destino, plan o servicio que indica que es visible para los visitantes del sitio web. \\
+\hline
+Coordenadas & Par de valores, latitud y longitud, que indican la posición geográfica exacta de un destino en el mapa. \\
+\hline
+Servicios premium & Servicios complementarios especializados para viajeros, como asistencia médica, trámites, conectividad y transporte. \\
+\hline
+Mapa interactivo & Herramienta visual integrada que muestra la ubicación de los destinos nacionales mediante marcadores geográficos. \\
+\hline
+Marcador & Punto visual ubicado sobre el mapa que representa la localización de un destino turístico. \\
+\hline
+Pie de página & Parte inferior del sitio web donde se ubica información de contacto y el acceso discreto al panel administrativo. \\
+\hline
+Diseño adaptable & Característica que permite ajustar la interfaz al tamaño del dispositivo utilizado, como celular, tableta o computador. \\
+\hline
+Credenciales & Combinación de correo electrónico y contraseña utilizada para autenticarse en el panel administrativo. \\
+\hline
+\end{longtable}
+
+\end{document}
