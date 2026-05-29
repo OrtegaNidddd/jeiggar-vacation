@@ -4,12 +4,16 @@
 % Formato general tipo APA 7.ª edición
 % -------------------------------------------------
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage[spanish,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+
+% Configuración para usar Helvetica (clon directo de Arial) en TODO el documento
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{indentfirst}
-\usepackage{mathptmx}
 \usepackage[table]{xcolor}
 \usepackage{hyperref}
 \usepackage{xurl}
@@ -22,38 +26,39 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{listings}
-\usepackage[most]{tcolorbox}
 \usepackage{graphicx}
 \usepackage{ragged2e}
 \usepackage{seqsplit}
 \usepackage{float}
 \usepackage{etoolbox}
-\usepackage{tocloft} % Gestión avanzada de índices
+\usepackage{tocloft}
 
-% Ajuste de espacios para los índices generales
-\advance\cfttabnumwidth 1em 
-\advance\cftfignumwidth 1em 
-\shorthandoff{"} % desactiva los shorthands de comillas dobles de babel para listings
+\advance\cftfignumwidth 1em
+\shorthandoff{"}
+
+\addto\captionsspanish{
+  \renewcommand{\listtablename}{Índice de Entidades}
+  \renewcommand{\tablename}{Entidad}
+}
 
 % -------------------------------------------------
-% Estilo de Rejilla y Estética de Tablas Completas
+% Estilo de tablas / entidades
 % -------------------------------------------------
 \definecolor{tableStripe}{HTML}{F2F4F7}
 \renewcommand{\arraystretch}{1.20}
 \setlength{\arrayrulewidth}{0.8pt}
 \setlength{\tabcolsep}{6pt}
-\captionsetup[table]{font=small,labelfont=bf}
-\captionsetup[figure]{font=small,labelfont=bf}
 
-% Inyección automática de cebra y formato compacto para diccionarios
+\captionsetup[table]{font={small,sf},labelfont=bf,position=above}
+\captionsetup[figure]{font={small,sf},labelfont=bf,position=above}
+
 \AtBeginEnvironment{longtable}{%
   \rowcolors{2}{tableStripe}{white}%
 }
 
-\BeforeBeginEnvironment{longtable}{\begingroup\singlespacing\footnotesize}
+\BeforeBeginEnvironment{longtable}{\begingroup\singlespacing\normalsize}
 \AfterEndEnvironment{longtable}{\endgroup}
 
-% Redefinición de reglas booktabs a líneas de bloque completo (Todos los bordes)
 \providecommand{\toprule}{}
 \providecommand{\midrule}{}
 \providecommand{\bottomrule}{}
@@ -61,21 +66,21 @@
 \renewcommand{\midrule}{\hline}
 \renewcommand{\bottomrule}{\hline}
 
-% Márgenes APA: 1 pulgada
+% Márgenes APA
 \geometry{margin=1in}
 \setlength{\headheight}{15pt}
 
-% Interlineado APA: doble espacio para el cuerpo de texto
+% Interlineado
 \doublespacing
 
-% Sangría APA: primera línea de cada párrafo 0.5 pulgadas
+% Sangría
 \setlength{\parindent}{0.5in}
 \setlength{\parskip}{0pt}
 
-% Alineación recomendada por APA: margen izquierdo alineado y derecho irregular
+% Alineación APA
 \raggedright
 
-% Encabezado y numeración APA
+% Encabezado y numeración
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\thepage}
@@ -83,10 +88,6 @@
 
 % Colores y enlaces
 \definecolor{apaBlue}{HTML}{1F4E79}
-\definecolor{codeBg}{HTML}{F6F8FA}
-\definecolor{codeFrame}{HTML}{D0D7DE}
-\definecolor{quoteBg}{HTML}{F7F7F7}
-\definecolor{quoteFrame}{HTML}{BDBDBD}
 
 \hypersetup{
     colorlinks=true,
@@ -94,16 +95,16 @@
     urlcolor=apaBlue,
     citecolor=black,
     pdftitle={Diccionario de Datos: Jeiggar Vacation},
-    pdfauthor={NICK ORTEGA}
+    pdfauthor={NELLY CANO Y NICK ORTEGA}
 }
 
-% Jerarquía de títulos compatible con APA
+% Títulos (Todos en tamaño 12pt / \normalsize)
 \titleformat{\section}
-  {\normalfont\centering\bfseries\Large}
+  {\normalfont\bfseries\normalsize}
   {\thesection.}{0.5em}{}
 
 \titleformat{\subsection}
-  {\normalfont\bfseries\large}
+  {\normalfont\bfseries\normalsize}
   {\thesubsection}{0.5em}{}
 
 \titleformat{\subsubsection}
@@ -114,10 +115,10 @@
 \titlespacing*{\subsection}{0pt}{1.2em}{0.8em}
 \titlespacing*{\subsubsection}{0pt}{1em}{0.6em}
 
-% Cada capítulo/sección principal inicia en una nueva hoja
+% Cada capítulo inicia en hoja nueva
 \pretocmd{\section}{\clearpage}{}{}
 
-% Código fuente SQL
+% Código SQL (SIN CUADROS, SIN FONDO, FUENTE ARIAL/HELVETICA TAMAÑO 12)
 \lstdefinelanguage{sql}{
     keywords={SELECT,FROM,WHERE,AND,OR,TRUE,FALSE,NULL,CREATE,TABLE,FUNCTION,RETURNS,TRIGGER,LANGUAGE,STABLE,INSERT,UPDATE,DELETE,PRIMARY,KEY,FOREIGN,REFERENCES,CHECK,UNIQUE,DEFAULT},
     sensitive=false,
@@ -126,10 +127,9 @@
 }
 
 \lstdefinestyle{codeblock}{
-    backgroundcolor=\color{codeBg},
-    frame=single,
-    rulecolor=\color{codeFrame},
-    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{white},
+    frame=none,
+    basicstyle=\normalfont\normalsize,
     breaklines=true,
     breakatwhitespace=false,
     columns=fullflexible,
@@ -139,110 +139,119 @@
 }
 \lstset{style=codeblock}
 
-\newtcolorbox{infobox}{
-    colback=quoteBg,
-    colframe=quoteFrame,
-    boxrule=0.8pt,
-    arc=1mm,
-    left=2mm,
-    right=2mm,
-    top=1mm,
-    bottom=1mm
-}
-
-% Texto técnico con posibilidad de corte de línea dentro de tablas de bordes cerrados
 \newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
-\newcommand{\code}[1]{\texorpdfstring{\begingroup\ttfamily\footnotesize\def\_{\textunderscore\allowbreak}#1\endgroup}{#1}}
+\newcommand{\code}[1]{\texorpdfstring{\begingroup\normalfont\normalsize\def\_{\textunderscore\allowbreak}#1\endgroup}{#1}}
 \newcommand{\dash}{---}
 
-% Macro quirúrgica para el control dimensional de diagramas
-\newcommand{\diagramfigure}[3]{%
+\newcommand{\diagramfigure}[4]{%
 \begin{figure}[H]
 \centering
+\caption{#2}
+\label{#4}
+\vspace{0.3cm}
+
 \IfFileExists{#1}{%
   \includegraphics[width=0.9\textwidth,height=0.42\textheight,keepaspectratio]{#1}%
 }{%
     \fbox{%
     \begin{minipage}[c][2.2in][c]{0.88\textwidth}
         \centering
-        \textbf{Espacio Reservado para Componente Gráfico}\\[0.5em]
-        Ubique la imagen correspondiente en la ruta física:\\
+        \textbf{Espacio reservado para imagen}\\[0.5em]
+        Ubique la imagen correspondiente en la ruta:\\
         \texttt{#1}
-        \end{minipage}%
+    \end{minipage}%
     }%
 }
-\caption{#2}
-\label{#3}
+
+\vspace{0.3cm}
+{\small \textit{Descripción de la figura: #3}}
 \end{figure}
 }
 
-% ------------------------------------------------------------------
 \begin{document}
-% ------------------------------------------------------------------
 
-% -------------------------------------------------
-% Portada tipo APA 7 estudiante
-% -------------------------------------------------
+% ==================================================================
+% PORTADA (Todo explícitamente en tamaño 12pt)
+% ==================================================================
 \begin{titlepage}
     \centering
-    \vspace*{1.5in}
+    \vspace*{0.5in}
 
-    {\bfseries\Large Diccionario de Datos: Plataforma Web de Gestión de Destinos y Administración de Servicios Turísticos\par}
+    % 1. Nombres completos de los estudiantes (Reemplazado el texto previo)
+    {\normalsize\bfseries
+    Jairo Andres Rincon Blanco \\
+    Laura Valentina Rozzo Espinel\\
+    Mary Fernanda Rodriguez Morales\\
+    Nelly Fabiola Cano Oviedo\\
+    Nestór Iván Granados Valenzuela\\
+    Nick Alejandro Ortega Mendez\\
+    Valery Gabriela Alarcon Peña\\
+    \par}
+    \vspace{0.6in}
+
+    % 2. Programa académico
+    {\normalsize Ingeniería de Software \par}
+    \vspace{0.4in}
+
+    % 3. Nombre completo de la FESC
+    {\normalsize Fundación de Estudios Superiores Comfanorte (FESC) \par}
+    \vspace{0.6in}
+
+    % 4. Nombre de la asignatura
+    {\normalsize\bfseries Sistemas Operativos \par}
+    \vspace{0.4in}
+
+    % 5. Identificación del Proyecto (PPA) y Título del Documento
+    {\normalsize Proyecto Pedagógico de Aula (PPA) \par}
     \vspace{0.5in}
+    {\normalsize\bfseries DICCIONARIO DE DATOS: PLATAFORMA WEB DE GESTIÓN DE DESTINOS Y ADMINISTRACIÓN DE SERVICIOS TURÍSTICOS\par}
+    \vspace{0.6in}
 
-    {Estudiantes de IV Semestre\par}
-    \vspace{0.2in}
+    % 6. Nombre completo de la docente (Corregido a Norly Alejandra)
+    {\normalsize Norly Alejandra Aguilar Quintero \par}
 
-    {Fundación de Estudios Superiores Comfanorte (FESC)\par}
-    {Ingeniería de Software\par}
-    \vspace{0.2in}
-
-    {Diccionario de Datos del Sistema\par}
-    \vspace{0.2in}
-
-    {Docente: Norly Alexandra Aguilar Quintero \par}
-    \vspace{0.2in}
-
-    {Mayo de 2026\par}
+    \vfill
+    {\normalsize San José de Cúcuta, Mayo de 2026 \par}
 \end{titlepage}
 
 \newpage
 \tableofcontents
 
 \newpage
-\cleardoublepage
-\addcontentsline{toc}{section}{Índice de tablas}
+\addcontentsline{toc}{section}{Índice de Entidades}
 \listoftables
 
 \newpage
-\cleardoublepage
-\addcontentsline{toc}{section}{Índice de figuras}
+\addcontentsline{toc}{section}{Índice de Figuras}
 \listoffigures
-\newpage
 
 % ==================================================================
-\section{Introducción}
+\section*{Introducción}
+\addcontentsline{toc}{section}{Introducción}
 % ==================================================================
 
-La base de datos de \textbf{Jeiggar Vacation} está alojada en la infraestructura gestionada de Supabase, operando sobre PostgreSQL 15 o superior. La base de datos soporta una plataforma de turismo enfocada en la exploración de destinos nacionales e internacionales mediante la integración de un componente de mapa interactivo basado en vectores. El diseño del esquema optimiza una jerarquía geográfica estructurada en tres niveles relacionales fijos: países, ciudades y destinos.
+La base de datos de \textbf{Jeiggar Vacation} está alojada en la infraestructura gestionada de Supabase y opera sobre PostgreSQL. Esta base de datos soporta una plataforma web de turismo enfocada en la exploración de destinos nacionales e internacionales, integrando información geográfica, imágenes, descripciones, categorías y marcadores de ubicación para su visualización dentro del sistema.
 
-A continuación, se presenta el consolidado cuantitativo de los componentes que integran el modelo relacional físico en el servidor de producción.
+El diseño de la base de datos se organiza mediante una estructura jerárquica compuesta por países, ciudades, destinos turísticos y perfiles de usuario. Esta organización permite administrar la información de manera ordenada, mantener la integridad de los datos y facilitar la consulta de los destinos desde la interfaz pública y administrativa.
+
+Antes de desarrollar el contenido técnico de cada esquema, se presenta un resumen general de los principales componentes estructurales que conforman la base de datos del sistema.
 
 \begin{longtable}{|L{0.42\textwidth}|L{0.48\textwidth}|}
+\caption{Resumen general de componentes de la base de datos}\\
 \toprule
 \textbf{Elemento de la Base de Datos} & \textbf{Cantidad Global / Detalles} \\
 \midrule
-Tablas Físicas & 4 \\
+Entidades físicas & 4 \\
 \hline
 Funciones SQL / PLpgSQL & 2 \\
 \hline
-Triggers Automáticos & 3 \\
+Triggers automáticos & 3 \\
 \hline
 Índices B-Tree optimizados & 9 \\
 \hline
-Políticas de Seguridad RLS & 14 \\
+Políticas de (Row Level Security) & 14 \\
 \hline
-Extensiones de Motor Activas & 4: \code{pg\_stat\_statements}, \code{pgcrypto}, \code{supabase\_vault}, \code{uuid-ossp} \\
+Extensiones de motor activas & 4: \code{pg\_stat\_statements}, \code{pgcrypto}, \code{supabase\_vault}, \code{uuid-ossp} \\
 \hline
 \end{longtable}
 
@@ -250,17 +259,18 @@ Extensiones de Motor Activas & 4: \code{pg\_stat\_statements}, \code{pgcrypto}, 
 \section{Modelo Relacional e Integridad de Datos}
 % ==================================================================
 
-El esquema de base de datos implementa una arquitectura jerárquica rígida de herencia geográfica. Cada registro de la tabla de países contiene múltiples ciudades asociadas, y cada ciudad a su vez encapsula N destinos turísticos. Con el fin de flexibilizar el catálogo, los destinos de naturaleza internacional omiten la clave foránea de la ciudad, acoplándose de manera directa al país raíz. Por otro lado, la entidad de perfiles extiende de forma unívoca la tabla nativa de autenticación del ecosistema de Supabase Cloud.
+Esta sección describe la forma en que se relacionan las entidades principales de la base de datos. El modelo relacional permite establecer vínculos entre países, ciudades, destinos y perfiles de usuario, garantizando que la información se almacene de forma coherente y evitando duplicidad innecesaria.
 
-La Tabla 2 describe la matriz relacional, sus tipos de correspondencia y los comportamientos referenciales ante eventos de eliminación en el disco.
+La estructura se basa en una jerarquía geográfica. Cada país puede tener varias ciudades asociadas, y cada ciudad puede contener varios destinos turísticos. Los destinos internacionales pueden asociarse directamente con un país sin depender obligatoriamente de una ciudad. Además, la entidad \code{profiles} complementa la información de los usuarios autenticados mediante Supabase.
 
 \begin{longtable}{|L{0.20\textwidth}|L{0.20\textwidth}|L{0.15\textwidth}|L{0.35\textwidth}|}
+\caption{Matriz relacional de entidades del sistema}\\
 \toprule
-\textbf{Tabla origen} & \textbf{Tabla destino} & \textbf{Cardinalidad} & \textbf{FK / Comportamiento de Integridad} \\
+\textbf{Entidad origen} & \textbf{Entidad destino} & \textbf{Cardinalidad} & \textbf{FK / Comportamiento de integridad} \\
 \midrule
 \code{countries} & \code{cities} & 1:N & \code{countries.id} $\rightarrow$ \code{cities.country\_id}; ON DELETE CASCADE. \\
 \hline
-\code{countries} & \code{destinations} & 1:N & \code{countries.id} $\rightarrow$ \code{destinations.country\_id}; Restrictivo. \\
+\code{countries} & \code{destinations} & 1:N & \code{countries.id} $\rightarrow$ \code{destinations.country\_id}. \\
 \hline
 \code{cities} & \code{destinations} & 1:N & \code{cities.id} $\rightarrow$ \code{destinations.city\_id}; ON DELETE CASCADE. \\
 \hline
@@ -268,211 +278,237 @@ La Tabla 2 describe la matriz relacional, sus tipos de correspondencia y los com
 \hline
 \end{longtable}
 
-Para complementar el análisis matricial, a continuación se inyecta la representación gráfica del Modelo Entidad-Relación (MER), exponiendo la distribución de restricciones PK y FK que controlan la persistencia del sistema.
+\diagramfigure
+{diagramas/modelo-entidad-relacion.png}
+{Modelo Entidad-Relación físico de la base de datos}
+{Estructura relacional del sistema Jeiggar Vacation, incluyendo las entidades principales, sus llaves primarias, llaves foráneas y relaciones de integridad.}
+{fig:mer}
 
-\diagramfigure{diagramas/modelo-entidad-relacion.png}{Diagrama Entidad-Relación (MER) físico de la base de datos de Jeiggar Vacation.}{fig:mer}
+\diagramfigure
+{diagramas/diagrama_clases.png}
+{Diagrama de clases del dominio geográfico}
+{Representación orientada a objetos de las entidades principales utilizadas por la plataforma para organizar países, ciudades, destinos y perfiles.}
+{fig:clases-uml}
 
-Asimismo, desde la perspectiva de la Ingeniería de Software, el acoplamiento lógico y la transferencia relacional de los esquemas hacia los tipos de datos manejados por el ORM/Frontend se modela mediante la abstracción orientada a objetos en el Diagrama de Clases.
-
-\diagramfigure{diagramas/diagrama-clases.png}{Diagrama de Clases UML enfocado en el dominio geográfico de la plataforma.}{fig:clases-uml}
-
-Por último, con el fin de definir la topología física de almacenamiento y la distribución perimetral de los datos, el Diagrama de Despliegue de Datos describe la segregación entre las entidades relacionales indexadas en disco, los secretos criptográficos protegidos en la bóveda y los assets pesados multimedia.
-
-\diagramfigure{diagramas/despliegue-datos.png}{Diagrama de Despliegue de Datos y distribución perimetral en Supabase Infrastructure.}{fig:despliegue-datos}
+\diagramfigure
+{diagramas/Diagrama-Despliegue-Datos-(topología Supabase).png}
+{Diagrama de despliegue de datos en Supabase}
+{Distribución física y lógica de los datos, incluyendo la base de datos PostgreSQL, los servicios de Supabase y los recursos asociados al almacenamiento.}
+{fig:despliegue-datos}
 
 % ==================================================================
-\section{Descripción de Tablas}
+\section{Descripción de Entidades}
 % ==================================================================
 
-A continuación se detalla la composición estructural de cada una de las tablas del sistema, incluyendo sus tipos de datos nativos, valores por defecto y las restricciones aplicadas a nivel de motor.
+En esta sección se describen las entidades que componen la base de datos. Cada entidad contiene campos específicos que permiten almacenar información relevante para el funcionamiento del sistema turístico. Se incluyen los tipos de datos, valores por defecto, posibilidad de valores nulos y la descripción de cada campo.
 
-\subsection{\code{countries}: Países}
+\subsection{\texorpdfstring{\code{countries}: Países}{\code{countries}: Países}}
 
-Almacena los países configurados y disponibles en la plataforma turística. Actúa como el nodo raíz de la jerarquía de visualización cartográfica.
+Esta entidad almacena la información general de los países registrados en la plataforma. Funciona como el nivel principal dentro de la jerarquía geográfica del sistema y permite organizar ciudades y destinos turísticos asociados.
 
 \begin{longtable}{|L{0.15\textwidth}|L{0.16\textwidth}|L{0.08\textwidth}|L{0.18\textwidth}|L{0.33\textwidth}|}
+\caption{Diccionario de datos de la entidad countries}\\
 \toprule
 \textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
 \midrule
-\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único del país; llave primaria. \\
+\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único del país y llave primaria de la entidad. \\
 \hline
 \code{name} & \code{text} & NO & \dash & Nombre oficial del país. Ejemplo: Colombia. \\
 \hline
-\code{slug} & \code{text} & NO & \dash & Identificador URL amigable único. Ejemplo: \code{colombia}. \\
+\code{slug} & \code{text} & NO & \dash & Identificador amigable para URL. Ejemplo: \code{colombia}. \\
 \hline
 \code{lat} & \code{double precision} & NO & \dash & Latitud del centro geográfico del país. \\
 \hline
 \code{lng} & \code{double precision} & NO & \dash & Longitud del centro geográfico del país. \\
 \hline
-\code{zoom} & \code{numeric(4,2)} & NO & \dash & Nivel de zoom inicial para MapLibre al centrar la vista. Rango: 4--7. \\
+\code{zoom} & \code{numeric(4,2)} & NO & \dash & Nivel de acercamiento inicial del mapa al visualizar el país. \\
 \hline
-\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de imagen de portada representativa del país. \\
+\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de la imagen representativa del país. \\
 \hline
-\code{description} & \code{text} & SÍ & \code{NULL} & Descripción general del país para la UI. \\
+\code{description} & \code{text} & SÍ & \code{NULL} & Descripción general del país mostrada en la interfaz. \\
 \hline
-\code{is\_active} & \code{boolean} & NO & \code{true} & Control de visibilidad pública en la SPA. \\
+\code{is\_active} & \code{boolean} & NO & \code{true} & Define si el país se encuentra visible para los usuarios. \\
 \hline
-\code{sort\_order} & \code{integer} & NO & \code{0} & Orden posicional en menús. Menor valor implica prioridad. \\
+\code{sort\_order} & \code{integer} & NO & \code{0} & Orden de presentación del país en listados o menús. \\
 \hline
-\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Sello de tiempo de inserción del registro. \\
+\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de creación del registro. \\
 \hline
-\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Última actualización gestionada por el trigger del sistema. \\
+\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de la última actualización del registro. \\
 \hline
 \end{longtable}
 
-\subsubsection*{Restricciones de la tabla \code{countries}}
+\subsubsection*{Restricciones de la entidad \code{countries}}
+
+Las restricciones permiten controlar la integridad de los datos almacenados en la entidad \code{countries}. En este caso, se define una llave primaria para identificar cada país y una restricción de unicidad para evitar que existan dos países con el mismo \code{slug}.
+
 \begin{longtable}{|L{0.30\textwidth}|L{0.20\textwidth}|L{0.40\textwidth}|}
+\caption{Restricciones de la entidad countries}\\
 \toprule
-\textbf{Nombre de Restricción} & \textbf{Tipo} & \textbf{Detalle Técnico de la Clave} \\
+\textbf{Nombre de restricción} & \textbf{Tipo} & \textbf{Detalle técnico} \\
 \midrule
-\code{countries\_pkey} & PRIMARY KEY & Columna asignada: \code{id} \\
+\code{countries\_pkey} & PRIMARY KEY & Columna asignada: \code{id}. \\
 \hline
-\code{countries\_slug\_key} & UNIQUE & Columna asignada: \code{slug} \\
+\code{countries\_slug\_key} & UNIQUE & Columna asignada: \code{slug}. \\
 \hline
 \end{longtable}
 
-\subsection{\code{cities}: Ciudades}
+\subsection{\texorpdfstring{\code{cities}: Ciudades}{\code{cities}: Ciudades}}
 
-Almacena las ciudades o regiones turísticas específicas contenidas dentro de cada país.
+Esta entidad almacena las ciudades o regiones turísticas pertenecientes a cada país. Su función es agrupar destinos nacionales y permitir una navegación más organizada dentro del sistema.
 
 \begin{longtable}{|L{0.15\textwidth}|L{0.16\textwidth}|L{0.08\textwidth}|L{0.18\textwidth}|L{0.33\textwidth}|}
+\caption{Diccionario de datos de la entidad cities}\\
 \toprule
 \textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
 \midrule
-\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único de la ciudad; llave primaria. \\
+\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único de la ciudad y llave primaria. \\
 \hline
-\code{country\_id} & \code{uuid} & NO & \dash & Llave foránea acoplada a \code{countries.id}. Eliminación en cascada activa. \\
+\code{country\_id} & \code{uuid} & NO & \dash & Llave foránea relacionada con \code{countries.id}. \\
 \hline
-\code{name} & \code{text} & NO & \dash & Nombre de la ciudad o región. Ejemplo: Cúcuta. \\
+\code{name} & \code{text} & NO & \dash & Nombre de la ciudad o región turística. \\
 \hline
-\code{slug} & \code{text} & NO & \dash & Identificador URL amigable. Único por país mediante compuesto. \\
+\code{slug} & \code{text} & NO & \dash & Identificador amigable para URL de la ciudad. \\
 \hline
-\code{lat} & \code{double precision} & NO & \dash & Latitud del centro urbano de la ciudad. \\
+\code{lat} & \code{double precision} & NO & \dash & Latitud del centro de la ciudad. \\
 \hline
-\code{lng} & \code{double precision} & NO & \dash & Longitud del centro urbano de la ciudad. \\
+\code{lng} & \code{double precision} & NO & \dash & Longitud del centro de la ciudad. \\
 \hline
-\code{zoom} & \code{numeric(4,2)} & NO & \dash & Nivel de zoom en MapLibre al enfocar la ciudad. Rango: 10--13. \\
+\code{zoom} & \code{numeric(4,2)} & NO & \dash & Nivel de acercamiento del mapa al visualizar la ciudad. \\
 \hline
-\code{description} & \code{text} & NO & \dash & Descripción resumida para el tooltip informativo de la tarjeta. \\
+\code{description} & \code{text} & NO & \dash & Descripción general de la ciudad. \\
 \hline
-\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de la imagen de stock de la ciudad. \\
+\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de la imagen representativa de la ciudad. \\
 \hline
-\code{is\_active} & \code{boolean} & NO & \code{true} & Estado de activación pública. \\
+\code{is\_active} & \code{boolean} & NO & \code{true} & Define si la ciudad se encuentra visible en la plataforma. \\
 \hline
-\code{sort\_order} & \code{integer} & NO & \code{0} & Orden jerárquico de presentación en listas. \\
+\code{sort\_order} & \code{integer} & NO & \code{0} & Orden de presentación de la ciudad. \\
 \hline
-\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Sello de tiempo de creación. \\
+\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de creación del registro. \\
 \hline
-\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Fecha de mutación física controlada por trigger. \\
+\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de la última actualización del registro. \\
 \hline
 \end{longtable}
 
-\subsubsection*{Restricciones de la tabla \code{cities}}
+\subsubsection*{Restricciones de la entidad \code{cities}}
+
+Las restricciones de esta entidad aseguran que cada ciudad tenga un identificador único, que pertenezca a un país válido y que no se repitan identificadores URL dentro de un mismo país.
+
 \begin{longtable}{|L{0.30\textwidth}|L{0.20\textwidth}|L{0.40\textwidth}|}
+\caption{Restricciones de la entidad cities}\\
 \toprule
-\textbf{Nombre de Restricción} & \textbf{Tipo} & \textbf{Detalle Técnico de la Clave} \\
+\textbf{Nombre de restricción} & \textbf{Tipo} & \textbf{Detalle técnico} \\
 \midrule
-\code{cities\_pkey} & PRIMARY KEY & Columna asignada: \code{id} \\
+\code{cities\_pkey} & PRIMARY KEY & Columna asignada: \code{id}. \\
 \hline
-\code{cities\_country\_id\_slug\_key} & UNIQUE & Índice compuesto único: \code{country\_id, slug} \\
+\code{cities\_country\_id\_slug\_key} & UNIQUE & Índice compuesto único: \code{country\_id, slug}. \\
 \hline
-\code{cities\_country\_id\_fkey} & FOREIGN KEY & \code{country\_id} $\rightarrow$ \code{countries.id} ON DELETE CASCADE \\
+\code{cities\_country\_id\_fkey} & FOREIGN KEY & \code{country\_id} $\rightarrow$ \code{countries.id} ON DELETE CASCADE. \\
 \hline
 \end{longtable}
 
-\subsection{\code{destinations}: Destinos turísticos}
+\subsection{\texorpdfstring{\code{destinations}: Destinos turísticos}{\code{destinations}: Destinos turísticos}}
 
-Tabla central de datos de la plataforma. Registra los puntos de interés turístico geolocalizados con metadata multimedia. Soporta polimorfismo de alcance mediante nulabilidad lógica: si es nacional se vincula a una ciudad, si es internacional anula la ciudad y hereda la relación directa del país.
+Esta entidad almacena la información principal de los destinos turísticos. Contiene datos como nombre, descripción, categoría, ubicación geográfica, tipo de destino, actividades disponibles, imagen y estado de visibilidad.
 
 \begin{longtable}{|L{0.15\textwidth}|L{0.15\textwidth}|L{0.07\textwidth}|L{0.15\textwidth}|L{0.38\textwidth}|}
+\caption{Diccionario de datos de la entidad destinations}\\
 \toprule
 \textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
 \midrule
-\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único del destino; llave primaria. \\
+\code{id} & \code{uuid} & NO & \code{gen\_random\_uuid()} & Identificador único del destino y llave primaria. \\
 \hline
-\code{city\_id} & \code{uuid} & SÍ & \code{NULL} & FK hacia \code{cities.id}. Nulo en registros internacionales. \\
+\code{city\_id} & \code{uuid} & SÍ & \code{NULL} & Llave foránea hacia \code{cities.id}. Puede ser nula en destinos internacionales. \\
 \hline
-\code{country\_id} & \code{uuid} & SÍ & \code{NULL} & FK hacia \code{countries.id}. Enlace directo internacional. \\
+\code{country\_id} & \code{uuid} & SÍ & \code{NULL} & Llave foránea hacia \code{countries.id}. \\
 \hline
-\code{name} & \code{text} & NO & \dash & Nombre público del destino. Ejemplo: Pozo Azul. \\
+\code{name} & \code{text} & NO & \dash & Nombre público del destino turístico. \\
 \hline
-\code{slug} & \code{text} & NO & \dash & Identificador de ruta estática único global. \\
+\code{slug} & \code{text} & NO & \dash & Identificador único para URL. \\
 \hline
-\code{short\_description} & \code{text} & NO & \dash & Texto resumen para tarjetas. Límite recomendado: 160 carac. \\
+\code{short\_description} & \code{text} & NO & \dash & Descripción breve usada en tarjetas o listados. \\
 \hline
-\code{description} & \code{text} & NO & \dash & Bloque informativo enriquecido para la vista extendida. \\
+\code{description} & \code{text} & NO & \dash & Descripción completa del destino turístico. \\
 \hline
-\code{category} & \code{text} & NO & \dash & Clasificación del sitio (Naturaleza, Cultura, Aventura). \\
+\code{category} & \code{text} & NO & \dash & Clasificación del destino, por ejemplo naturaleza, cultura o aventura. \\
 \hline
-\code{destination\_type} & \code{text} & NO & \dash & Discriminador de tipo: \code{national} o \code{international}. \\
+\code{destination\_type} & \code{text} & NO & \dash & Tipo de destino: \code{national} o \code{international}. \\
 \hline
-\code{lat} & \code{double precision} & NO & \dash & Coordenada de latitud exacta del marcador. \\
+\code{lat} & \code{double precision} & NO & \dash & Coordenada de latitud del marcador del destino. \\
 \hline
-\code{lng} & \code{double precision} & NO & \dash & Coordenada de longitud exacta del marcador. \\
+\code{lng} & \code{double precision} & NO & \dash & Coordenada de longitud del marcador del destino. \\
 \hline
-\code{climate} & \code{text} & SÍ & \code{NULL} & Metadata del estado climático general. \\
+\code{climate} & \code{text} & SÍ & \code{NULL} & Información general del clima del destino. \\
 \hline
-\code{image\_url} & \code{text} & SÍ & \code{NULL} & CDN del recurso de imágen almacenado en Storage. \\
+\code{image\_url} & \code{text} & SÍ & \code{NULL} & URL de la imagen asociada al destino. \\
 \hline
-\code{activities} & \code{text[]} & NO & \code{\{\}} & Vector de texto plano con los tags de actividades. \\
+\code{activities} & \code{text[]} & NO & \code{\{\}} & Lista de actividades disponibles en el destino. \\
 \hline
-\code{is\_active} & \code{boolean} & NO & \code{true} & Estado de publicación perimetral. \\
+\code{is\_active} & \code{boolean} & NO & \code{true} & Define si el destino se encuentra visible para los usuarios. \\
 \hline
-\code{is\_featured} & \code{boolean} & NO & \code{false} & Bandera de promoción en sección principal de inicio. \\
+\code{is\_featured} & \code{boolean} & NO & \code{false} & Indica si el destino aparece como destacado en la página principal. \\
 \hline
-\code{sort\_order} & \code{integer} & NO & \code{0} & Ordenamiento interno por contenedor geográfico. \\
+\code{sort\_order} & \code{integer} & NO & \code{0} & Orden de presentación dentro de su grupo geográfico. \\
 \hline
-\code{sort\_order\_home} & \code{integer} & NO & \code{0} & Ordenamiento interno en la grilla de destacados. \\
+\code{sort\_order\_home} & \code{integer} & NO & \code{0} & Orden de presentación en la sección de destacados. \\
 \hline
-\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Fecha de creación. \\
+\code{created\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de creación del registro. \\
 \hline
-\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Control temporal automático ante mutaciones. \\
+\code{updated\_at} & \code{timestamptz} & NO & \code{now()} & Fecha y hora de la última actualización del registro. \\
 \hline
 \end{longtable}
 
-\subsubsection*{Restricciones de la tabla \code{destinations}}
+\subsubsection*{Restricciones de la entidad \code{destinations}}
+
+Las restricciones de esta entidad permiten controlar que cada destino tenga un identificador único, un tipo válido y relaciones correctas con ciudades o países según corresponda.
+
 \begin{longtable}{|L{0.34\textwidth}|L{0.16\textwidth}|L{0.40\textwidth}|}
+\caption{Restricciones de la entidad destinations}\\
 \toprule
-\textbf{Nombre de Restricción} & \textbf{Tipo} & \textbf{Detalle Técnico de la Clave} \\
+\textbf{Nombre de restricción} & \textbf{Tipo} & \textbf{Detalle técnico} \\
 \midrule
-\code{destinations\_pkey} & PRIMARY KEY & Columna asignada: \code{id} \\
+\code{destinations\_pkey} & PRIMARY KEY & Columna asignada: \code{id}. \\
 \hline
-\code{destinations\_slug\_key} & UNIQUE & Columna asignada: \code{slug} \\
+\code{destinations\_slug\_key} & UNIQUE & Columna asignada: \code{slug}. \\
 \hline
-\code{destinations\_type\_check} & CHECK & Validación de dominio: \code{destination\_type IN ('national', 'international')} \\
+\code{destinations\_type\_check} & CHECK & Validación: \code{destination\_type IN ('national', 'international')}. \\
 \hline
-\code{destinations\_city\_id\_fkey} & FOREIGN KEY & \code{city\_id} $\rightarrow$ \code{cities.id} ON DELETE CASCADE \\
+\code{destinations\_city\_id\_fkey} & FOREIGN KEY & \code{city\_id} $\rightarrow$ \code{cities.id} ON DELETE CASCADE. \\
 \hline
-\code{destinations\_country\_id\_fkey} & FOREIGN KEY & \code{country\_id} $\rightarrow$ \code{countries.id} \\
+\code{destinations\_country\_id\_fkey} & FOREIGN KEY & \code{country\_id} $\rightarrow$ \code{countries.id}. \\
 \hline
 \end{longtable}
 
-\subsection{\code{profiles}: Perfiles de usuario}
+\subsection{\texorpdfstring{\code{profiles}: Perfiles de usuario}{\code{profiles}: Perfiles de usuario}}
 
-Entidad que extiende los metadatos de la tabla protegida del sistema de autenticación central de Supabase (\code{auth.users}). Centraliza los niveles de privilegios para la capa administrativa.
+Esta entidad almacena información complementaria de los usuarios autenticados en Supabase. Su propósito principal es controlar los permisos administrativos dentro del sistema.
 
 \begin{longtable}{|L{0.15\textwidth}|L{0.16\textwidth}|L{0.08\textwidth}|L{0.18\textwidth}|L{0.33\textwidth}|}
+\caption{Diccionario de datos de la entidad profiles}\\
 \toprule
 \textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Default} & \textbf{Descripción} \\
 \midrule
-\code{id} & \code{uuid} & NO & \dash & Llave primaria acoplada a \code{auth.users.id} via relación 1:1. Cascaded. \\
+\code{id} & \code{uuid} & NO & \dash & Llave primaria relacionada con \code{auth.users.id}. \\
 \hline
-\code{role} & \code{text} & NO & \dash & Token de rol asignado. Único valor permitido: \code{admin}. \\
+\code{role} & \code{text} & NO & \dash & Rol asignado al usuario. Valor permitido: \code{admin}. \\
 \hline
-\code{created\_at} & \code{timestamptz} & SÍ & \code{now()} & Registro temporal de alta en el sistema de gestión. \\
+\code{created\_at} & \code{timestamptz} & SÍ & \code{now()} & Fecha y hora de creación del perfil. \\
 \hline
 \end{longtable}
 
-\subsubsection*{Restricciones de la tabla \code{profiles}}
+\subsubsection*{Restricciones de la entidad \code{profiles}}
+
+Las restricciones de esta entidad aseguran que cada perfil esté relacionado con un usuario autenticado y que el rol asignado corresponda únicamente al valor permitido.
+
 \begin{longtable}{|L{0.30\textwidth}|L{0.20\textwidth}|L{0.40\textwidth}|}
+\caption{Restricciones de la entidad profiles}\\
 \toprule
-\textbf{Nombre de Restricción} & \textbf{Tipo} & \textbf{Detalle Técnico de la Clave} \\
+\textbf{Nombre de restricción} & \textbf{Tipo} & \textbf{Detalle técnico} \\
 \midrule
-\code{profiles\_pkey} & PRIMARY KEY & Columna asignada: \code{id} \\
+\code{profiles\_pkey} & PRIMARY KEY & Columna asignada: \code{id}. \\
 \hline
-\code{profiles\_role\_check} & CHECK & Integridad de dominio: \code{role = 'admin'} \\
+\code{profiles\_role\_check} & CHECK & Validación: \code{role = 'admin'}. \\
 \hline
-\code{profiles\_id\_fkey} & FOREIGN KEY & \code{id} $\rightarrow$ \code{auth.users.id} ON DELETE CASCADE \\
+\code{profiles\_id\_fkey} & FOREIGN KEY & \code{id} $\rightarrow$ \code{auth.users.id} ON DELETE CASCADE. \\
 \hline
 \end{longtable}
 
@@ -480,27 +516,28 @@ Entidad que extiende los metadatos de la tabla protegida del sistema de autentic
 \section{Índices}
 % ==================================================================
 
-Las estructuras de acceso acelerado de la base de datos están basadas en el algoritmo estructurado B-Tree de PostgreSQL, optimizando los tiempos de respuesta del API REST perimetral ante operaciones indexadas de filtrado o unión de tablas.
+Esta sección describe los índices de tipo B-Tree implementados en el motor relacional. Los índices permiten mejorar el rendimiento de las consultas estructuradas, especialmente cuando se realizan búsquedas, filtros o uniones de datos entre entidades geográficas.
 
 \begin{longtable}{|L{0.26\textwidth}|L{0.16\textwidth}|L{0.20\textwidth}|L{0.28\textwidth}|}
+\caption{Índices implementados en la base de datos}\\
 \toprule
-\textbf{Nombre Técnico del Índice} & \textbf{Tabla Base} & \textbf{Columna Objetivada} & \textbf{Propósito en Optimización} \\
+\textbf{Nombre técnico del índice} & \textbf{Entidad base} & \textbf{Columna objetivo} & \textbf{Propósito} \\
 \midrule
-\code{idx\_cities\_country\_id} & \code{cities} & \code{country\_id} & Aceleración de Joins relacionales y agrupamiento por país. \\
+\code{idx\_cities\_country\_id} & \code{cities} & \code{country\_id} & Optimiza consultas de ciudades asociadas a un país. \\
 \hline
-\code{idx\_cities\_slug} & \code{cities} & \code{slug} & Búsqueda y enrutamiento dinámico SPA. \\
+\code{idx\_cities\_slug} & \code{cities} & \code{slug} & Facilita la búsqueda de ciudades mediante rutas amigables. \\
 \hline
-\code{idx\_destinations\_city\_id} & \code{destinations} & \code{city\_id} & Optimización de carga de marcadores urbanos. \\
+\code{idx\_destinations\_city\_id} & \code{destinations} & \code{city\_id} & Optimiza la consulta de destinos asociados a una ciudad. \\
 \hline
-\code{idx\_destinations\_category} & \code{destinations} & \code{category} & Indexación de búsquedas segmentadas por categoría. \\
+\code{idx\_destinations\_category} & \code{destinations} & \code{category} & Permite filtrar destinos por categoría. \\
 \hline
-\code{idx\_destinations\_slug} & \code{destinations} & \code{slug} & Resolución rápida de la vista de detalle del destino. \\
+\code{idx\_destinations\_slug} & \code{destinations} & \code{slug} & Facilita la búsqueda de destinos mediante rutas amigables. \\
 \hline
-\code{idx\_dest\_active} & \code{destinations} & \code{is\_active} & Filtrado binario de exclusión para usuarios públicos. \\
+\code{idx\_dest\_active} & \code{destinations} & \code{is\_active} & Optimiza el filtrado de destinos activos. \\
 \hline
-\code{idx\_dest\_featured} & \code{destinations} & \code{is\_featured} & Optimización del tiempo de renderizado de la landing home. \\
+\code{idx\_dest\_featured} & \code{destinations} & \code{is\_featured} & Optimiza la consulta de destinos destacados. \\
 \hline
-\code{idx\_dest\_type} & \code{destinations} & \code{destination\_type} & Separación lógica perimetral nacional / internacional. \\
+\code{idx\_dest\_type} & \code{destinations} & \code{destination\_type} & Permite separar destinos nacionales e internacionales. \\
 \hline
 \end{longtable}
 
@@ -508,11 +545,12 @@ Las estructuras de acceso acelerado de la base de datos están basadas en el alg
 \section{Triggers}
 % ==================================================================
 
-El sistema implementa mecanismos de automatización en el servidor mediante disparadores que interceptan los eventos de actualización física para inyectar auditoría temporal antes del commit.
+Esta sección describe los disparadores automáticos utilizados por la base de datos. Los triggers permiten ejecutar acciones internas cuando ocurre un evento específico, como la actualización de un registro dentro de cualquiera de las entidades.
 
 \begin{longtable}{|L{0.30\textwidth}|L{0.16\textwidth}|L{0.18\textwidth}|L{0.26\textwidth}|}
+\caption{Triggers implementados en las entidades}\\
 \toprule
-\textbf{Nombre del Disparador} & \textbf{Tabla Destino} & \textbf{Evento Captured} & \textbf{Procedimiento Invocado} \\
+\textbf{Nombre del disparador} & \textbf{Entidad destino} & \textbf{Evento capturado} & \textbf{Procedimiento invocado} \\
 \midrule
 \code{trg\_countries\_updated\_at} & \code{countries} & BEFORE UPDATE & \code{set\_updated\_at()} \\
 \hline
@@ -526,21 +564,29 @@ El sistema implementa mecanismos de automatización en el servidor mediante disp
 \section{Funciones Almacenadas}
 % ==================================================================
 
-\subsection{\code{set\_updated\_at()}}
+Esta sección presenta las funciones almacenadas utilizadas por la base de datos. Estas funciones permiten automatizar procesos internos y facilitar la consulta de información estructurada desde la aplicación frontend.
 
-\begin{infobox}
-\textbf{Tipo de Objeto:} TRIGGER FUNCTION. \textbf{Lenguaje:} PL/pgSQL. \textbf{Retorno:} \code{trigger}.
-\end{infobox}
+\subsection{\texorpdfstring{Función \code{set\_updated\_at()}}{Función set\_updated\_at()}}
 
-Rutina encargada de interceptar el registro mutado y asignarle el timestamp de alta precisión actual de la máquina mediante la primitiva \code{now()} al campo \code{updated\_at}.
+Tipo de objeto: TRIGGER FUNCTION.
 
-\subsection{\code{get\_country\_map\_data(p\_country\_slug text)}}
+Lenguaje: PL/pgSQL.
 
-\begin{infobox}
-\textbf{Tipo de Objeto:} SQL FUNCTION. \textbf{Lenguaje:} SQL. \textbf{Volatilidad:} STABLE. \textbf{Retorno:} \code{jsonb}.
-\end{infobox}
+Retorno: \code{trigger}.
 
-Constituye el punto de acceso remoto (RPC) principal de la aplicación para alimentar el mapa de vectores de la SPA. Compila e indexa la estructura jerárquica en un árbol de datos JSON anidado nativo.
+La función \code{set\_updated\_at()} se encarga de actualizar automáticamente el campo \code{updated\_at} cada vez que un registro es modificado. Esto permite conservar un control básico sobre la fecha de última actualización de los datos.
+
+\subsection{\texorpdfstring{Función \code{get\_country\_map\_data(p\_country\_slug text)}}{Función get\_country\_map\_data(p\_country\_slug text)}}
+
+Tipo de objeto: SQL FUNCTION.
+
+Lenguaje: SQL.
+
+Volatilidad: STABLE.
+
+Retorno: \code{jsonb}.
+
+La función \code{get\_country\_map\_data} permite obtener la información necesaria para cargar el mapa de un país dentro de la aplicación. Esta función devuelve una estructura JSON con los datos del país, sus ciudades y los destinos turísticos asociados.
 
 \begin{lstlisting}[language=sql]
 pais -> {
@@ -559,17 +605,16 @@ pais -> {
 }
 \end{lstlisting}
 
-La función aplica por defecto cláusulas de exclusión que purgan las entidades inactivas y formatea los resultados basándose en los campos \code{sort\_order}. Otorga permisos explícitos de ejecución para los roles perimetrales públicos \code{anon} y \code{authenticated}.
-
 % ==================================================================
-\section{Políticas de Seguridad: Row Level Security}
+\section{Políticas de Seguridad}
 % ==================================================================
 
-Cada una de las tablas del sistema implementa aislamiento de registros mediante políticas perimetrales RLS a nivel de kernel de base de datos. Se garantiza el acceso público de lectura y la restricción absoluta de mutación de datos para sesiones con firmas de rol administrativo.
+Esta sección describe las políticas aplicadas por medio del mecanismo de (Row Level Security). Estas instrucciones permiten controlar qué usuarios pueden consultar, insertar, actualizar o eliminar registros dentro de cada entidad geográfica. El acceso público anónimo se limita principalmente a la lectura de datos con estado activo, mientras que las acciones de escritura y mutación se reservan para sesiones autenticadas con rol administrativo.
 
 \begin{longtable}{|L{0.24\textwidth}|L{0.14\textwidth}|L{0.12\textwidth}|L{0.16\textwidth}|L{0.24\textwidth}|}
+\caption{Políticas de seguridad basadas en el control de acceso por fila}\\
 \toprule
-\textbf{Nombre de la Política} & \textbf{Tabla} & \textbf{Operación} & \textbf{Rol Red} & \textbf{Expresión de Condición Lógica} \\
+\textbf{Nombre de la política} & \textbf{Entidad} & \textbf{Operación} & \textbf{Rol} & \textbf{Condición lógica} \\
 \midrule
 Public read countries & \code{countries} & SELECT & anon, auth & \code{is\_active = true} \\
 \hline
@@ -605,19 +650,20 @@ Public read destinations & \code{destinations} & SELECT & anon, auth & \code{is\
 \section{Extensiones PostgreSQL}
 % ==================================================================
 
-Módulos de extensión activos en el esquema del motor para dar soporte a operaciones lógicas complejas de clave y rendimiento.
+Esta sección describe las extensiones activas dentro de PostgreSQL. Las extensiones amplían las capacidades del motor de base de datos y permiten el uso de funciones adicionales relacionadas con seguridad, rendimiento y generación de identificadores UUID de forma nativa.
 
 \begin{longtable}{|L{0.22\textwidth}|L{0.18\textwidth}|L{0.50\textwidth}|}
+\caption{Extensiones activas de PostgreSQL}\\
 \toprule
-\textbf{Nombre Extensión} & \textbf{Esquema Destino} & \textbf{Descripción del Servicio Interno} \\
+\textbf{Nombre de extensión} & \textbf{Esquema destino} & \textbf{Descripción} \\
 \midrule
-\code{uuid-ossp} & \code{extensions} & Algoritmos criptográficos para generación de identificadores UUID v4. \\
+\code{uuid-ossp} & \code{extensions} & Permite generar identificadores UUID de forma nativa. \\
 \hline
-\code{pgcrypto} & \code{extensions} & Primitivas criptográficas de hashing para firmas de sesión de Supabase Auth. \\
+\code{pgcrypto} & \code{extensions} & Proporciona funciones criptográficas para operaciones de hash y seguridad. \\
 \hline
-\code{pg\_stat\_statements} & \code{extensions} & Instrumentalización y métricas de rendimiento de hilos de consulta SQL. \\
+\code{pg\_stat\_statements} & \code{extensions} & Permite recopilar estadísticas sobre consultas ejecutadas en PostgreSQL. \\
 \hline
-\code{supabase\_vault} & \code{vault} & Sistema cifrado de almacenamiento de llaves y secretos de entorno de red. \\
+\code{supabase\_vault} & \code{vault} & Permite almacenar secretos y llaves de forma protegida dentro del entorno de Supabase. \\
 \hline
 \end{longtable}
 
@@ -625,38 +671,49 @@ Módulos de extensión activos en el esquema del motor para dar soporte a operac
 \section{Glosario}
 % ==================================================================
 
+Esta sección presenta los términos técnicos más importantes utilizados en el documento. Su propósito es facilitar la comprensión del comportamiento relacional y operacional de los componentes de la base de datos.
+
 \begin{longtable}{|L{0.22\textwidth}|L{0.68\textwidth}|}
+\caption{Glosario de términos técnicos}\\
 \toprule
-\textbf{Término Técnico} & \textbf{Definición Operacional en el Sistema} \\
+\textbf{Término técnico} & \textbf{Definición operacional en el sistema} \\
 \midrule
-\code{slug} & Mutación en cadena de texto limpia de caracteres especiales, en formato minúscula y concatenada por guiones medios para la resolución nativa de URIs. \\
+\code{slug} & Cadena de texto limpia, generalmente en minúsculas y separada por guiones, utilizada para construir rutas amigables en la aplicación web. \\
 \hline
-\code{zoom} & Escala métrica numérica que parametriza la altura de renderizado focal del mapa de vectores. Escala: 0 para plano global, 22 para resolución urbana. \\
+\code{zoom} & Valor numérico que define el nivel de acercamiento del mapa al mostrar un país, ciudad o destino. \\
 \hline
-\code{is\_active} & Bandera lógica de tipo booleano empleada para aplicar exclusión perimetral de registros en consultas públicas sin ejecutar purgas físicas en disco. \\
+\code{is\_active} & Campo booleano que indica si un registro debe mostrarse públicamente en la plataforma. \\
 \hline
-\code{is\_featured} & Atributo relacional que añade un registro estático a la cola prioritaria de renderizado en el módulo flotante de destacados de la landing. \\
+\code{is\_featured} & Campo booleano que indica si un destino debe mostrarse como destacado en la página principal. \\
 \hline
-\code{destination\_type} & Clasificador categórico que bifurca el alcance lógico de ruteo geográfico entre las tipologías de destinos de entorno \code{national} o \code{international}. \\
+\code{destination\_type} & Campo que clasifica un destino como nacional o internacional. \\
 \hline
-\code{activities} & Estructura de vector lineal indexada (\code{array}) que encapsula las etiquetas descriptivas de actividades físicas asociadas a un destino. \\
+\code{activities} & Lista de actividades asociadas a un destino turístico. \\
 \hline
-\code{sort\_order} & Indicador de tipo entero utilizado para romper la ordenación alfabética por defecto y forzar una presentación posicional bajo un ordenamiento de tipo ascendente. \\
+\code{sort\_order} & Campo numérico utilizado para definir el orden de presentación de los registros. \\
 \hline
-\code{RLS} & Row Level Security: Sistema nativo de seguridad perimetral a nivel de fila que intercepta el hilo de ejecución validando firmas de token antes de retornar datos de consulta. \\
+\code{(Row Level Security)} & Mecanismo de seguridad a nivel de fila que permite controlar el acceso a los registros según el usuario o rol. \\
 \hline
-\code{RPC} & Remote Procedure Call: Mecanismo que permite invocar procedimientos y subrutinas almacenadas en PostgreSQL de forma remota mediante un punto de acceso HTTP REST. \\
+\code{RPC} & Remote Procedure Call: mecanismo que permite ejecutar funciones almacenadas desde la aplicación cliente. \\
 \hline
 \end{longtable}
 
+% ==================================================================
+\section{Conclusiones}
+% ==================================================================
+
+El diccionario de datos de Jeiggar Vacation permite documentar de manera organizada la estructura de la base de datos utilizada por la plataforma. A través de las entidades, relaciones, restricciones, índices, funciones y políticas de seguridad, se evidencia una arquitectura orientada a mantener la integridad de la información y facilitar la administración de destinos turísticos nacionales e internacionales.
+
+La implementación sobre PostgreSQL y Supabase permite integrar mecanismos de autenticación, seguridad y consulta eficiente de datos. Además, la organización por entidades facilita el mantenimiento del sistema y permite que futuros desarrolladores comprendan con mayor claridad la estructura interna de la base de datos.
+
 \newpage
-\section*{Referencias}
-\addcontentsline{toc}{section}{Referencias}
+\section*{Bibliografía}
+\addcontentsline{toc}{section}{Bibliografía}
 
-Documentación oficial de PostgreSQL. (s. f.). \textit{PostgreSQL documentation}. Recuperado el 3 de mayo de 2026, de \url{https://www.postgresql.org/docs/}
+PostgreSQL. (s. f.). \textit{PostgreSQL documentation}. Recuperado el 3 de mayo de 2026, de \url{https://www.postgresql.org/docs/}
 
-Documentación oficial de Supabase. (s. f.). \textit{Supabase Docs}. Recuperado el 3 de mayo de 2026, de \url{https://supabase.com/docs}
+Supabase. (s. f.). \textit{Supabase Docs}. Recuperado el 3 de mayo de 2026, de \url{https://supabase.com/docs}
 
-Supabase. (s. f.). \textit{Row Level Security}. Recuperado el 3 de mayo de 2026, de \url{https://supabase.com/docs/guides/database/postgres/row-level-security}
+Supabase. (s. f.). \textit{Database Row Level Security}. Recuperado el 3 de mayo de 2026, de \url{https://supabase.com/docs/guides/database/postgres/row-level-security}
 
 \end{document}

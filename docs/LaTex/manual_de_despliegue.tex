@@ -6,15 +6,21 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-tabla]{babel}
+
+% Configuración para usar Helvetica (clon directo de Arial) en TODO el documento
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\shorthandoff{"}
+
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{indentfirst}
-\usepackage{mathptmx}
 \usepackage[table]{xcolor}
 \usepackage{hyperref}
 \usepackage{xurl}
 \usepackage{longtable}
 \usepackage{array}
+\usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{needspace}
@@ -22,31 +28,37 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{listings}
-\usepackage[most]{tcolorbox}
 \usepackage{graphicx}
 \usepackage{ragged2e}
 \usepackage{float}
 \usepackage{etoolbox}
-\usepackage{tocloft} % Paquete para el índice de figuras
-\advance\cftfignumwidth 1em % Aumenta el espacio para el número de figura en el índice
-\shorthandoff{"} % desactiva los shorthands de comillas dobles de babel (" activa) para listings
+\usepackage{tocloft}
+
+\advance\cftfignumwidth 1em
 
 % -------------------------------------------------
-% Mejora visual de tablas (alinear con manual_de_codigo.tex)
+% Colores y tablas
 % -------------------------------------------------
 \definecolor{tableStripe}{HTML}{F2F4F7}
+\definecolor{apaBlue}{HTML}{1F4E79}
+
 \renewcommand{\arraystretch}{1.15}
 \setlength{\arrayrulewidth}{0.8pt}
 \setlength{\tabcolsep}{8pt}
-\setlength{\LTpre}{0pt}
-\setlength{\LTpost}{0pt}
-\captionsetup[table]{font=small,labelfont=bf}
+\setlength{\LTpre}{0.8em}
+\setlength{\LTpost}{0.8em}
+
+% Se fuerza a que el caption automático (Nombre de tabla/figura) se renderice ARRIBA
+\captionsetup[table]{font={small,sf},labelfont=bf,position=above}
+\captionsetup[figure]{font={small,sf},labelfont=bf,position=above}
+
+% -------------------------------------------------
+% Ajuste para tablas largas
+% -------------------------------------------------
 \AtBeginEnvironment{longtable}{%
-  \setlength{\tabcolsep}{5pt}%
-  \rowcolors{2}{tableStripe}{white}%
+\setlength{\tabcolsep}{5pt}%
 }
 
-% Redefinir booktabs reglas como \hline para tablas con bordes iguales al manual de codigo
 \providecommand{\toprule}{}
 \providecommand{\midrule}{}
 \providecommand{\bottomrule}{}
@@ -54,249 +66,237 @@
 \renewcommand{\midrule}{\hline}
 \renewcommand{\bottomrule}{\hline}
 
-% Márgenes APA: 1 pulgada
+% -------------------------------------------------
+% Configuración de página
+% -------------------------------------------------
 \geometry{margin=1in}
 \setlength{\headheight}{15pt}
-
-% Interlineado APA: doble espacio
 \doublespacing
+\justifying
 
-% Sangría APA: primera línea de cada párrafo 0.5 pulgadas
 \setlength{\parindent}{0.5in}
 \setlength{\parskip}{0pt}
-
-% Listas con sangría controlada
 \setlist[itemize]{leftmargin=0.5in}
 \setlist[enumerate]{leftmargin=0.5in}
 
-% Alineación recomendada por APA: margen izquierdo alineado y derecho irregular
-\raggedright
-
-% -------------------------------------------------
-% Encabezado y numeración APA
-% -------------------------------------------------
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\thepage}
 \renewcommand{\headrulewidth}{0pt}
 
-% -------------------------------------------------
-% Colores y enlaces
-% -------------------------------------------------
-\definecolor{apaBlue}{HTML}{1F4E79}
-\definecolor{codeBg}{HTML}{F6F8FA}
-\definecolor{codeFrame}{HTML}{D0D7DE}
-\definecolor{quoteBg}{HTML}{F7F7F7}
-\definecolor{quoteFrame}{HTML}{BDBDBD}
-
 \hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    urlcolor=apaBlue,
-    citecolor=black,
-    pdftitle={Manual de Despliegue: Jeiggar Vacation},
-    pdfauthor={NICK ORTEGA}
+colorlinks=true,
+linkcolor=black,
+urlcolor=apaBlue,
+citecolor=black,
+pdftitle={Manual de Despliegue: Jeiggar Vacation},
+pdfauthor={NELLY CANO Y NICK ORTEGA}
 }
 
 % -------------------------------------------------
-% Jerarquía de títulos compatible con APA
+% Jerarquía de títulos (Todos en tamaño 12pt / \normalsize)
 % -------------------------------------------------
 \titleformat{\section}
-  {\normalfont\centering\bfseries\Large}
-  {\thesection.}{0.5em}{}
+{\normalfont\bfseries\normalsize}
+{\thesection.}{0.5em}{}
 
 \titleformat{\subsection}
-  {\normalfont\bfseries\large}
-  {\thesubsection}{0.5em}{}
+{\normalfont\bfseries\normalsize}
+{\thesubsection}{0.5em}{}
 
 \titleformat{\subsubsection}
-  {\normalfont\bfseries\itshape\normalsize}
-  {\thesubsubsection}{0.5em}{}
+{\normalfont\bfseries\itshape\normalsize}
+{\thesubsubsection}{0.5em}{}
 
 \titlespacing*{\section}{0pt}{1.5em}{1em}
 \titlespacing*{\subsection}{0pt}{1.2em}{0.8em}
 \titlespacing*{\subsubsection}{0pt}{1em}{0.6em}
 
-% Cada sección principal inicia en una nueva hoja
+% Cada capítulo inicia en hoja nueva
 \pretocmd{\section}{\clearpage}{}{}
 
 % -------------------------------------------------
-% Código fuente
+% Código fuente (SIN CUADROS, SIN FONDO, FUENTE ARIAL/HELVETICA TAMAÑO 12)
 % -------------------------------------------------
 \lstdefinelanguage{typescript}{
-  keywords={const,let,var,function,return,export,import,from,type,interface,extends,if,else,await,async,null,true,false,default,new,class},
-  sensitive=true,
-  comment=[l]{//},
-  morecomment=[s]{/*}{*/},
-  morestring=[b]',
-  morestring=[b]",
-  morestring=[b]`
+keywords={const,let,var,function,return,export,import,from,type,interface,extends,if,else,await,async,null,true,false,default,new,class},
+sensitive=true,
+comment=[l]{//},
+morecomment=[s]{/*}{*/},
+morestring=[b]',
+morestring=[b]",
+morestring=[b]`
 }
 
 \lstdefinestyle{codeblock}{
-    backgroundcolor=\color{codeBg},
-    frame=single,
-    rulecolor=\color{codeFrame},
-    basicstyle=\ttfamily\small,
-    breaklines=true,
-    breakatwhitespace=false,
-    columns=fullflexible,
-    keepspaces=true,
-    showstringspaces=false,
-  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
-       {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
-       {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {ü}{{\"u}}1 {Ü}{{\"U}}1
-       {→}{{$\to$}}1 {≥}{{$\geq$}}1 {≤}{{$\leq$}}1 {·}{{$\cdot$}}1
-       {*}{{*}}1 {!}{{!}}1 {i}{{i}}1 {OK}{{OK}}1 {X}{{X}}1,
-    tabsize=2
+backgroundcolor=\color{white},
+frame=none,
+basicstyle=\normalfont\normalsize,
+breaklines=true,
+breakatwhitespace=false,
+columns=fullflexible,
+keepspaces=true,
+showstringspaces=false,
+literate={á}{{'a}}1 {é}{{'e}}1 {í}{{'i}}1 {ó}{{'o}}1 {ú}{{'u}}1
+{Á}{{'A}}1 {É}{{'E}}1 {Í}{{'I}}1 {Ó}{{'O}}1 {Ú}{{'U}}1
+{ñ}{{~n}}1 {Ñ}{{~N}}1 {ü}{{"u}}1 {Ü}{{"U}}1
+{→}{{$\to$}}1 {≥}{{$\geq$}}1 {≤}{{$\leq$}}1,
+tabsize=2
 }
 \lstset{style=codeblock}
 
-% Cajas de texto
-\newtcolorbox{infobox}{
-    colback=quoteBg,
-    colframe=quoteFrame,
-    boxrule=0.8pt,
-    arc=1mm,
-    left=2mm, right=2mm, top=1mm, bottom=1mm
-}
-
-\newtcolorbox{warnbox}{
-    colback=warnBg,
-    colframe=warnFrame,
-    boxrule=0.8pt,
-    arc=1mm,
-    left=2mm, right=2mm, top=1mm, bottom=1mm
-}
-
-\newtcolorbox{okbox}{
-    colback=okBg,
-    colframe=okFrame,
-    boxrule=0.8pt,
-    arc=1mm,
-    left=2mm, right=2mm, top=1mm, bottom=1mm
-}
-
-% Comandos de utilidad
 \newcommand{\code}[1]{\nolinkurl{#1}}
-\DeclareRobustCommand{\codebreak}[1]{\texorpdfstring{\begingroup\ttfamily\footnotesize\def\_{{\textunderscore\allowbreak}}#1\endgroup}{#1}}
+\DeclareRobustCommand{\codebreak}[1]{\texorpdfstring{\begingroup\normalfont\normalsize #1\endgroup}{#1}}
 \newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
 \newcommand{\dash}{---}
 
-% Ajuste para tablas largas
-\setlength{\LTpre}{0.8em}
-\setlength{\LTpost}{0.8em}
-
-% Macro para diagramas igual al manual de código
-\newcommand{\diagramfigurehere}[3]{%
+% -------------------------------------------------
+% Figuras Corregidas: Nombre arriba, imagen, descripción abajo
+% -------------------------------------------------
+\newcommand{\diagramfigurehere}[4]{%
 \begin{figure}[H]
 \centering
-\IfFileExists{#1}{%
-  \includegraphics[width=0.9\textwidth,height=0.45\textheight,keepaspectratio]{#1}%
-}{%
-    \fbox{%
-    \begin{minipage}[c][2.5in][c]{0.88\textwidth}
-        \centering
-        \textbf{Espacio reservado para el diagrama}\\[0.5em]
-    Inserta aquí la imagen correspondiente en la ruta:\\[0.3em]
-        \texttt{#1}
-        \end{minipage}%
-    }%
-}
 \caption{#2}
-\label{#3}
+\label{#4}
+\vspace{0.3cm}
+
+\IfFileExists{#1}{%
+\includegraphics[width=0.9\textwidth,height=0.45\textheight,keepaspectratio]{#1}%
+}{%
+\fbox{%
+\begin{minipage}[c][2.5in][c]{0.88\textwidth}
+\centering
+\textbf{Espacio reservado para el diagrama}\\[0.5em]
+Inserta aquí la imagen correspondiente en la ruta:\\[0.3em]
+\texttt{#1}
+\end{minipage}%
+}%
+}
+
+\vspace{0.3cm}
+{\small \textit{Descripción de la figura: #3}}
 \end{figure}
 }
 
-\newcommand{\diagramfigurefullpage}[3]{%
+\newcommand{\diagramfigurefullpage}[4]{%
 \begin{figure}[H]
 \centering
-\IfFileExists{#1}{%
-  \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{#1}%
-}{%
-  \fbox{%
-    \begin{minipage}[c][2.5in][c]{0.88\textwidth}
-    \centering
-    \textbf{Espacio reservado para el diagrama}\\[0.5em]
-    Inserta aquí la imagen correspondiente en la ruta:\\[0.3em]
-    \texttt{#1}
-    \end{minipage}%
-  }%
-}
 \caption{#2}
-\label{#3}
+\label{#4}
+\vspace{0.3cm}
+
+\IfFileExists{#1}{%
+\includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{#1}%
+}{%
+\fbox{%
+\begin{minipage}[c][2.5in][c]{0.88\textwidth}
+\centering
+\textbf{Espacio reservado para el diagrama}\\[0.5em]
+Inserta aquí la imagen correspondiente en la ruta:\\[0.3em]
+\texttt{#1}
+\end{minipage}%
+}%
+}
+
+\vspace{0.3cm}
+{\small \textit{Descripción de la figura: #3}}
 \end{figure}
 }
 
-\newcommand{\diagramfigure}[3]{\diagramfigurehere{#1}{#2}{#3}}
-
-% ------------------------------------------------------------------
 \begin{document}
-% ------------------------------------------------------------------
 
-% -------------------------------------------------
-% Portada tipo APA 7 estudiante
-% -------------------------------------------------
+% ==================================================================
+% PORTADA (Todo explícitamente en tamaño 12pt)
+% ==================================================================
 \begin{titlepage}
-    \centering
-    \vspace*{1.5in}
+\centering
+\vspace*{0.5in}
 
-    {\bfseries\Large Manual de Despliegue: Plataforma Web de Gestión de Destinos y Administración de Servicios Turísticos\par}
-    \vspace{0.5in}
+% 1. Nombres completos de los estudiantes
+    {\normalsize\bfseries
+    Jairo Andres Rincon Blanco \\
+    Laura Valentina Rozzo Espinel\\
+    Mary Fernanda Rodriguez Morales\\
+    Nelly Fabiola Cano Oviedo\\
+    Nestór Iván Granados Valenzuela\\
+    Nick Alejandro Ortega Mendez\\
+    Valery Gabriela Alarcon Peña\\
+    \par}
+    \vspace{0.6in}
 
-    {Estudiantes de IV Semestre\par}
-    \vspace{0.2in}
+% 2. Programa académico
+{\normalsize Ingeniería de Software \par}
+\vspace{0.4in}
 
-    {Fundación de Estudios Superiores Comfanorte (FESC)\par}
-    {Ingeniería de Software\par}
-    \vspace{0.2in}
+% 3. Nombre completo de la FESC
+{\normalsize Fundación de Estudios Superiores Comfanorte (FESC) \par}
+\vspace{0.6in}
 
-    {Manual de Despliegue del Proyecto\par}
-    \vspace{0.2in}
+% 4. Nombre de la asignatura
+{\normalsize\bfseries Sistemas Operativos \par}
+\vspace{0.4in}
 
-    {Docente: Norly Alexandra Aguilar Quintero\par}
-    \vspace{0.2in}
+% 5. Identificación del Proyecto (PPA) y Título del Documento
+{\normalsize Proyecto Pedagógico de Aula (PPA) \par}
+\vspace{0.5in}
 
-    {Mayo de 2026\par}
+{\normalsize\bfseries
+MANUAL DE DESPLIEGUE: PLATAFORMA WEB DE GESTIÓN DE DESTINOS Y ADMINISTRACIÓN DE SERVICIOS TURÍSTICOS
+\par}
+
+\vspace{0.6in}
+
+% 6. Nombre completo de la docente (Corregido a Norly Alejandra)
+{\normalsize Norly Alejandra Aguilar Quintero \par}
+
+\vfill
+
+{\normalsize San José de Cúcuta, Mayo de 2026 \par}
+
 \end{titlepage}
 
 \newpage
 \tableofcontents
-\newpage
 
-% -------------------------------------------------
-% Índice de figuras
-% -------------------------------------------------
 \cleardoublepage
+\phantomsection
+\addcontentsline{toc}{section}{Índice de tablas}
+\listoftables
+
+\cleardoublepage
+\phantomsection
 \addcontentsline{toc}{section}{Índice de figuras}
 \listoffigures
-\newpage
 
 % ==================================================================
-\section{Introducción}
+\section*{Introducción}
+\addcontentsline{toc}{section}{Introducción}
 % ==================================================================
 
-Este documento describe el proceso completo para desplegar la plataforma \textbf{Jeiggar Vacation} en un servidor de producción. El sistema es una \textbf{Single Page Application} (SPA) construida con React~19, Vite~7 y TypeScript, cuya capa de datos y autenticación reside íntegramente en \textbf{Supabase} (PostgreSQL 15+). El entregable de producción es una imagen \textbf{Docker} de dos etapas que combina el bundle estático de Vite con un servidor \textbf{Nginx~Alpine}, el cual coexiste con un Proxy Inverso para la gestión perimetral del tráfico y los certificados de seguridad.
+El presente manual de despliegue describe el proceso técnico necesario para publicar la plataforma \textbf{Jeiggar Vacation} en un entorno de producción. El documento está dirigido a desarrolladores, administradores técnicos y responsables del mantenimiento del sistema que necesiten instalar, configure, actualizar o verificar la aplicación en un servidor.
 
-El manual está organizado en fases secuenciales; cada fase debe completarse en el orden indicado antes de pasar a la siguiente. El lector asume conocimientos básicos de Linux, SSH y Docker.
+Jeiggar Vacation es una aplicación web de una sola página desarrollada con React, Vite y TypeScript. Su capa de datos, autenticación y almacenamiento se gestiona mediante Supabase, mientras que el despliegue de producción se realiza mediante Docker y Nginx. Esta organización permite separar la interfaz web de los servicios del servidor y facilita la administración del sistema en un servidor VPS.
+
+El manual se organiza por fases para que el proceso sea claro, secuencial y verificable. Cada fase incluye los comandos necesarios, la explicación de su propósito y las recomendaciones básicas para evitar errores durante la instalación.
 
 \begin{longtable}{|p{0.40\textwidth}|p{0.50\textwidth}|}
+\caption{Componentes principales del despliegue}\\
 \hline
 \textbf{Componente} & \textbf{Tecnología / Servicio} \\
 \hline
-Frontend (SPA) & React 19 + Vite 7 + TypeScript \\
+Interfaz cliente & React, Vite y TypeScript. \\
 \hline
-Servidor web & Nginx Alpine (dentro de Docker) \\
+Servidor web & Nginx Alpine dentro de Docker. \\
 \hline
-Proxy Inverso & Nginx Proxy Manager \\
+Proxy inverso & Nginx Proxy Manager. \\
 \hline
-Backend / BD & Supabase (PostgreSQL 15+, Auth, Storage, RLS) \\
+Servidor y base de datos & Supabase, PostgreSQL, Auth y Storage. \\
 \hline
-Contenedorización & Docker 20+ con compilación multi-etapa \\
+Contenedorización & Docker con compilación multi-etapa. \\
 \hline
-Servidor de producción & VPS Ubuntu 22.04 LTS \\
+Servidor de producción & VPS con Ubuntu 22.04 LTS. \\
 \hline
-Dominio (opcional) & Registrador compatible con registros A / CNAME (ej. Namecheap) \\
+Dominio & Dominio configurado mediante registros DNS. \\
 \hline
 \end{longtable}
 
@@ -304,117 +304,137 @@ Dominio (opcional) & Registrador compatible con registros A / CNAME (ej. Nameche
 \section{Visión General de la Arquitectura de Despliegue}
 % ==================================================================
 
-El siguiente diagrama muestra el flujo de una solicitud desde el navegador del usuario hasta los servicios de backend.
+Esta sección presenta la arquitectura general del despliegue. Su propósito es explicar cómo viaja una solicitud desde el navegador del usuario hasta los servicios utilizados por la aplicación.
 
-\diagramfigure{diagramas/arquitectura-despliegue.png}{Arquitectura de despliegue de Jeiggar Vacation.}{fig:arquitectura-despliegue}
+El flujo inicia cuando el usuario accede al dominio del sistema desde el navegador. La solicitud llega al proxy inverso, el cual redirige el tráfico hacia el contenedor Docker donde se encuentra Nginx sirviendo la aplicación web. Desde la aplicación, las operaciones de datos se comunican con Supabase para consultar información, validar autenticación y cargar recursos almacenados.
+
+\diagramfigurehere
+{diagramas/arquitectura-despliegue.png}
+{Arquitectura de despliegue de Jeiggar Vacation}
+{Flujo de comunicación entre el navegador del usuario, el proxy inverso, el contenedor Docker, Nginx y los servicios de Supabase.}
+{fig:arquitectura-despliegue}
 
 % ==================================================================
 \section{Prerrequisitos}
 % ==================================================================
 
+Esta sección describe los recursos y herramientas necesarios antes de iniciar el despliegue. Contar con estos elementos evita interrupciones durante el proceso de instalación.
+
 \subsection{Infraestructura requerida}
 
-Antes de iniciar, se deben tener listos los siguientes recursos.
+Antes de iniciar, se deben tener disponibles los siguientes recursos técnicos.
 
 \begin{longtable}{|p{0.28\textwidth}|p{0.20\textwidth}|p{0.42\textwidth}|}
+\caption{Infraestructura requerida para el despliegue}\\
 \hline
 \textbf{Recurso} & \textbf{Mínimo recomendado} & \textbf{Observaciones} \\
 \hline
-VPS & 1 vCPU / 1 GB RAM & Ubuntu 22.04 LTS. Proveedores compatibles: DigitalOcean, Contabo, Hetzner, etc. \\
+VPS & 1 vCPU / 1 GB RAM & Se recomienda Ubuntu 22.04 LTS. \\
 \hline
-Acceso SSH & Puerto 22 abierto & Con usuario \code{root} o con privilegios \code{sudo}. \\
+Acceso SSH & Puerto 22 abierto & Usuario root o usuario con privilegios sudo. \\
 \hline
-Proyecto Supabase activo & \dash & Con tablas, RLS y Storage configurados según el Diccionario de Datos. \\
+Proyecto Supabase activo & \dash & Debe tener base de datos, autenticación y almacenamiento configurados. \\
 \hline
-Credenciales Supabase & \dash & \code{VITE\_SUPABASE\_URL} y \code{VITE\_SUPABASE\_ANON\_KEY} disponibles. \\
+Credenciales Supabase & \dash & Variables \code{VITE_SUPABASE_URL} y \code{VITE_SUPABASE_ANON_KEY}. \\
 \hline
-Repositorio Git & \dash & Acceso de lectura al repositorio \code{OrtegaNidddd/jeiggar-vacation}. \\
+Repositorio Git & \dash & Acceso de lectura al repositorio del proyecto. \\
+\hline
+Dominio & Opcional & Requerido si se desea acceso mediante URL pública personalizada. \\
 \hline
 \end{longtable}
 
-\subsection{Software en el servidor}
+\subsection{Software requerido en el servidor}
 
-Los siguientes paquetes deben instalarse en el VPS durante la fase de preparación. El proceso de instalación se describe paso a paso en la \textbf{Sección 4}.
+Las siguientes herramientas deben instalarse en el VPS durante la preparación del servidor.
 
 \begin{longtable}{|p{0.26\textwidth}|p{0.18\textwidth}|p{0.46\textwidth}|}
+\caption{Software requerido en el servidor}\\
 \hline
 \textbf{Herramienta} & \textbf{Versión mínima} & \textbf{Propósito} \\
 \hline
-\code{git} & cualquier & Clonar el repositorio. \\
+\code{git} & Cualquier versión estable & Clonar y actualizar el repositorio. \\
 \hline
-\code{docker} & 20.x & Compilar y ejecutar el contenedor. \\
+\code{docker} & 20.x o superior & Compilar y ejecutar el contenedor de la aplicación. \\
 \hline
-\code{certbot} & cualquier & Obtener certificados SSL/TLS gratuitos. \\
+\code{docker compose} & 2.x o superior & Administrar servicios compuestos si se requiere. \\
 \hline
-\code{curl} & cualquier & Descargar scripts auxiliares si se requiere. \\
+\code{certbot} & Cualquier versión estable & Obtener certificados SSL/TLS. \\
+\hline
+\code{curl} & Cualquier versión estable & Realizar descargas y pruebas HTTP. \\
 \hline
 \end{longtable}
 
-\begin{warnbox}
-\textbf{Importante:} Node.js \textbf{no} necesita instalarse en el servidor de producción. La compilación de la SPA ocurre dentro del contenedor Docker durante la etapa de \textit{build} (\code{FROM node:20-alpine AS build}).
-\end{warnbox}
+\textbf{Importante:} Node.js no necesita instalarse directamente en el servidor de producción. La compilación de la aplicación ocurre dentro del contenedor Docker durante la etapa de construcción.
 
 % ==================================================================
 \section{Fase 1: Preparación del Servidor}
 % ==================================================================
 
-\subsection{Paso 1 — Conectarse al VPS mediante SSH}
+Esta fase prepara el VPS para recibir el proyecto. Incluye la conexión remota, actualización del sistema, instalación de herramientas base y creación del directorio de trabajo.
 
-Desde la terminal local, ejecutar:
+\subsection{Paso 1: Conectarse al VPS mediante SSH}
+
+Desde la terminal local, ejecutar el siguiente comando:
 
 \begin{lstlisting}[language=bash]
 ssh root@<IP_DEL_SERVIDOR>
 \end{lstlisting}
 
-Reemplazar \code{<IP\_DEL\_SERVIDOR>} con la dirección IPv4 pública del VPS.
+Se debe reemplazar \code{<IP_DEL_SERVIDOR>} por la dirección IPv4 pública del VPS.
 
-\subsection{Paso 2 — Actualizar el sistema}
+\subsection{Paso 2: Actualizar el sistema}
 
-Sincronizar los índices de paquetes y aplicar todas las actualizaciones pendientes de seguridad y sistema:
+Antes de instalar herramientas, se recomienda actualizar los paquetes del sistema.
 
 \begin{lstlisting}[language=bash]
 apt update && apt upgrade -y
 \end{lstlisting}
 
-\subsection{Paso 3 — Instalar herramientas base}
+Este comando actualiza el índice de paquetes y aplica las actualizaciones disponibles.
+
+\subsection{Paso 3: Instalar herramientas base}
 
 \begin{lstlisting}[language=bash]
-apt install -y curl apt-transport-https ca-certificates software-properties-common certbot
+apt install -y curl apt-transport-https ca-certificates software-properties-common certbot git
 \end{lstlisting}
 
 \begin{longtable}{|p{0.30\textwidth}|p{0.60\textwidth}|}
+\caption{Herramientas base instaladas en el servidor}\\
 \hline
 \textbf{Paquete} & \textbf{Motivo} \\
 \hline
-\code{curl} & Descarga de scripts de instalación y pruebas HTTP. \\
+\code{curl} & Permite descargar recursos y probar conexiones HTTP. \\
 \hline
-\code{apt-transport-https} & Permite \code{apt} obtener paquetes por HTTPS. \\
+\code{apt-transport-https} & Permite obtener paquetes mediante HTTPS. \\
 \hline
 \code{ca-certificates} & Valida certificados TLS durante descargas. \\
 \hline
-\code{certbot} & Generación manual de certificados SSL Let's Encrypt. \\
+\code{software-properties-common} & Facilita la administración de repositorios. \\
+\hline
+\code{certbot} & Permite generar certificados SSL/TLS. \\
+\hline
+\code{git} & Permite clonar y actualizar el repositorio del proyecto. \\
 \hline
 \end{longtable}
 
-\subsection{Paso 4 — Instalar Docker y Docker Compose}
+\subsection{Paso 4: Instalar Docker y Docker Compose}
 
 \begin{lstlisting}[language=bash]
 apt install -y docker.io docker-compose-v2
 \end{lstlisting}
 
-Verificar que Docker quedó operativo:
+Para verificar la instalación, ejecutar:
 
 \begin{lstlisting}[language=bash]
 docker --version
-# Resultado esperado: Docker version 24.x.x, build ...
-
 docker compose version
-# Resultado esperado: Docker Compose version v2.x.x
 \end{lstlisting}
 
-\subsection{Paso 5 — Crear directorio de proyectos}
+El resultado debe mostrar la versión instalada de Docker y Docker Compose.
 
-Se recomienda alojar todos los proyectos bajo \code{/var/www/proyectos} para mantener una estructura organizada:
+\subsection{Paso 5: Crear directorio de proyectos}
+
+Se recomienda mantener los proyectos web en un directorio organizado.
 
 \begin{lstlisting}[language=bash]
 mkdir -p /var/www/proyectos
@@ -425,71 +445,70 @@ cd /var/www/proyectos
 \section{Fase 2: Obtención del Código Fuente}
 % ==================================================================
 
-\subsection{Paso 6 — Clonar el repositorio}
+Esta fase permite descargar el código fuente del proyecto desde el repositorio y preparar las variables de entorno necesarias para la compilación.
+
+\subsection{Paso 6: Clonar el repositorio}
 
 \begin{lstlisting}[language=bash]
 git clone https://github.com/OrtegaNidddd/jeiggar-vacation
 cd jeiggar-vacation
 \end{lstlisting}
 
-La estructura clonada debe coincidir con la descrita en el Manual de Código, sección ``Estructura de carpetas''. Los archivos clave para el despliegue son:
+Después de clonar el repositorio, se deben verificar los archivos principales del despliegue.
 
 \begin{longtable}{|p{0.38\textwidth}|p{0.52\textwidth}|}
+\caption{Archivos principales para el despliegue}\\
 \hline
 \textbf{Archivo} & \textbf{Propósito en el despliegue} \\
 \hline
-\code{Dockerfile} & Define las dos etapas de compilación: \code{build} (Node) y \code{serve} (Nginx). \\
+\code{Dockerfile} & Define el proceso de compilación y ejecución del contenedor. \\
 \hline
-\code{nginx.conf} & Configuración de Nginx para servir la SPA con soporte de rutas históricas (\code{try\_files}). \\
+\code{nginx.conf} & Configura Nginx para servir la aplicación web. \\
 \hline
-\code{.env.example} & Plantilla con los nombres de las variables de entorno requeridas. \\
+\code{.env.example} & Plantilla de variables de entorno requeridas. \\
 \hline
-\code{package.json} & Dependencias y scripts de compilación. \\
+\code{package.json} & Define dependencias y scripts del proyecto. \\
 \hline
 \end{longtable}
 
-\subsection{Paso 7 — Configurar las variables de entorno físicas}
+\subsection{Paso 7: Configurar variables de entorno}
 
-\subsubsection*{7.1 Copiar la plantilla}
+Vite integra las variables de entorno dentro del paquete final durante la compilación. Por esta razón, el archivo \code{.env.local} debe existir antes de construir la imagen Docker.
 
-Vite compila las variables de entorno en el bundle estático. Es indispensable crear el archivo físico \code{.env.local} en el servidor antes de compilar la imagen.
+\subsubsection*{Copiar la plantilla}
 
 \begin{lstlisting}[language=bash]
 cp .env.example .env.local
 \end{lstlisting}
 
-\subsubsection*{7.2 Editar el archivo con las credenciales reales}
+\subsubsection*{Editar el archivo}
 
 \begin{lstlisting}[language=bash]
 nano .env.local
 \end{lstlisting}
 
-El archivo debe quedar con los valores obtenidos desde el panel de Supabase en \textbf{Project Settings} $\rightarrow$ \textbf{API}:
+El archivo debe contener los valores del proyecto Supabase.
 
 \begin{lstlisting}[language={}]
-# URL del proyecto Supabase
 VITE_SUPABASE_URL="https://xxxxxxxxxxxxxxxx.supabase.co"
-
-# Anon key (clave publica, segura para el frontend)
 VITE_SUPABASE_ANON_KEY="sb_publishable_xxxxxxxxxxxxxxxx"
 \end{lstlisting}
 
-Guardar y salir: \textbf{Ctrl + O}, \textbf{Enter} para confirmar, luego \textbf{Ctrl + X} para salir. Asegúrese de que este archivo no esté bloqueado por \code{.dockerignore}.
+Para guardar en Nano se utiliza \textbf{Ctrl + O}, luego \textbf{Enter}. Para salir se utiliza \textbf{Ctrl + X}.
 
-\begin{warnbox}
-\textbf{Seguridad:} El archivo \code{.env.local} está incluido en \code{.gitignore} y \textbf{nunca debe subirse} al repositorio. Las variables \code{VITE\_*} son incrustadas en el bundle por Vite en tiempo de compilación; su seguridad se garantiza mediante las políticas \textbf{Row Level Security (RLS)} de Supabase, no ocultando la clave.
-\end{warnbox}
+\textbf{Seguridad:} El archivo \code{.env.local} no debe subirse al repositorio. Las variables con prefijo \code{VITE_} son públicas dentro de la interfaz cliente, por lo tanto, la seguridad de los datos debe controlarse mediante políticas de seguridad a nivel de fila (Row Level Security) configuradas en Supabase.
 
 % ==================================================================
 \section{Fase 3: Compilación de la Imagen Docker}
 % ==================================================================
 
+Esta fase construye la imagen Docker de la aplicación. El proceso utiliza una compilación multi-etapa para generar primero los archivos estáticos con Node.js y luego servirlos mediante Nginx.
+
 \subsection{Descripción del Dockerfile}
 
-El \code{Dockerfile} del proyecto implementa una construcción \textbf{multi-etapa} que garantiza que el artefacto final sea mínimo y no incluya herramientas de desarrollo. Al tener el archivo físico \code{.env.local} creado, el compilador lo leerá de forma natural.
+El \code{Dockerfile} utiliza una primera etapa para instalar dependencias y compilar el proyecto. La segunda etapa copia el resultado compilado a una imagen ligera de Nginx.
 
 \begin{lstlisting}[language={}]
-# Etapa 1: Compilacion (node:20-alpine)
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
@@ -498,7 +517,6 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Etapa 2: Servidor de produccion (nginx:alpine)
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -506,25 +524,29 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 \end{lstlisting}
 
-\diagramfigure{diagramas/docker-build-flow.png}{Flujo de compilación multi-etapa de Docker para Jeiggar Vacation.}{fig:docker-build-flow}
+\diagramfigurehere
+{diagramas/docker-build-flow.png}
+{Flujo de compilación multi-etapa de Docker}
+{Representación de cómo Docker compila primero la aplicación con Node.js y luego transfiere los archivos generados a una imagen final basada en Nginx.}
+{fig:docker-build-flow}
 
-\subsection{Paso 8 — Compilar la imagen}
+\subsection{Paso 8: Compilar la imagen}
 
-Desde el directorio raíz del proyecto (\code{/var/www/proyectos/jeiggar-vacation}):
+Desde el directorio raíz del proyecto, ejecutar:
 
 \begin{lstlisting}[language=bash]
 docker build --no-cache -t jeiggar-vacation .
 \end{lstlisting}
 
-El proceso puede tardar entre 2 y 5 minutos dependiendo del ancho de banda del servidor para la descarga de imágenes base de Docker Hub. El flag \code{--no-cache} asegura que Vite detecte el archivo \code{.env.local} recién creado.
+El parámetro \code{--no-cache} obliga a Docker a reconstruir la imagen desde cero. Esto es útil cuando se han modificado variables de entorno o dependencias.
 
 % ==================================================================
 \section{Fase 4: Ejecución del Contenedor}
 % ==================================================================
 
-\subsection{Paso 9 — Iniciar el contenedor en un puerto dedicado}
+Esta fase ejecuta la imagen Docker compilada y expone la aplicación en un puerto específico del servidor.
 
-Dado que el servidor puede alojar otros servicios perimetrales (como Nginx Proxy Manager) escuchando en los puertos estándar, ejecutaremos la aplicación en el puerto local \textbf{8082}.
+\subsection{Paso 9: Iniciar el contenedor}
 
 \begin{lstlisting}[language=bash]
 docker run -d \
@@ -535,158 +557,157 @@ docker run -d \
 \end{lstlisting}
 
 \begin{longtable}{|p{0.28\textwidth}|p{0.62\textwidth}|}
+\caption{Parámetros usados al ejecutar el contenedor}\\
 \hline
-\textbf{Flag} & \textbf{Descripción} \\
+\textbf{Parámetro} & \textbf{Descripción} \\
 \hline
-\code{-d} & Modo \textit{detached}: el contenedor corre en segundo plano liberando la terminal. \\
+\code{-d} & Ejecuta el contenedor en segundo plano. \\
 \hline
-\code{--name jeiggar-app} & Asigna un nombre legible para administrar el contenedor con comandos futuros. \\
+\code{--name jeiggar-app} & Asigna un nombre identificable al contenedor. \\
 \hline
-\code{-p 8082:80} & Mapea el puerto 8082 del servidor Ubuntu al puerto 80 de Nginx dentro del contenedor. \\
+\code{-p 8082:80} & Conecta el puerto 8082 del servidor con el puerto 80 del contenedor. \\
 \hline
-\code{--restart unless-stopped} & Reinicia el contenedor automáticamente si el servidor se reinicia por mantenimiento. \\
+\code{--restart unless-stopped} & Reinicia el contenedor automáticamente salvo que se detenga manualmente. \\
 \hline
-\code{jeiggar-vacation} & Nombre de la imagen compilada en el paso anterior. \\
+\code{jeiggar-vacation} & Nombre de la imagen construida previamente. \\
 \hline
 \end{longtable}
 
-\subsection{Paso 10 — Verificar que el contenedor está activo}
+\subsection{Paso 10: Verificar el contenedor}
 
 \begin{lstlisting}[language=bash]
 docker ps
 \end{lstlisting}
 
-\begin{okbox}
-\textbf{Resultado esperado:} La tabla debe mostrar \code{jeiggar-app} con estado \code{Up X seconds} o \code{Up X minutes} y el mapeo \code{0.0.0.0:8082->80/tcp}.
-\end{okbox}
+El contenedor debe aparecer con el nombre \code{jeiggar-app}, estado \code{Up} y mapeo de puerto \code{8082:80}.
 
-\subsection{Comandos de administración del contenedor}
+\subsection{Comandos de administración}
 
-Una vez desplegado, los siguientes comandos son de uso cotidiano:
+Los siguientes comandos permiten administrar el contenedor después del despliegue.
 
 \begin{longtable}{|p{0.40\textwidth}|p{0.50\textwidth}|}
+\caption{Comandos de administración del contenedor}\\
 \hline
 \textbf{Comando} & \textbf{Acción} \\
 \hline
-\code{docker ps} & Listar contenedores activos. \\
+\code{docker ps} & Lista los contenedores activos. \\
 \hline
-\code{docker logs jeiggar-app} & Ver logs de Nginx (accesos y errores). \\
+\code{docker logs jeiggar-app} & Muestra los registros del contenedor. \\
 \hline
-\code{docker stop jeiggar-app} & Detener el contenedor. \\
+\code{docker stop jeiggar-app} & Detiene el contenedor. \\
 \hline
-\code{docker restart jeiggar-app} & Reiniciar el contenedor. \\
+\code{docker restart jeiggar-app} & Reinicia el contenedor. \\
 \hline
-\code{docker rm jeiggar-app} & Eliminar el contenedor (debe estar detenido). \\
+\code{docker rm jeiggar-app} & Elimina el contenedor detenido. \\
 \hline
 \end{longtable}
 
 % ==================================================================
-\section{Fase 5: Configuración de Dominio y Certificado SSL (Nginx Proxy Manager)}
+\section{Fase 5: Configuración de Dominio y Certificado SSL}
 % ==================================================================
 
-Esta fase describe la vinculación del dominio apuntando al contenedor \code{jeiggar-app} (puerto 8082) utilizando Nginx Proxy Manager y Certbot.
+Esta fase explica cómo asociar un dominio al servidor y habilitar una conexión segura mediante certificado SSL/TLS.
 
-\subsection{Paso 11 — Apuntar el dominio a la IP del VPS}
+\subsection{Paso 11: Apuntar el dominio a la IP del VPS}
 
-Acceder al panel del registrador de dominios (ej. Namecheap). Asegurarse de utilizar los \textbf{Nameservers Básicos} y en la sección \textbf{Advanced DNS} crear los registros:
+Desde el panel del proveedor del dominio se deben crear los registros DNS correspondientes.
 
 \begin{longtable}{|p{0.14\textwidth}|p{0.20\textwidth}|p{0.28\textwidth}|p{0.28\textwidth}|}
+\caption{Registros DNS requeridos}\\
 \hline
 \textbf{Tipo} & \textbf{Nombre / Host} & \textbf{Valor / Apunta a} & \textbf{TTL} \\
 \hline
-A & \code{@} & IP pública del VPS & Automatic \\
+A & \code{@} & IP pública del VPS. & Automático. \\
 \hline
-CNAME & \code{www} & Dominio principal (ej. \code{ppa-nick.shop}) & Automatic \\
+CNAME & \code{www} & Dominio principal. & Automático. \\
 \hline
 \end{longtable}
 
-\subsection{Paso 12 — Obtener el Certificado SSL (Desafío DNS Manual)}
+\subsection{Paso 12: Obtener certificado SSL con Certbot}
 
-Debido a que el puerto 80 ya está administrado por el Proxy Inverso global de la máquina, utilizaremos el desafío de DNS de Certbot para validar la propiedad del dominio sin interrumpir los servicios.
+Si el puerto 80 está administrado por un proxy inverso, puede utilizarse validación DNS manual.
 
 \begin{lstlisting}[language=bash]
 certbot certonly --manual --preferred-challenges dns -d tu-dominio.com -d www.tu-dominio.com --email tu-correo@gmail.com --agree-tos --no-eff-email
 \end{lstlisting}
 
-El asistente mostrará una cadena de texto. Diríjase a su registrador (Namecheap) y añada un registro \textbf{TXT} con el Host \code{\_acme-challenge} y el valor proporcionado. Repita el proceso si le arroja un segundo texto para el host \code{\_acme-challenge.www}. Espere 3 minutos y presione \textbf{Enter} en la consola para confirmar.
+Certbot solicitará crear registros TXT en el panel DNS del dominio. Después de agregarlos, se debe esperar la propagación y continuar el proceso en la consola.
 
-\subsection{Paso 13 — Configurar Nginx Proxy Manager}
+\subsection{Paso 13: Configurar Nginx Proxy Manager}
 
-Una vez emitidos los certificados en \code{/etc/letsencrypt/live}, debemos clonarlos en el volumen compartido del proxy inverso para que pueda aplicarlos:
+Una vez emitidos los certificados, se copian al volumen del proxy inverso.
 
 \begin{lstlisting}[language=bash]
 mkdir -p /var/lib/docker/volumes/parking_nginxmanager_data/_data/nginx/certs
 
 cp /etc/letsencrypt/live/tu-dominio.com/fullchain.pem /var/lib/docker/volumes/parking_nginxmanager_data/_data/nginx/certs/tu-dominio-fullchain.pem
+
 cp /etc/letsencrypt/live/tu-dominio.com/privkey.pem /var/lib/docker/volumes/parking_nginxmanager_data/_data/nginx/certs/tu-dominio-privkey.pem
 \end{lstlisting}
 
-Modificar el archivo de host asociado dentro de la configuración de Nginx Proxy Manager (por ejemplo, el archivo \code{1.conf}):
+Luego se edita el archivo de configuración del host proxy.
 
 \begin{lstlisting}[language=bash]
 nano /var/lib/docker/volumes/parking_nginxmanager_data/_data/nginx/proxy_host/1.conf
 \end{lstlisting}
 
-Reemplazar su contenido con la siguiente configuración para forzar HTTPS y rutear el tráfico hacia la aplicación Jeiggar:
+Configuración sugerida:
 
 \begin{lstlisting}[language={}]
 server {
-  listen 80;
-  listen [::]:80;
-  server_name tu-dominio.com www.tu-dominio.com;
-  return 301 https://$host$request_uri;
+listen 80;
+listen [::]:80;
+server_name tu-dominio.com www.tu-dominio.com;
+return 301 https://$host$request_uri;
 }
 
 server {
-  listen 443 ssl;
-  listen [::]:443;
-  server_name tu-dominio.com www.tu-dominio.com;
+listen 443 ssl;
+listen [::]:443;
+server_name tu-dominio.com www.tu-dominio.com;
 
-  ssl_certificate /data/nginx/certs/tu-dominio-fullchain.pem;
-  ssl_certificate_key /data/nginx/certs/tu-dominio-privkey.pem;
+ssl_certificate /data/nginx/certs/tu-dominio-fullchain.pem;
+ssl_certificate_key /data/nginx/certs/tu-dominio-privkey.pem;
 
-  access_log /data/logs/proxy-host-1_access.log proxy;
-  error_log /data/logs/proxy-host-1_error.log warn;
-
-  location / {
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_pass       http://159.65.222.34:8082;
-  }
+location / {
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_pass http://159.65.222.34:8082;
+}
 }
 \end{lstlisting}
 
-\subsection{Paso 14 — Reiniciar el Proxy}
+\subsection{Paso 14: Reiniciar el proxy}
 
 \begin{lstlisting}[language=bash]
 docker restart nginxmanager
 \end{lstlisting}
 
-Tras este reinicio, la web responderá directamente bajo conexión segura HTTPS a través del dominio configurado.
+Después del reinicio, el dominio debe responder mediante HTTPS.
 
 % ==================================================================
 \section{Fase 6: Actualización del Despliegue}
 % ==================================================================
 
-Cuando el equipo de desarrollo publique nuevos cambios en el repositorio, el proceso de actualización es el siguiente.
+Esta sección describe cómo actualizar la aplicación cuando existan nuevos cambios en el repositorio.
 
-\diagramfigure{diagramas/flujo-actualizacion.png}{Flujo de actualización del despliegue en producción.}{fig:flujo-actualizacion}
+\diagramfigurehere
+{diagramas/flujo-actualizacion.png}
+{Flujo de actualización del despliegue}
+{Proceso secuencial para obtener cambios del repositorio, detener el contenedor anterior, reconstruir la imagen Docker y ejecutar la versión actualizada.}
+{fig:flujo-actualizacion}
 
 \begin{lstlisting}[language=bash]
-# 1. Obtener los ultimos cambios del repositorio
 cd /var/www/proyectos/jeiggar-vacation
 git pull origin main
 
-# 2. Detener y eliminar el contenedor actual
 docker stop jeiggar-app
 docker rm jeiggar-app
 
-# 3. Re-compilar la imagen (leyendo el .env.local)
 docker build --no-cache -t jeiggar-vacation .
 
-# 4. Iniciar el contenedor actualizado en su puerto designado
 docker run -d \
   --name jeiggar-app \
   -p 8082:80 \
@@ -698,58 +719,60 @@ docker run -d \
 \section{Referencia de Variables de Entorno}
 % ==================================================================
 
-Esta sección consolida todas las variables de entorno relevantes para el despliegue. \textbf{Deben configurarse físicamente en el archivo \code{.env.local} en la raíz del proyecto antes de compilar la imagen}. No se inyectan a través de la terminal mediante comandos de Docker.
+Esta sección consolida las variables necesarias para el funcionamiento de la interfaz cliente en producción. Estas variables deben estar configuradas antes de compilar la imagen Docker.
 
 \begin{longtable}{|p{0.36\textwidth}|p{0.18\textwidth}|p{0.36\textwidth}|}
+\caption{Variables de entorno requeridas}\\
 \hline
 \textbf{Variable} & \textbf{Requerida} & \textbf{Descripción} \\
 \hline
-\code{VITE\_SUPABASE\_URL} & Sí & URL base del proyecto Supabase. Formato: \code{https://xxxx.supabase.co}. Obtenida en Project Settings $\rightarrow$ API. \\
+\code{VITE_SUPABASE_URL} & Sí & URL base del proyecto Supabase. \\
 \hline
-\code{VITE\_SUPABASE\_ANON\_KEY} & Sí & Clave anónima pública de Supabase (\code{anon key}). Es segura para el frontend; la seguridad de los datos se gestiona con RLS. \\
+\code{VITE_SUPABASE_ANON_KEY} & Sí & Clave pública anónima de Supabase usada por la interfaz cliente. \\
 \hline
 \end{longtable}
 
-\begin{warnbox}
-\textbf{Recuerda:} Las variables con prefijo \code{VITE\_} son incrustadas en el bundle estático en tiempo de compilación. Cualquier cambio en el archivo \code{.env.local} requiere \textbf{recompilar la imagen} Docker. No es suficiente con reiniciar el contenedor.
-\end{warnbox}
+\textbf{Importante:} Las variables con prefijo \code{VITE_} se integran en el paquete final durante la compilación. Si estas variables cambian, no basta con reiniciar el contenedor; se debe reconstruir la imagen Docker.
 
 % ==================================================================
-\section{Relación con la Base de Datos (Supabase)}
+\section{Relación con la Base de Datos}
 % ==================================================================
 
-El despliegue de la SPA no incluye migraciones de base de datos; estas se gestionan directamente desde el \textbf{SQL Editor} del panel de Supabase. Sin embargo, para que el sistema funcione correctamente en producción, la instancia de Supabase debe tener el esquema descrito en el Diccionario de Datos, que comprende:
+Esta sección explica la relación entre el despliegue de la aplicación y la configuración de Supabase. El despliegue de la aplicación no ejecuta migraciones automáticas de base de datos, por lo tanto, la estructura debe estar previamente configurada desde el panel de Supabase.
+
+Para que el sistema funcione correctamente, Supabase debe contar con los siguientes elementos:
 
 \begin{itemize}
-    \item Las cuatro tablas: \code{countries}, \code{cities}, \code{destinations} y \code{profiles}.
-    \item Las 14 políticas de Row Level Security (RLS) activas.
-    \item Las funciones \code{set\_updated\_at()} y \code{get\_country\_map\_data()}.
-    \item Los tres triggers de auditoría (\code{trg\_*\_updated\_at}).
-    \item El bucket de Storage \code{destinations} con permisos de lectura pública.
-    \item Las cuatro extensiones: \code{uuid-ossp}, \code{pgcrypto}, \code{pg\_stat\_statements} y \code{supabase\_vault}.
+\item Entidades \code{countries}, \code{cities}, \code{destinations} y \code{profiles}.
+\item Políticas de seguridad a nivel de fila (Row Level Security) activas en cada entidad.
+\item Funciones \code{set_updated_at()} y \code{get_country_map_data()}.
+\item Triggers de actualización automática.
+\item Bucket de almacenamiento \code{destinations}.
+\item Permisos de lectura pública para imágenes requeridas por la aplicación.
 \end{itemize}
 
-\begin{infobox}
-\textbf{Verificación rápida:} Desde un navegador, acceder a \code{https://<tu-proyecto>.supabase.co/rest/v1/countries?select=name\&is\_active=eq.true} con el header \code{apikey: <ANON\_KEY>}. Debe retornar un JSON con la lista de países activos. Si retorna un error 401 o una tabla vacía de RLS, revisar las políticas de seguridad.
-\end{infobox}
+\textbf{Verificación rápida:} Desde un navegador o herramienta de pruebas HTTP, se puede consultar la API REST de Supabase para validar que existan países activos y que las políticas permitan lectura pública.
 
 % ==================================================================
 \section{Resolución de Problemas Frecuentes}
 % ==================================================================
 
+Esta sección presenta errores comunes durante el despliegue y posibles acciones correctivas.
+
 \begin{longtable}{|p{0.32\textwidth}|p{0.30\textwidth}|p{0.28\textwidth}|}
+\caption{Problemas frecuentes y soluciones}\\
 \hline
 \textbf{Síntoma} & \textbf{Causa probable} & \textbf{Solución} \\
 \hline
-La página muestra pantalla en blanco & Las variables \code{VITE\_*} no fueron detectadas por el build. & Verificar que el archivo \code{.env.local} exista físicamente y que no esté bloqueado por \code{.dockerignore}. \\
+La página muestra pantalla en blanco. & Variables \code{VITE_*} no detectadas durante la compilación. & Verificar que \code{.env.local} exista y reconstruir la imagen. \\
 \hline
-\code{ERR\_CONNECTION\_REFUSED} al configurar HTTPS & Nginx Proxy Manager se cayó tras el reinicio. & Revisar rutas de certificados con \codebreak{docker logs nginxmanager} y reiniciar el contenedor proxy. \\
+Error de conexión al dominio. & DNS no propagado o proxy mal configurado. & Revisar registros DNS y configuración del proxy. \\
 \hline
-Rutas como \code{/destinos} devuelven 404 & Falta la directiva \code{try\_files} en \code{nginx.conf}. & Verificar el contenido de \code{nginx.conf} y reconstruir el contenedor \code{jeiggar-app}. \\
+Rutas como \code{/destinos} devuelven 404. & Falta configuración \code{try_files} en Nginx. & Revisar \code{nginx.conf} y reconstruir el contenedor. \\
 \hline
-El mapa no carga destinos & La \code{ANON\_KEY} es incorrecta o RLS bloquea el acceso. & Verificar la clave en Supabase y que la política \code{Public read destinations} esté activa. \\
+El mapa no carga destinos. & Clave de Supabase incorrecta o políticas restrictivas. & Verificar \code{VITE_SUPABASE_ANON_KEY} y políticas públicas. \\
 \hline
-El contenedor no arranca (\code{docker ps} muestra \code{Exited}) & Error en \code{nginx.conf} o imagen corrupta. & Ejecutar \codebreak{docker logs jeiggar-app} para ver el error. \\
+El contenedor aparece como \code{Exited}. & Error en configuración o imagen corrupta. & Ejecutar \code{docker logs jeiggar-app}. \\
 \hline
 \end{longtable}
 
@@ -757,34 +780,43 @@ El contenedor no arranca (\code{docker ps} muestra \code{Exited}) & Error en \co
 \section{Lista de Verificación de Despliegue}
 % ==================================================================
 
-Antes de dar por finalizado el despliegue, confirmar cada uno de los siguientes puntos:
+Esta sección permite comprobar que el despliegue fue realizado correctamente.
 
 \begin{itemize}
-    \item[$\square$] El VPS tiene Ubuntu 22.04 LTS con acceso SSH disponible.
-    \item[$\square$] Los paquetes \code{docker.io}, \code{docker-compose-v2} y \code{certbot} están instalados y operativos.
-    \item[$\square$] El repositorio fue clonado exitosamente en \code{/var/www/proyectos/jeiggar-vacation}.
-    \item[$\square$] El archivo \code{.env.local} existe físicamente y contiene los valores reales.
-    \item[$\square$] La imagen Docker fue compilada exitosamente ejecutando el comando base.
-    \item[$\square$] El contenedor \code{jeiggar-app} está en estado \code{Up} operando en su puerto específico.
-    \item[$\square$] El dominio de Namecheap apunta al VPS y posee registros DNS activos.
-    \item[$\square$] Certbot procesó satisfactoriamente el desafío DNS y emitió las firmas \code{.pem}.
-    \item[$\square$] Nginx Proxy Manager asimiló los certificados y maneja tráfico en el puerto 443.
-    \item[$\square$] La navegación entre rutas de la SPA funciona sin errores 404 (ej.: \code{/destinos}, \code{/nosotros}).
-    \item[$\square$] El mapa interactivo carga los destinos nacionales desde Supabase.
+\item[$\square$] El VPS tiene Ubuntu 22.04 LTS y acceso SSH disponible.
+\item[$\square$] Docker y Docker Compose están instalados.
+\item[$\square$] El repositorio fue clonado en \code{/var/www/proyectos/jeiggar-vacation}.
+\item[$\square$] El archivo \code{.env.local} existe y contiene los values reales de Supabase.
+\item[$\square$] La imagen Docker fue compilada correctamente.
+\item[$\square$] El contenedor \code{jeiggar-app} está activo.
+\item[$\square$] La aplicación responde en el puerto configurado.
+\item[$\square$] El dominio apunta a la IP del VPS.
+\item[$\square$] El certificado SSL fue emitido correctamente.
+\item[$\square$] El proxy inverso redirige tráfico HTTPS hacia la aplicación.
+\item[$\square$] Las rutas internas de la aplicación funcionan sin error 404.
+\item[$\square$] La conexión con Supabase responde correctamente.
 \end{itemize}
 
+% ==================================================================
+\section{Conclusiones}
+% ==================================================================
+
+El proceso de despliegue de Jeiggar Vacation permite publicar la aplicación en un entorno de producción utilizando Docker, Nginx y Supabase. Esta estrategia facilita la portabilidad del sistema, la administración del contenedor y la actualización controlada de nuevas versiones.
+
+La separación entre interfaz cliente, contenedor de producción, proxy inverso y servicios de Supabase permite mantener una arquitectura organizada y escalable. Además, el uso de variables de entorno, certificados SSL y políticas de seguridad en Supabase contribuye a un despliegue más seguro y confiable.
+
 \newpage
-\section*{Referencias}
-\addcontentsline{toc}{section}{Referencias}
+\section*{Bibliografía}
+\addcontentsline{toc}{section}{Bibliografía}
 
-Documentación oficial de Docker. (s. f.). \textit{Docker Docs: Build your image}. Recuperado el 23 de mayo de 2026, de \url{https://docs.docker.com/get-started/docker-concepts/building-images/}
+Certbot. (s. f.). \textit{Certbot instructions}. Recuperado el 23 de mayo de 2026, de \url{https://certbot.eff.org/instructions}
 
-Documentación oficial de Nginx. (s. f.). \textit{Nginx Documentation}. Recuperado el 23 de mayo de 2026, de \url{https://nginx.org/en/docs/}
+Docker. (s. f.). \textit{Docker Docs: Build your image}. Recuperado el 23 de mayo de 2026, de \url{https://docs.docker.com/get-started/docker-concepts/building-images/}
 
-Documentación oficial de Certbot. (s. f.). \textit{Manual de Desafíos DNS Criptográficos}. Let's Encrypt Core. Recuperado el 23 de mayo de 2026, de \url{https://certbot.eff.org/instructions}
+Nginx. (s. f.). \textit{Nginx Documentation}. Recuperado el 23 de mayo de 2026, de \url{https://nginx.org/en/docs/}
 
-Documentación oficial de Supabase. (s. f.). \textit{Supabase Docs}. Recuperado el 23 de mayo de 2026, de \url{https://supabase.com/docs}
+Supabase. (s. f.). \textit{Supabase Docs}. Recuperado el 23 de mayo de 2026, de \url{https://supabase.com/docs}
 
-Documentación oficial de Vite. (s. f.). \textit{Vite: Env Variables and Modes}. Recuperado el 23 de mayo de 2026, de \url{https://vite.dev/guide/env-and-mode}
+Vite. (s. f.). \textit{Vite: Env Variables and Modes}. Recuperado el 23 de mayo de 2026, de \url{https://vite.dev/guide/env-and-mode}
 
 \end{document}
